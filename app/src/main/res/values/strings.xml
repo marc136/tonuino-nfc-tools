@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">My Application</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="edit_simple_header">Hello blank fragment</string>
+    <string-array name="tonuino_modes">
+        <item>Hörspiel (einzelner Titel?)</item>
+        <item>Album (alle Titel in einem Ordner)</item>
+        <item>Party (zufälliger Titel)</item>
+        <item>Einzel</item>
+        <item>Hörbuch (speichert Fortschritt)</item>
+    </string-array>
+</resources>
