@@ -38,7 +38,6 @@ class EditSimple : Fragment() {
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
     private lateinit var firstByteText: TextView
-//    private lateinit val rootView: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,7 +70,6 @@ class EditSimple : Fragment() {
         if (listener == null) {
             throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
         }
-
     }
 
     override fun onResume() {
@@ -93,8 +91,18 @@ class EditSimple : Fragment() {
             // Apply the adapter to the spinner
             spinner.adapter = adapter
         }
-        val listener = SpinnerListener()
+        val listener = SpinnerListener(this, WhichByte.FOLDER)
         spinner.onItemSelectedListener = listener
+    }
+
+    fun drawBytes() {
+        val bytes = listener!!.bytes
+
+        Log.i(TAG, "drawBytes")
+        Log.i("drawBytes", listOf(bytes).toString())
+
+        var byte: UByte = bytes[0]
+        firstByteText.text = "First byte: ${byte}"
     }
 
     override fun onDetach() {
@@ -119,6 +127,11 @@ class EditSimple : Fragment() {
         fun onFragmentInteraction(uri: Uri)
     }
 
+    public fun setByte(value: UByte, which: WhichByte) {
+        listener!!.bytes[which.ordinal] = value
+        drawBytes()
+    }
+
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -140,15 +153,19 @@ class EditSimple : Fragment() {
     }
 }
 
-class SpinnerListener : AdapterView.OnItemSelectedListener {
+enum class WhichByte { FOLDER, MODE, SPECIAL }
+
+class SpinnerListener(val fragment: EditSimple, val which: WhichByte) : AdapterView.OnItemSelectedListener {
     override fun onNothingSelected(parent: AdapterView<*>) {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    @ExperimentalUnsignedTypes
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
         // An item was selected. You can retrieve the selected item using
         Log.d(TAG, "spinner $position")
         parent.getItemAtPosition(position)
-    }
 
+        fragment.setByte((position + 1).toUByte(), which)
+    }
 }
