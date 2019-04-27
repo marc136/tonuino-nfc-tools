@@ -9,7 +9,7 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/edit_simple_header"/>
+            android:text="@string/edit_simple_intro"/>
     <TextView
             android:id="@+id/byte0_label"
             android:layout_width="match_parent"

@@ -8,13 +8,16 @@ import android.view.View
 
 
 @ExperimentalUnsignedTypes
-class MainActivity : AppCompatActivity(), EditSimple.OnFragmentInteractionListener {
+class MainActivity : AppCompatActivity(), EditSimple.OnFragmentInteractionListener, EditExtended.OnFragmentInteractionListener  {
     private var currentScreen :Fragment? = null
     public override var bytes : UByteArray = ubyteArrayOf(1u, 2u, 3u, 4u, 5u)
+    public lateinit var cardData : CardData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        cardData = CardData()
 
 //        // Add a backstack listener so we get the handle for the new screen when user presses back
 //        supportFragmentManager.addOnBackStackChangedListener {

@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">My Application</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="edit_simple_header">Hello blank fragment</string>
+    <string name="edit_simple_intro">Diese Ansicht erlaubt das einfache Auswählen der Einstellungen für eine NFC Karte.</string>
     <string-array name="tonuino_modes">
         <item>Hörspiel (einzelner Titel?)</item>
         <item>Album (alle Titel in einem Ordner)</item>
@@ -10,4 +9,8 @@
         <item>Einzel</item>
         <item>Hörbuch (speichert Fortschritt)</item>
     </string-array>
+    <string name="tonuino_mode_unknown">Unbekannt: %1$s</string>
+
+    <string name="edit_extended_intro">Über diese erweiterte Ansicht können Werte eingegeben werden, die dieser App nicht bekannt sind.</string>
+
 </resources>
