@@ -3,15 +3,18 @@ package com.example.myapplication
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
+import android.support.v4.view.ViewPager
 import android.view.View
 
 
 @ExperimentalUnsignedTypes
-class MainActivity : AppCompatActivity(), EditSimple.OnFragmentInteractionListener, EditExtended.OnFragmentInteractionListener  {
-    private var currentScreen :Fragment? = null
-    public override var bytes : UByteArray = ubyteArrayOf(1u, 2u, 3u, 4u, 5u)
-    public lateinit var cardData : CardData
+class MainActivity : AppCompatActivity(), EditSimple.OnFragmentInteractionListener,
+    EditExtended.OnFragmentInteractionListener {
+    private var currentScreen: Fragment? = null
+    public override var bytes: UByteArray = ubyteArrayOf(1u, 2u, 3u, 4u, 5u)
+    public lateinit var cardData: CardData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,14 +27,30 @@ class MainActivity : AppCompatActivity(), EditSimple.OnFragmentInteractionListen
 //            currentScreen = supportFragmentManager
 //                .findFragmentById(R.id.mainactivity_content) as BaseFragment?
 //        }
+        
+        val viewPager = findViewById<ViewPager>(R.id.mainactivity_pager)
+        viewPager.adapter = EditPagerAdapter(supportFragmentManager)
+        val tabLayout = findViewById<TabLayout>(R.id.mainactivity_tabs)
+
+        viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
+
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                viewPager.currentItem = tab.position
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
     }
 
-    public fun loadSimpleEditFragment(v: View)   {
+    public fun loadSimpleEditFragment(v: View) {
         val fragment = EditSimple()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.mainactivity_content, fragment)
-            .commit();
-        onTransition(null, fragment);
+//        supportFragmentManager.beginTransaction()
+//            .replace(R.id.mainactivity_pager, fragment)
+//            .commit();
+//        onTransition(null, fragment);
     }
 
     /*
