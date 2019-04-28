@@ -1,16 +1,38 @@
 <resources>
     <string name="app_name">My Application</string>
 
-    <string name="edit_simple_intro">Diese Ansicht erlaubt das einfache Auswählen der Einstellungen für eine NFC Karte.</string>
-    <string-array name="tonuino_modes">
-        <item>Hörspiel (einzelner Titel?)</item>
-        <item>Album (alle Titel in einem Ordner)</item>
-        <item>Party (zufälliger Titel)</item>
-        <item>Einzel</item>
-        <item>Hörbuch (speichert Fortschritt)</item>
-    </string-array>
-    <string name="tonuino_mode_unknown">Unbekannt: %1$s</string>
+    <string name="edit_folder_label">Ordner</string>
+    <string name="edit_mode_label">Modus</string>
+    <string name="edit_special_label">Extra</string>
+    <string name="edit_special2_label">Extra 2</string>
 
+    <string name="edit_limit_numeric_value">Bitte eine Zahl zwischen %d und %d eingeben.</string>
+
+    <string-array name="edit_mode">
+        <item>Hörspiel</item>
+        <item>Album</item>
+        <item>Party</item>
+        <item>Einzel</item>
+        <item>Hörbuch</item>
+        <item>Admin</item>
+    </string-array>
+    <string-array name="edit_mode_description">
+        <item>Ein zufälliger Titel aus dem gewählten Ordner wird abgespielt.</item>
+        <item>Spielt alle Titel des Ordners in numerischer Reihenfolge.</item>
+        <item>Spielt zufällige Titel des Ordners in Endlosschleife.</item>
+        <item>Spielt den gewählten Titel aus dem Ordner.</item>
+        <item>Spielt alle Titel des Ordners in numerischer Reihenfolge und speichert den Fortschritt, sodass beim Nächsten Verwenden der Karte beim aktuellen Titel begonnen wird.</item>
+        <item>Admin-Karten werden in Tonuino 2.0.1 noch nicht unterstützt.</item>
+    </string-array>
+    <string name="edit_mode_unknown">Der Modus \'%d\' ist unbekannt.</string>
+
+    <!-- Strings on the EditSimple fragment -->
+    <string name="edit_simple_intro">Diese Ansicht erlaubt das einfache Auswählen der Einstellungen für eine NFC Karte.</string>
+
+    <!-- Strings on the EditExtended fragment -->
+    <string name="edit_ext_folder_description">Verwendet den Ordner /%02d.</string>
     <string name="edit_extended_intro">Über diese erweiterte Ansicht können Werte eingegeben werden, die dieser App nicht bekannt sind.</string>
 
+    <!-- Other strings -->
+    <string name="play_mp3_file">Spielt Datei %03d.mp3 ab</string>
 </resources>

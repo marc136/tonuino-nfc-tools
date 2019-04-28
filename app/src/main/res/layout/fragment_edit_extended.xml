@@ -13,12 +13,10 @@
     <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="1"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp">
+            android:stretchColumns="1">
         <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="48dp">
             <TextView
-                    android:text="Ordner"
+                    android:text="@string/edit_folder_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="8dp"
@@ -31,9 +29,17 @@
                     android:id="@+id/edit_ext_folder"
                     android:inputType="number"/>
         </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="0dp">
+            <TextView
+                    android:text=""
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:id="@+id/edit_ext_folder_description"/>
+        </TableRow>
         <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="48dp">
             <TextView
-                    android:text="Modus"
+                    android:text="@string/edit_mode_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="8dp"
@@ -46,10 +52,18 @@
                     android:ems="10"
                     android:id="@+id/edit_ext_mode"/>
         </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="0dp">
+            <TextView
+                    android:text=""
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:id="@+id/edit_ext_mode_description"/>
+        </TableRow>
         <TableRow android:id="@+id/edit_ext_special_row"
                   android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="48dp">
             <TextView
-                    android:text="Extra"
+                    android:text="@string/edit_special_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/edit_ext_special_label"
@@ -63,10 +77,18 @@
                     android:ems="10"
                     android:id="@+id/edit_ext_special"/>
         </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="0dp">
+            <TextView
+                    android:text=""
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:id="@+id/edit_ext_special_description"/>
+        </TableRow>
         <TableRow android:id="@+id/edit_ext_special2_row"
                   android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="48dp">
             <TextView
-                    android:text="Extra 2"
+                    android:text="@string/edit_special2_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/edit_ext_special2_label"
@@ -80,11 +102,17 @@
                     android:ems="10"
                     android:id="@+id/edit_ext_special2"/>
         </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="0dp">
+            <TextView
+                    android:text=""
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:id="@+id/edit_ext_special2_description"/>
+        </TableRow>
     </TableLayout>
     <Button
             android:text="Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/toggle_visible_button"/>
-
-
 </LinearLayout>

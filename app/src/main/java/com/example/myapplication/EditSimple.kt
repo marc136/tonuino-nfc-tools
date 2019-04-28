@@ -1,9 +1,7 @@
 package com.example.myapplication
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,31 +11,11 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 private const val TAG = "EditSimple"
 
-/**
- * A simple [Fragment] subclass.
- * https://developer.android.com/guide/components/fragments#kotlin
- * Activities that contain this fragment must implement the
- * [EditSimple.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [EditSimple.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
 @ExperimentalUnsignedTypes
 class EditSimple : EditFragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private var listener: EditNfcData? = null
-    private lateinit var firstByteText: TextView
 
 
     override fun onAttach(context: Context) {
@@ -52,10 +30,6 @@ class EditSimple : EditFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i(TAG, "onCreate()")
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -66,7 +40,9 @@ class EditSimple : EditFragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_edit_simple, container, false)
 
-        firstByteText = view.findViewById(R.id.byte0_label)
+        folder = view.findViewById(R.id.edit_simple_folder)
+        mode = view.findViewById(R.id.edit_simple_mode)
+        modeDescription = view.findViewById(R.id.edit_simple_mode_description)
 
         return view
     }
@@ -80,21 +56,37 @@ class EditSimple : EditFragment() {
         }
         val bytes = listener!!.bytes
 
-        var byte: UByte = bytes[0]
-        firstByteText.text = "First byte: ${byte}"
-
-        val spinner: Spinner = view!!.findViewById(R.id.byte0_spinner)
+        val spinner: Spinner = view!!.findViewById(R.id.edit_simple_mode)
         ArrayAdapter.createFromResource(
             activity!!.baseContext,
-            R.array.tonuino_modes, android.R.layout.simple_spinner_item
+            R.array.edit_mode, android.R.layout.simple_spinner_item
         ).also { adapter ->
             // Specify the layout to use when the list of choices appears
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // Apply the adapter to the spinner
             spinner.adapter = adapter
         }
-        val listener = SpinnerListener(this, WhichByte.MODE)
-        spinner.onItemSelectedListener = listener
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+
+            @ExperimentalUnsignedTypes
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                this@EditSimple.listener?.setByte(WhichByte.MODE, (position + 1).toUByte())
+                refreshText(listener!!)
+            }
+        }
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        Log.i(TAG, "setUserVisibleHint($isVisibleToUser)")
+
+        if (listener == null) {
+            Log.d("$TAG.setUserVisibleHint", "listener is null")
+        } else if (isVisibleToUser) {
+            refreshText(listener!!)
+        }
     }
 
     override fun onDetach() {
@@ -103,70 +95,35 @@ class EditSimple : EditFragment() {
         listener = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
-    interface OnFragmentInteractionListener {
-        var bytes: UByteArray
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
-    }
-
     override fun refreshText(data: EditNfcData) {
         val bytes = data.bytes
         Log.i("$TAG:refreshText", listOf(bytes).toString())
 
-        var byte: UByte = bytes[1]
-        firstByteText.text = "byte[1]: ${byte}"
-    }
-
-    public fun setByte(value: UByte, which: WhichByte) {
-        listener!!.bytes[which.ordinal] = value
-        refreshText(listener!!)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment EditSimple.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            EditSimple().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        val modeIndex = bytes[BytePositions.MODE.ordinal].toInt() - 1
+        val arr = resources.getStringArray(R.array.edit_mode_description)
+        modeDescription.text = if (modeIndex < arr.size  ) {
+            mode.setSelection(modeIndex, false)
+            arr[modeIndex]
+        } else {
+            getString(R.string.edit_mode_unknown, modeIndex + 1)
+        }
     }
 }
 
-enum class WhichByte { FOLDER, MODE, SPECIAL }
-
-class SpinnerListener(val fragment: EditSimple, val which: WhichByte) : AdapterView.OnItemSelectedListener {
-    override fun onNothingSelected(parent: AdapterView<*>) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+class SpinnerListener(val which: WhichByte) : AdapterView.OnItemSelectedListener {
+    override fun onNothingSelected(parent: AdapterView<*>) {}
 
     @ExperimentalUnsignedTypes
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
         // An item was selected. You can retrieve the selected item using
         Log.d(TAG, "spinner $position")
         parent.getItemAtPosition(position)
+        val max = parent.resources.getStringArray(R.array.edit_mode).size
+        if (position < max) {
+            (parent.context as EditNfcData).setByte(which, (position + 1).toUByte())
 
-        fragment.setByte((position + 1).toUByte(), which)
+        } else {
+            Log.w(TAG, "Spinner selected element $position, but only values smaller than $max are allowed.")
+        }
     }
 }

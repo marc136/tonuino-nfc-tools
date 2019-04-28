@@ -5,17 +5,18 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity" android:orientation="vertical">
+        tools:context=".EditActivity" android:orientation="vertical">
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
             android:text="This is the main activity"
     />
     <android.support.design.widget.TabLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/mainactivity_tabs"
+            android:id="@+id/edit_main_tabs"
             android:minHeight="?attr/actionBarSize">
 
         <android.support.design.widget.TabItem
@@ -35,11 +36,12 @@
     </android.support.design.widget.TabLayout>
     <android.support.v4.view.ViewPager
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:layout_weight="5" android:id="@+id/mainactivity_pager"/>
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
+            android:layout_weight="5"
+            android:id="@+id/edit_main_pager"/>
     <Button
-            android:text="Button"
+            android:text="Write on Tag"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/mainactivity_button"
-            android:onClick="loadSimpleEditFragment"/>
-
+            android:layout_height="wrap_content" android:id="@+id/main_write_btn"/>
 </LinearLayout>

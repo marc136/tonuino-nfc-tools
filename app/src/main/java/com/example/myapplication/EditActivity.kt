@@ -1,30 +1,28 @@
 package com.example.myapplication
 
-import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
-import android.util.Log
-import android.view.View
 
 
 @ExperimentalUnsignedTypes
-class MainActivity : AppCompatActivity(), EditNfcData {
+class EditActivity : AppCompatActivity(), EditNfcData {
     public override var bytes: UByteArray = ubyteArrayOf(1u, 2u, 3u, 4u, 5u)
     public lateinit var cardData: CardData
+    public override var currentEditFragment: EditFragment? = null
+    override var triggerRefreshTextOnCurrentFragment: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_edit)
 
         cardData = CardData()
 
-        val viewPager = findViewById<ViewPager>(R.id.mainactivity_pager)
+        val viewPager = findViewById<ViewPager>(R.id.edit_main_pager)
         viewPager.adapter = EditPagerAdapter(supportFragmentManager)
-        val tabLayout = findViewById<TabLayout>(R.id.mainactivity_tabs)
+        val tabLayout = findViewById<TabLayout>(R.id.edit_main_tabs)
 
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
 
@@ -34,11 +32,15 @@ class MainActivity : AppCompatActivity(), EditNfcData {
                 // `(viewPager.adapter as FragmentPagerAdapter)?.getItem(tab.position)`
                 // but when calling refreshText on it, it will throw an error
                 viewPager.currentItem = tab.position
+                this@EditActivity.currentEditFragment =
+                    (viewPager.adapter as FragmentPagerAdapter).getItem(tab.position) as EditFragment
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {}
 
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
+
+        triggerRefreshTextOnCurrentFragment = true
     }
 }
