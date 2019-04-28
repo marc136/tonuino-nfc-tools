@@ -7,21 +7,22 @@ import android.util.Log
 import java.lang.RuntimeException
 
 class EditPagerAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm) {
+    public
     override fun getItem(position: Int): Fragment {
-        Log.i("EditPagerAdapter", "position = $position")
+//        Log.i("EditPagerAdapter", "position = $position")
         return when (position) {
             0 ->
                 EditSimple()
             1 ->
                 EditExtended()
-            2 ->
-                EditExtended()
+//            2 ->
+//                EditRaw()
             else ->
                 throw RuntimeException("Only supports 2 items")
         }
     }
 
     override fun getCount(): Int {
-        return 3
+        return 2
     }
 }

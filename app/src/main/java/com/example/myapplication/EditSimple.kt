@@ -32,15 +32,26 @@ private const val TAG = "EditSimple"
  *
  */
 @ExperimentalUnsignedTypes
-class EditSimple : Fragment() {
+class EditSimple : EditFragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var listener: OnFragmentInteractionListener? = null
+    private var listener: EditNfcData? = null
     private lateinit var firstByteText: TextView
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.i(TAG, "onAttach()")
+        listener = context as EditNfcData
+        if (listener == null) {
+            throw RuntimeException(context.toString() + " must implement EditNfcData")
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.i(TAG, "onCreate()")
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -51,6 +62,7 @@ class EditSimple : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.i(TAG, "onCreateView()")
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_edit_simple, container, false)
 
@@ -59,23 +71,13 @@ class EditSimple : Fragment() {
         return view
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        listener = context as OnFragmentInteractionListener
-        if (listener == null) {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-
     override fun onResume() {
         super.onResume()
-
-        if (listener == null) return
+        Log.i(TAG, "onResume()")
+        if (listener == null) {
+            Log.i(TAG, "onCreateView(), listener is null")
+            return
+        }
         val bytes = listener!!.bytes
 
         var byte: UByte = bytes[0]
@@ -91,22 +93,13 @@ class EditSimple : Fragment() {
             // Apply the adapter to the spinner
             spinner.adapter = adapter
         }
-        val listener = SpinnerListener(this, WhichByte.FOLDER)
+        val listener = SpinnerListener(this, WhichByte.MODE)
         spinner.onItemSelectedListener = listener
-    }
-
-    fun drawBytes() {
-        val bytes = listener!!.bytes
-
-        Log.i(TAG, "drawBytes")
-        Log.i("drawBytes", listOf(bytes).toString())
-
-        var byte: UByte = bytes[0]
-        firstByteText.text = "First byte: ${byte}"
     }
 
     override fun onDetach() {
         super.onDetach()
+        Log.i(TAG, "onDetach()")
         listener = null
     }
 
@@ -127,9 +120,17 @@ class EditSimple : Fragment() {
         fun onFragmentInteraction(uri: Uri)
     }
 
+    override fun refreshText(data: EditNfcData) {
+        val bytes = data.bytes
+        Log.i("$TAG:refreshText", listOf(bytes).toString())
+
+        var byte: UByte = bytes[1]
+        firstByteText.text = "byte[1]: ${byte}"
+    }
+
     public fun setByte(value: UByte, which: WhichByte) {
         listener!!.bytes[which.ordinal] = value
-        drawBytes()
+        refreshText(listener!!)
     }
 
     companion object {

@@ -7,5 +7,11 @@ private val TonuinoCookie = ubyteArrayOf(1u, 2u, 3u, 4u, 5u) // TODO set correct
 class CardData(
     var cookie: UByteArray = TonuinoCookie,
     var version: UByte = 0x01.toUByte(),
-    val folderSettings : NfcFolderSettings = NfcFolderSettings()
+    val folderSettings: NfcFolderSettings = NfcFolderSettings()
 )
+
+interface EditNfcData {
+    var bytes: UByteArray
+}
+
+enum class BytePositions { FOLDER, MODE, SPECIAL, SPECIAL2 }
