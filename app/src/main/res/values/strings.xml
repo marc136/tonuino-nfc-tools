@@ -1,11 +1,14 @@
 <resources>
     <string name="app_name">My Application</string>
 
+    <!-- Strings used on EditActivity -->
     <string name="edit_folder_label">Ordner</string>
     <string name="edit_mode_label">Modus</string>
     <string name="edit_special_label">Extra</string>
+    <string name="edit_special_label_for_album_mode">Titel</string>
     <string name="edit_special2_label">Extra 2</string>
 
+    <string name="edit_hidden_label">hidden</string>
     <string name="edit_limit_numeric_value">Bitte eine Zahl zwischen %d und %d eingeben.</string>
 
     <string-array name="edit_mode">
@@ -35,4 +38,5 @@
 
     <!-- Other strings -->
     <string name="play_mp3_file">Spielt Datei %03d.mp3 ab</string>
+
 </resources>

@@ -24,7 +24,7 @@
                     android:text="@string/edit_folder_label"/>
             <Spinner
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/edit_simple_folder"
+                    android:layout_height="wrap_content" android:id="@+id/folder"
                     android:spinnerMode="dialog"/>
         </TableRow>
         <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="0dp">
@@ -42,7 +42,7 @@
                     android:text="@string/edit_mode_label"/>
             <Spinner
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/edit_simple_mode"
+                    android:layout_height="wrap_content" android:id="@+id/mode"
                     android:spinnerMode="dialog"/>
         </TableRow>
         <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="0dp">
@@ -51,15 +51,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_span="2"
-                    android:id="@+id/edit_simple_mode_description"/>
+                    android:id="@+id/mode_description"/>
         </TableRow>
-        <TableRow android:id="@+id/edit_simple_special_row"
+        <TableRow android:id="@+id/special_row"
                   android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="48dp">
             <TextView
                     android:text="@string/edit_special_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edit_ext_special_label"
+                    android:id="@+id/special_label"
                     android:layout_marginRight="8dp"
                     android:textStyle="bold"/>
             <EditText
@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="10"
-                    android:id="@+id/edit_simple_special"/>
+                    android:id="@+id/special"/>
         </TableRow>
         <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="0dp">
             <TextView
@@ -76,15 +76,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_span="2"
-                    android:id="@+id/edit_simple_special_description"/>
+                    android:id="@+id/special_description"/>
         </TableRow>
-        <TableRow android:id="@+id/edit_simple_special2_row"
+        <TableRow android:id="@+id/special2_row"
                   android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="48dp">
             <TextView
                     android:text="@string/edit_special2_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edit_ext_special2_label"
+                    android:id="@+id/edit_simple_special2_label"
                     android:layout_marginRight="8dp"
                     android:textStyle="bold"/>
             <EditText
@@ -93,7 +93,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="10"
-                    android:id="@+id/edit_simple_special2"/>
+                    android:id="@+id/special2"/>
         </TableRow>
         <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="0dp">
             <TextView
@@ -101,7 +101,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_span="2"
-                    android:id="@+id/edit_simple_special2_description"/>
+                    android:id="@+id/special2_description"/>
         </TableRow>
     </TableLayout>
 

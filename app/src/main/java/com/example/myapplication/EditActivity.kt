@@ -32,8 +32,8 @@ class EditActivity : AppCompatActivity(), EditNfcData {
                 // `(viewPager.adapter as FragmentPagerAdapter)?.getItem(tab.position)`
                 // but when calling refreshText on it, it will throw an error
                 viewPager.currentItem = tab.position
-                this@EditActivity.currentEditFragment =
-                    (viewPager.adapter as FragmentPagerAdapter).getItem(tab.position) as EditFragment
+//                this@EditActivity.currentEditFragment =
+//                    (viewPager.adapter as FragmentPagerAdapter).getItem(tab.position) as EditFragment
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {}

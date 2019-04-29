@@ -6,10 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
 
 private const val TAG = "EditSimple"
 
@@ -17,6 +14,17 @@ private const val TAG = "EditSimple"
 class EditSimple : EditFragment() {
     private var listener: EditNfcData? = null
 
+    private lateinit var folder: Spinner
+    private lateinit var mode: Spinner
+    private lateinit var modeDescription: TextView
+    private lateinit var special: EditText
+    private lateinit var specialLabel: TextView
+    private lateinit var specialDescription: TextView
+    private lateinit var specialRow: View
+    private lateinit var special2: EditText
+    private lateinit var special2Label: TextView
+    private lateinit var special2Description: TextView
+    private lateinit var special2Row: View
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -40,9 +48,21 @@ class EditSimple : EditFragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_edit_simple, container, false)
 
-        folder = view.findViewById(R.id.edit_simple_folder)
-        mode = view.findViewById(R.id.edit_simple_mode)
-        modeDescription = view.findViewById(R.id.edit_simple_mode_description)
+        folder = view.findViewById(R.id.folder)
+
+        mode = view.findViewById(R.id.mode)
+        modeDescription = view.findViewById(R.id.mode_description)
+
+        special = view.findViewById(R.id.special)
+        special.validateInputAndSetByte(WhichByte.SPECIAL, 0, 255)
+        specialLabel = view.findViewById(R.id.special_label)
+        specialDescription = view.findViewById(R.id.special_description)
+        specialRow = view.findViewById(R.id.special_row)
+
+        special2 = view.findViewById(R.id.special2)
+        special2.validateInputAndSetByte(WhichByte.SPECIAL2, 0, 255)
+        special2Description = view.findViewById(R.id.special2_description)
+        special2Row = view.findViewById(R.id.special2_row)
 
         return view
     }
@@ -54,9 +74,23 @@ class EditSimple : EditFragment() {
             Log.i(TAG, "onCreateView(), listener is null")
             return
         }
-        val bytes = listener!!.bytes
 
-        val spinner: Spinner = view!!.findViewById(R.id.edit_simple_mode)
+        // initialize spinner for 'folder'
+        val folders = (1..99).map { it.toString().padStart(2, '0') }
+        ArrayAdapter<String>(activity!!.baseContext, android.R.layout.simple_spinner_item, folders).also {
+            folder.adapter = it
+        }
+        folder.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+
+            @ExperimentalUnsignedTypes
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                this@EditSimple.listener?.setByte(WhichByte.FOLDER, (position + 1).toUByte())
+                refreshText(listener!!)
+            }
+        }
+
+        // initialize spinner for 'mode'
         ArrayAdapter.createFromResource(
             activity!!.baseContext,
             R.array.edit_mode, android.R.layout.simple_spinner_item
@@ -64,10 +98,9 @@ class EditSimple : EditFragment() {
             // Specify the layout to use when the list of choices appears
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // Apply the adapter to the spinner
-            spinner.adapter = adapter
+            mode.adapter = adapter
         }
-
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        mode.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>) {}
 
             @ExperimentalUnsignedTypes
@@ -99,13 +132,51 @@ class EditSimple : EditFragment() {
         val bytes = data.bytes
         Log.i("$TAG:refreshText", listOf(bytes).toString())
 
+        val folderIndex = bytes[BytePositions.FOLDER.ordinal].toInt() - 1
+        Log.w("$TAG:refreshFolderSpinner", "index=$folderIndex, count=${folder.adapter.count}")
+        if (folderIndex < folder.adapter.count) {
+            folder.setSelection(folderIndex, false)
+        }
+
         val modeIndex = bytes[BytePositions.MODE.ordinal].toInt() - 1
         val arr = resources.getStringArray(R.array.edit_mode_description)
-        modeDescription.text = if (modeIndex < arr.size  ) {
+        modeDescription.text = if (modeIndex < arr.size) {
             mode.setSelection(modeIndex, false)
             arr[modeIndex]
         } else {
             getString(R.string.edit_mode_unknown, modeIndex + 1)
+        }
+
+        refreshSpecialRow(modeIndex+1, bytes[BytePositions.SPECIAL.ordinal].toInt())
+
+        // always hide special2 for now as it is not used in Tonuino 2.0.1
+        special2Row.visibility = View.GONE
+        special2.setText(bytes[BytePositions.SPECIAL2.ordinal].toString())
+    }
+
+    private fun refreshSpecialRow(mode: Int, value: Int) {
+        special.setText(value.toString())
+
+        when (mode) {
+            1, 2, 3, 5 -> {
+                specialRow.visibility = View.GONE
+                specialLabel.text = getString(R.string.edit_hidden_label)
+                specialDescription.visibility = View.GONE
+                specialDescription.text = getString(R.string.edit_hidden_label)
+            }
+            4 -> {
+                specialRow.visibility = View.VISIBLE
+                specialLabel.text = getString(R.string.edit_special_label_for_album_mode)
+                specialDescription.visibility = View.VISIBLE
+                specialDescription.text = getString(R.string.play_mp3_file, value)
+            }
+            else -> {
+                // unknown modes
+                specialRow.visibility = View.VISIBLE
+                specialLabel.text = getString(R.string.edit_special_label)
+                specialDescription.visibility = View.GONE
+                specialDescription.text = getString(R.string.edit_hidden_label)
+            }
         }
     }
 }

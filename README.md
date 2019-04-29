@@ -31,3 +31,10 @@ Wird nur in bestimmten Modi benutzt für:
 - mode 4: Titelnummer
 - mode 6: Platzhalter, bisher ohne Funktion
 
+
+## TODO
+
+- use data binding
+- hide on-screen-keyboard when switching between edit fragments
+- Add entry "unknown <#>" to mode spinner on EditSimple fragment
+

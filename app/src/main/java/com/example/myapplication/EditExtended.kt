@@ -59,24 +59,24 @@ class EditExtended : EditFragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_edit_extended, container, false)
 
-        folder = view.findViewById(R.id.edit_ext_folder)
+        folder = view.findViewById(R.id.folder)
         folder.validateInputAndSetByte(WhichByte.FOLDER, 1, 99) // 0x01-0x63 (restricted by the DFPlayer)
-        folderDescription = view.findViewById(R.id.edit_ext_folder_description)
+        folderDescription = view.findViewById(R.id.folder_description)
 
-        mode = view.findViewById(R.id.edit_ext_mode)
+        mode = view.findViewById(R.id.mode)
         mode.validateInputAndSetByte(WhichByte.MODE, 0, 255)
-        modeDescription = view.findViewById(R.id.edit_ext_mode_description)
+        modeDescription = view.findViewById(R.id.mode_description)
 
-        special = view.findViewById(R.id.edit_ext_special)
+        special = view.findViewById(R.id.special)
         special.validateInputAndSetByte(WhichByte.SPECIAL, 0, 255)
-        specialLabel = view.findViewById(R.id.edit_ext_special_label)
-        specialDescription = view.findViewById(R.id.edit_ext_special_description)
-        specialRow = view.findViewById(R.id.edit_ext_special_row)
+        specialLabel = view.findViewById(R.id.special_label)
+        specialDescription = view.findViewById(R.id.special_description)
+        specialRow = view.findViewById(R.id.special_row)
 
-        special2 = view.findViewById(R.id.edit_ext_special2)
-//        special2.validateInputAndSetByte(0, 255) // TODO
-        special2Description = view.findViewById(R.id.edit_ext_special_description)
-        special2Row = view.findViewById(R.id.edit_ext_special2_row)
+        special2 = view.findViewById(R.id.special2)
+        special2.validateInputAndSetByte(WhichByte.SPECIAL2, 0, 255)
+        special2Description = view.findViewById(R.id.special2_description)
+        special2Row = view.findViewById(R.id.special2_row)
 
         val btn = view.findViewById<Button>(R.id.toggle_visible_button)
         btn.setOnClickListener {
@@ -144,28 +144,27 @@ class EditExtended : EditFragment() {
     }
 
     private fun refreshSpecialRow(mode: Int, value: Int) {
-        Log.w("$TAG:ebbes", "refreshSpecialRow($value)")
         special.setText(value.toString())
 
         when (mode) {
             1, 2, 3, 5 -> {
                 specialRow.visibility = View.GONE
-                specialLabel.text = "hidden"
+                specialLabel.text = getString(R.string.edit_hidden_label)
                 specialDescription.visibility = View.GONE
-                specialDescription.text = "hidden"
+                specialDescription.text = getString(R.string.edit_hidden_label)
             }
             4 -> {
                 specialRow.visibility = View.VISIBLE
-                specialLabel.text = "Titel"
+                specialLabel.text = getString(R.string.edit_special_label_for_album_mode)
                 specialDescription.visibility = View.VISIBLE
                 specialDescription.text = getString(R.string.play_mp3_file, value)
             }
             else -> {
                 // unknown modes
                 specialRow.visibility = View.VISIBLE
-                specialLabel.text = "Extra"
+                specialLabel.text = getString(R.string.edit_special_label)
                 specialDescription.visibility = View.GONE
-                specialDescription.text = "hidden"
+                specialDescription.text = getString(R.string.edit_hidden_label)
             }
         }
     }
@@ -174,5 +173,9 @@ class EditExtended : EditFragment() {
         super.onDetach()
         Log.d(TAG, "onDetach()")
         listener = null
+    }
+
+    private fun isFormValid(): Boolean {
+        return listOf(folder.error).all { it == null }
     }
 }

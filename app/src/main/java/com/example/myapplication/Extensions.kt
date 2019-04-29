@@ -20,15 +20,18 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
     })
 }
 
+@ExperimentalUnsignedTypes
 fun EditText.addValidator(whichByte: WhichByte, error: String, validator: (String) -> Boolean) {
-    this.afterTextChanged {
-        this.error = if (validator(it)) {
-            (this.context as EditNfcData)?.setByte(whichByte, this.text.toString().toUByte())
+    this.afterTextChanged { str ->
+        this.error = if (!validator(str)) error else {
+            (this.context as EditNfcData).setByte(whichByte, this.text.toString().toUByte())
+            this.parentFragment
             null
-        } else error
+        }
     }
 }
 
+@ExperimentalUnsignedTypes
 fun EditText.validateInputAndSetByte(which: WhichByte, min: Int = 0, max: Int = 255) {
     if (max > 255) throw IllegalArgumentException("max must not be greater than 255")
     if (max < 0) throw IllegalArgumentException("min must not be smaller than 0")
