@@ -78,19 +78,7 @@ class EditExtended : EditFragment() {
         special2Description = view.findViewById(R.id.special2_description)
         special2Row = view.findViewById(R.id.special2_row)
 
-        val btn = view.findViewById<Button>(R.id.toggle_visible_button)
-        btn.setOnClickListener {
-            Log.i("onclick", "visibility before click: ${specialRow.visibility}")
-            if (specialRow.visibility == View.VISIBLE) {
-                specialRow.visibility = View.INVISIBLE
-            } else {
-                specialRow.visibility = View.VISIBLE
-            }
-            Log.i("onclick", "visibility after click: ${specialRow.visibility}")
-        }
-
         refreshUi(listener!!)
-
         return view
     }
 
