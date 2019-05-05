@@ -1,7 +1,32 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">TonUINO NFC Tools</string>
+
+    <!-- Strings on MainActivity -->
+    <string name="main_intro_line1">Diese App erlaubt das Lesen und Schreiben NFC-kompatibler RFID Tags für die TonUINO
+        DIY-Musikbox.
+    </string>
+    <string name="main_intro_line2">Mehr Informationen zu dem TonUINO Projekt sind unter https://www.voss.earth/tonuino
+        und https://discourse.voss.earth zu finden.
+    </string>
+    <string name="main_nfcadapter_error">Fehler</string>
+    <string name="main_nfcadapter_is_null">Leider hat dieses Gerät keine Unterstützung für NFC!</string>
+    <string name="main_nfcadapter_disabled">"NFC ist auf diesem Gerät verfügbar, aber gerade nicht aktiviert.\nBitte
+        aktiviere NFC in den Einstellungen."
+    </string>
+    <string name="main_read_tag_headline">Tags Lesen</string>
+    <string name="main_read_tag_description">Sobald dieses Gerät auf einem NFC-kompatiblen RFID Tag, das TonUINO Daten
+        beinhält, platziert wird, werden die Daten gelesen und angezeigt.
+    </string>
+    <string name="main_write_tag_headline">Tags Schreiben</string>
+    <string name="main_write_tag_description">Beim Beschreiben können auch bereits bestehende Daten auf dem Tag
+        überschrieben werden.
+    </string>
+    <string name="main_write_tag_button">Tag Beschreiben</string>
+
 
     <!-- Strings used on EditActivity -->
+    <string name="edit_cookie_label">Cookie</string>
+    <string name="edit_version_label">Version</string>
     <string name="edit_folder_label">Ordner</string>
     <string name="edit_mode_label">Modus</string>
     <string name="edit_special_label">Extra</string>
@@ -24,19 +49,36 @@
         <item>Spielt alle Titel des Ordners in numerischer Reihenfolge.</item>
         <item>Spielt zufällige Titel des Ordners in Endlosschleife.</item>
         <item>Spielt den gewählten Titel aus dem Ordner.</item>
-        <item>Spielt alle Titel des Ordners in numerischer Reihenfolge und speichert den Fortschritt, sodass beim Nächsten Verwenden der Karte beim aktuellen Titel begonnen wird.</item>
+        <item>Spielt alle Titel des Ordners in numerischer Reihenfolge und speichert den Fortschritt, sodass beim
+            nächsten Verwenden der Karte beim aktuellen Titel begonnen wird.
+        </item>
         <item>Admin-Karten werden in Tonuino 2.0.1 noch nicht unterstützt.</item>
     </string-array>
     <string name="edit_mode_unknown">Der Modus \'%d\' ist unbekannt.</string>
 
+    <string name="edit_write_button">Daten auf Tag %s schreiben</string>
+    <string name="edit_write_description">Damit die Daten sicher geschrieben werden, den Empfänger ruhig auf das NFC Tag halten/legen und dann den Button betätigen.</string>
+
     <!-- Strings on the EditSimple fragment -->
-    <string name="edit_simple_intro">Diese Ansicht erlaubt das einfache Auswählen der Einstellungen für eine NFC Karte.</string>
+    <string name="edit_simple_intro">Diese Ansicht erlaubt das einfache Auswählen der Einstellungen für eine NFC
+        Karte.
+    </string>
 
     <!-- Strings on the EditExtended fragment -->
     <string name="edit_ext_folder_description">Verwendet den Ordner /%02d.</string>
-    <string name="edit_extended_intro">Über diese erweiterte Ansicht können Werte eingegeben werden, die dieser App nicht bekannt sind.</string>
+    <string name="edit_extended_intro">Über diese erweiterte Ansicht können Werte eingegeben werden, die dieser App
+        nicht bekannt sind.
+    </string>
+
+    <!-- Strings on ReadActivity -->
+    <string name="read_title">Tag %s</string>
+    <string name="read_intro">Gelesene Daten</string>
+    <string name="read_edit_button">Bearbeiten</string>
 
     <!-- Other strings -->
     <string name="play_mp3_file">Spielt Datei %03d.mp3 ab</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

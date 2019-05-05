@@ -10,9 +10,11 @@ import android.widget.*
 
 private const val TAG = "EditSimple"
 
+
 @ExperimentalUnsignedTypes
 class EditSimple : EditFragment() {
     private var listener: EditNfcData? = null
+    override val TAG = "EditSimple"
 
     private lateinit var folder: Spinner
     private lateinit var mode: Spinner
@@ -86,7 +88,7 @@ class EditSimple : EditFragment() {
             @ExperimentalUnsignedTypes
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 this@EditSimple.listener?.setByte(WhichByte.FOLDER, (position + 1).toUByte())
-                refreshUi(listener!!)
+                refreshUi(listener!!.tagData)
             }
         }
 
@@ -106,7 +108,7 @@ class EditSimple : EditFragment() {
             @ExperimentalUnsignedTypes
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 this@EditSimple.listener?.setByte(WhichByte.MODE, (position + 1).toUByte())
-                refreshUi(listener!!)
+                refreshUi(listener!!.tagData)
             }
         }
     }
@@ -118,7 +120,7 @@ class EditSimple : EditFragment() {
         if (listener == null) {
             Log.d("$TAG.setUserVisibleHint", "listener is null")
         } else if (isVisibleToUser) {
-            refreshUi(listener!!)
+            refreshUi(listener!!.tagData)
         }
     }
 
@@ -128,43 +130,41 @@ class EditSimple : EditFragment() {
         listener = null
     }
 
-    override fun refreshInputs(data: EditNfcData) {
-        val bytes = data.bytes
-        Log.i("$TAG:refreshInputs", listOf(bytes).toString())
+    override fun refreshInputs(data: TagData) {
+        Log.i("$TAG:refreshInputs", data.toString())
 
-        val folderIndex = bytes[BytePositions.FOLDER.ordinal].toInt() - 1
+        val folderIndex = data.folder.toInt() - 1
         Log.w("$TAG:refreshFolderSpinner", "index=$folderIndex, count=${folder.adapter.count}")
         if (folderIndex < folder.adapter.count) {
             folder.setSelection(folderIndex, false)
         }
 
-        val modeIndex = bytes[BytePositions.MODE.ordinal].toInt() - 1
+        val modeIndex = data.mode.toInt() - 1
         val arr = resources.getStringArray(R.array.edit_mode_description)
         if (modeIndex < arr.size) {
             mode.setSelection(modeIndex, false)
         }
 
-        special.setText(bytes[BytePositions.SPECIAL.ordinal].toString())
+        special.setText(data.special.toString())
 
-        special2.setText(bytes[BytePositions.SPECIAL2.ordinal].toString())
+        special2.setText(data.special2.toString())
     }
 
-    override fun refreshDescriptions(data: EditNfcData) {
-        val bytes = data.bytes
-        Log.i("$TAG:refreshDescriptions", listOf(bytes).toString())
+    override fun refreshDescriptions(data: TagData) {
+        Log.i("$TAG:refreshDescriptions", data.toString())
 
-        val folderIndex = bytes[BytePositions.FOLDER.ordinal].toInt() - 1
+        val folderIndex = data.folder.toInt() - 1
         Log.i("$TAG:refreshFolderSpinner", "index=$folderIndex, count=${folder.adapter.count}")
 
-        val modeIndex = bytes[BytePositions.MODE.ordinal].toInt() - 1
+        val modeIndex = data.mode.toInt() - 1
         val arr = resources.getStringArray(R.array.edit_mode_description)
-        modeDescription.text = if (modeIndex < arr.size) {
+        modeDescription.text = if (modeIndex in 0..arr.size) {
             arr[modeIndex]
         } else {
             getString(R.string.edit_mode_unknown, modeIndex + 1)
         }
 
-        refreshSpecialRow(modeIndex+1, bytes[BytePositions.SPECIAL.ordinal].toInt())
+        refreshSpecialRow(modeIndex + 1, data.special.toInt())
 
         // always hide special2 for now as it is not used in Tonuino 2.0.1
         special2Row.visibility = View.GONE

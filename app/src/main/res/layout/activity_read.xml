@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ReadActivity"
+        android:orientation="vertical"
+        android:layout_margin="16dp">
+
+    <TextView
+            android:text="@string/read_intro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/textView"/>
+
+    <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1">
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
+            <TextView
+                    android:text="@string/edit_cookie_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:textStyle="bold"/>
+            <TextView
+                    android:text=""
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:id="@+id/cookie"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical"
+                  android:layout_marginTop="8dp">
+            <TextView
+                    android:text="@string/edit_version_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:textStyle="bold"/>
+            <TextView
+                    android:text=""
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:id="@+id/version"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical"
+                  android:layout_marginTop="8dp">
+            <TextView
+                    android:text="@string/edit_folder_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:textStyle="bold"/>
+            <TextView
+                    android:text=""
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:id="@+id/folder"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="0dp"
+                  android:gravity="center_vertical">
+            <TextView
+                    android:text=""
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:id="@+id/folder_description"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical"
+                  android:layout_marginTop="8dp">
+            <TextView
+                    android:text="@string/edit_mode_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:textStyle="bold"/>
+            <TextView
+                    android:text="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:id="@+id/mode"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="0dp"
+                  android:gravity="center_vertical">
+            <TextView
+                    android:text=""
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:id="@+id/mode_description"/>
+        </TableRow>
+        <TableRow android:id="@+id/special_row"
+                  android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical"
+                  android:layout_marginTop="8dp">
+            <TextView
+                    android:text="@string/edit_special_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/special_label"
+                    android:layout_marginEnd="8dp"
+                    android:textStyle="bold"/>
+            <TextView
+                    android:text="0"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:id="@+id/special"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="0dp"
+                  android:gravity="center_vertical">
+            <TextView
+                    android:text=""
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:id="@+id/special_description"/>
+        </TableRow>
+        <TableRow android:id="@+id/special2_row"
+                  android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical"
+                  android:layout_marginTop="8dp">
+            <TextView
+                    android:text="@string/edit_special2_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/edit_ext_special2_label"
+                    android:layout_marginEnd="8dp"
+                    android:textStyle="bold"/>
+            <TextView
+                    android:text="0"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:id="@+id/special2"/>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="0dp"
+                  android:gravity="center_vertical">
+            <TextView
+                    android:text=""
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:id="@+id/special2_description"/>
+        </TableRow>
+    </TableLayout>
+    <Button
+            android:text="@string/read_edit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    android:onClick="gotoEditActivity"/>
+</LinearLayout>

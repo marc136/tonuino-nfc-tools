@@ -1,25 +1,29 @@
 package com.example.myapplication
 
-import android.support.v7.app.AppCompatActivity
+import android.nfc.Tag
 import android.os.Bundle
 import android.support.design.widget.TabLayout
-import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
+import android.util.Log
+import android.view.View
+import android.widget.Button
 
 
 @ExperimentalUnsignedTypes
-class EditActivity : AppCompatActivity(), EditNfcData {
-    public override var bytes: UByteArray = ubyteArrayOf(1u, 2u, 3u, 4u, 5u)
-    public lateinit var cardData: CardData
-    public override var currentEditFragment: EditFragment? = null
-    override var triggerRefreshTextOnCurrentFragment: Boolean = true
+class EditActivity() : NfcIntentActivity(), EditNfcData {
+    override val TAG = "EditActivity"
+
+    var tag: Tag? = null
+    public override lateinit var tagData: TagData
     override val fragments: Array<EditFragment> = arrayOf(EditSimple(), EditExtended())
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
 
-        cardData = CardData()
+        tag = intent.getParcelableExtra<Tag>(PARCEL_TAG) ?: null
+        tagData = intent.getParcelableExtra<TagData>(PARCEL_TAGDATA) ?: TagData.createDefault()
 
         val viewPager = findViewById<ViewPager>(R.id.edit_main_pager)
         viewPager.adapter = EditPagerAdapter(supportFragmentManager, fragments)
@@ -41,7 +45,24 @@ class EditActivity : AppCompatActivity(), EditNfcData {
 
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
+    }
 
-        triggerRefreshTextOnCurrentFragment = true
+    @Suppress("UNUSED_PARAMETER")
+    fun writeTag(view: View) {
+        if (tag == null) return
+
+        Log.w("$TAG.writeTag", "will write to tag ${tagIdAsString(tag!!)}")
+        val result = writeTonuino(tag!!, tagData)
+
+        Log.w(TAG, "result ${result}")
+    }
+
+    override fun onNfcTag(tag: Tag) {
+        this.tag = tag
+        val tagId = tagIdAsString(tag)
+        Log.i("$TAG.onNfcTag", "Tag $tagId")
+//        supportActionBar?.title = getString(R.string.read_title, tagId)
+
+        findViewById<Button>(R.id.write_button).text = getString(R.string.edit_write_button, tagId)
     }
 }

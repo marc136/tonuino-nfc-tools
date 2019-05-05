@@ -32,9 +32,27 @@ Wird nur in bestimmten Modi benutzt für:
 - mode 6: Platzhalter, bisher ohne Funktion
 
 
+## NFC
+How discovered NFC tags are dispatched to activities: 
+https://developer.android.com/guide/topics/connectivity/nfc/nfc.html#dispatching
+
+Currently only Mifare Classic is used, but look in the future into generic NfcA.
+Links:
+
+- [Android Tag Technology (NfcA, NfcB, ..)](https://developer.android.com/guide/topics/connectivity/nfc/advanced-nfc)
+- [Stackoverflow answer that also contains a command overview of NfcA commands](https://stackoverflow.com/a/42915018)
+- [Stackoverflow answer with general help on NfcA](https://stackoverflow.com/a/40303293)
+- [Summary of Open Source projects using Android's NfcA API](https://www.programcreek.com/java-api-examples/index.php?api=android.nfc.tech.NfcA)
+    - [Example from above's list that actually uses NfcA (and not Mifare)](https://www.programcreek.com/java-api-examples/?code=ProjectMAXS/maxs/maxs-master/module-nfc/src/org/projectmaxs/module/nfc/tech/NfcAHandler.java#)
+
+
+
 ## TODO
 
 - use data binding
 - hide on-screen-keyboard when switching between edit fragments
 - Add entry "unknown <#>" to mode spinner on EditSimple fragment
+- Add support for Tonuino 2.1
+- Use proper Material design theming instead of faking it
+    - MainActivity if NFC is not available
 

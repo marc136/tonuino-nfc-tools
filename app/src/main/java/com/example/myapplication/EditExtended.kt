@@ -10,8 +10,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 
-private val TAG = "EditExtended"
-
 /**
  * From https://developer.android.com/guide/components/fragments#Creating
  * Execution order: onAttach, onCreate, onCreateView, onActivityCreated, onStart, onResume
@@ -21,6 +19,8 @@ private val TAG = "EditExtended"
  */
 @ExperimentalUnsignedTypes
 class EditExtended : EditFragment() {
+    override val TAG = "EditExtended"
+
     private var listener: EditNfcData? = null
 
     private lateinit var folder: EditText
@@ -78,7 +78,7 @@ class EditExtended : EditFragment() {
         special2Description = view.findViewById(R.id.special2_description)
         special2Row = view.findViewById(R.id.special2_row)
 
-        refreshUi(listener!!)
+        refreshUi(listener!!.tagData)
         return view
     }
 
@@ -99,42 +99,37 @@ class EditExtended : EditFragment() {
         if (listener == null) {
             Log.d("$TAG.setUserVisibleHint", "listener is null")
         } else if (isVisibleToUser) {
-            refreshUi(listener!!)
+            refreshUi(listener!!.tagData)
         }
     }
 
-    override fun refreshInputs(data: EditNfcData) {
-        val bytes = data.bytes
-        Log.i("$TAG:refreshInputs", listOf(bytes).toString())
+    override fun refreshInputs(data: TagData) {
+        Log.i("$TAG:refreshInputs", data.toString())
 
-        folder.setText(bytes[BytePositions.FOLDER.ordinal].toString())
-
-        mode.setText(bytes[BytePositions.MODE.ordinal].toString())
-
-        special.setText(bytes[BytePositions.SPECIAL.ordinal].toString())
-
-        special2.setText(bytes[BytePositions.SPECIAL2.ordinal].toString())
+        folder.setText(data.folder.toString())
+        mode.setText(data.mode.toString())
+        special.setText(data.special.toString())
+        special2.setText(data.special2.toString())
     }
 
-    override fun refreshDescriptions(data: EditNfcData) {
-        val bytes = data.bytes
-        Log.i("$TAG:refreshDescriptions", listOf(bytes).toString())
+    override fun refreshDescriptions(data: TagData) {
+        Log.i("$TAG:refreshDescriptions", data.toString())
 
-        val folder_ = bytes[BytePositions.FOLDER.ordinal].toInt()
-        folderDescription.text = getString(R.string.edit_ext_folder_description, folder_)
+        folderDescription.text = getString(R.string.edit_ext_folder_description, data.folder.toInt())
 
-        val mode_ = bytes[BytePositions.MODE.ordinal].toInt()
+        val mode_ = data.mode.toInt()
         if (mode_ in 1..6) {
             modeDescription.visibility = View.VISIBLE
-            modeDescription.text = resources.getStringArray(R.array.edit_mode)[mode_ - 1] + ": " +
+            val text = resources.getStringArray(R.array.edit_mode)[mode_ - 1] + ": " +
                     resources.getStringArray(R.array.edit_mode_description)[mode_ - 1]
+            modeDescription.text = text
         } else {
             Log.w("$TAG:refreshDescriptions", "Cannot display a description for unknown mode '$mode_'.")
             modeDescription.visibility = View.GONE
             modeDescription.text = ""
         }
 
-        refreshSpecialDescription(mode_.toInt(), bytes[BytePositions.SPECIAL.ordinal].toInt())
+        refreshSpecialDescription(mode_.toInt(), data.special.toInt())
 
         // always hide special2 for now as it is not used in Tonuino 2.0.1
         special2Row.visibility = View.GONE

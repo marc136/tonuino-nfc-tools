@@ -2,6 +2,7 @@ package com.example.myapplication
 
 private val characters = "0123456789ABCDEF".toCharArray()
 
+@ExperimentalUnsignedTypes
 fun byteToHex(byte: UByte): String {
     val i = byte.toInt() and 0xFF
     val i0 = i ushr 4 // i >> 4
@@ -10,10 +11,12 @@ fun byteToHex(byte: UByte): String {
     return String(charArrayOf(characters[i0], characters[i1]))
 }
 
+@ExperimentalUnsignedTypes
 fun byteArrayToHex(bytes: UByteArray): List<String> {
     return bytes.map { byteToHex(it) }
 }
 
+@ExperimentalUnsignedTypes
 fun hexToBytes(hex: String): UByteArray {
     // Could not find a nice way to create a UByteArray from a List<UByte>
     val conv: List<UByte> = hex.chunked(size = 2) { it.toString().toUByte(radix = 16) }
@@ -23,6 +26,7 @@ fun hexToBytes(hex: String): UByteArray {
     return result
 }
 
+@ExperimentalUnsignedTypes
 fun hexToByte(hex: CharSequence): UByte {
     return hex.toString().toUByte(radix = 16)
 }
