@@ -7,23 +7,13 @@ import android.util.Log
 import java.lang.RuntimeException
 
 @ExperimentalUnsignedTypes
-class EditPagerAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm) {
-    public
+class EditPagerAdapter(fm: FragmentManager?, val fragments: Array<EditFragment>) : FragmentPagerAdapter(fm) {
+
     override fun getItem(position: Int): Fragment {
-//        Log.i("EditPagerAdapter", "position = $position")
-        return when (position) {
-            0 ->
-                EditSimple()
-            1 ->
-                EditExtended()
-//            2 ->
-//                EditRaw()
-            else ->
-                throw RuntimeException("Only supports 2 items")
-        }
+        return this.fragments[position]
     }
 
     override fun getCount(): Int {
-        return 2
+        return fragments.size
     }
 }

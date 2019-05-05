@@ -13,6 +13,7 @@ class EditActivity : AppCompatActivity(), EditNfcData {
     public lateinit var cardData: CardData
     public override var currentEditFragment: EditFragment? = null
     override var triggerRefreshTextOnCurrentFragment: Boolean = true
+    override val fragments: Array<EditFragment> = arrayOf(EditSimple(), EditExtended())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +22,7 @@ class EditActivity : AppCompatActivity(), EditNfcData {
         cardData = CardData()
 
         val viewPager = findViewById<ViewPager>(R.id.edit_main_pager)
-        viewPager.adapter = EditPagerAdapter(supportFragmentManager)
+        viewPager.adapter = EditPagerAdapter(supportFragmentManager, fragments)
         val tabLayout = findViewById<TabLayout>(R.id.edit_main_tabs)
 
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
@@ -30,7 +31,7 @@ class EditActivity : AppCompatActivity(), EditNfcData {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 // We could access the fragment that will be shown with
                 // `(viewPager.adapter as FragmentPagerAdapter)?.getItem(tab.position)`
-                // but when calling refreshText on it, it will throw an error
+                // but when calling refreshUi on it, it will throw an error
                 viewPager.currentItem = tab.position
 //                this@EditActivity.currentEditFragment =
 //                    (viewPager.adapter as FragmentPagerAdapter).getItem(tab.position) as EditFragment

@@ -23,10 +23,11 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
 @ExperimentalUnsignedTypes
 fun EditText.addValidator(whichByte: WhichByte, error: String, validator: (String) -> Boolean) {
     this.afterTextChanged { str ->
-        this.error = if (!validator(str)) error else {
-            (this.context as EditNfcData).setByte(whichByte, this.text.toString().toUByte())
-            this.parentFragment
-            null
+        if (validator(str)) {
+            (this.context as EditNfcData).setByte(whichByte, str.toUByte())
+            this.error = null
+        } else {
+            this.error = error
         }
     }
 }

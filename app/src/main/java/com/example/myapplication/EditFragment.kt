@@ -4,5 +4,10 @@ import android.support.v4.app.Fragment
 
 @ExperimentalUnsignedTypes
 abstract class EditFragment : Fragment() {
-    public abstract fun refreshText(data: EditNfcData)
+    fun refreshUi(data: EditNfcData) {
+        refreshInputs(data)
+        refreshDescriptions(data)
+    }
+    abstract fun refreshInputs(data: EditNfcData)
+    abstract fun refreshDescriptions(data: EditNfcData)
 }

@@ -17,11 +17,16 @@ interface EditNfcData {
     var bytes: UByteArray
     var currentEditFragment: EditFragment? // TODO remove if not needed
     var triggerRefreshTextOnCurrentFragment: Boolean // TODO remove if not needed
+    val fragments: Array<EditFragment>
 
     fun setByte(which: WhichByte, value: UByte) {
         if (bytes[which.ordinal] != value) {
-            Log.w("Edit byte $which", "From '${bytes[which.ordinal]}' to '$value'")
             bytes[which.ordinal] = value
+            fragments.forEach {fragment ->
+                if (fragment.isVisible) {
+                    fragment.refreshDescriptions(this)
+                }
+            }
         }
     }
 }
