@@ -129,42 +129,6 @@
   </metadata>
   <g
      inkscape:groupmode="layer"
-     id="layer3"
-     inkscape:label="Unused">
-    <g
-       style="display:inline"
-       id="g6189-8"
-       transform="translate(43.518289,21.667286)">
-      <path
-         inkscape:connector-curvature="0"
-         id="path6147-7"
-         transform="scale(0.26458333)"
-         d="M 631.79492,134.125 A 103.93701,103.93701 0 0 0 527.85742,238.0625 103.93701,103.93701 0 0 0 631.79492,342 103.93701,103.93701 0 0 0 735.73047,238.0625 103.93701,103.93701 0 0 0 631.79492,134.125 Z m 0,18.89844 a 85.03937,85.03937 0 0 1 85.03906,85.03906 85.03937,85.03937 0 0 1 -85.03906,85.03906 85.03937,85.03937 0 0 1 -85.04101,-85.03906 85.03937,85.03937 0 0 1 85.04101,-85.03906 z"
-         style="fill:#8e0000;fill-opacity:1;stroke:none;stroke-width:2.94309378;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-      <path
-         inkscape:connector-curvature="0"
-         id="path6151-0-5"
-         transform="scale(0.26458333)"
-         d="m 631.79492,171.92188 a 66.141732,66.141732 0 0 0 -66.14258,66.14062 66.141732,66.141732 0 0 0 66.14258,66.14258 66.141732,66.141732 0 0 0 66.14063,-66.14258 66.141732,66.141732 0 0 0 -66.14063,-66.14062 z m 0,18.89648 a 47.244094,47.244094 0 0 1 47.24414,47.24414 47.244094,47.244094 0 0 1 -47.24414,47.24414 47.244094,47.244094 0 0 1 -47.24414,-47.24414 47.244094,47.244094 0 0 1 47.24414,-47.24414 z"
-         style="display:inline;fill:#24d300;fill-opacity:1;stroke:none;stroke-width:3.47659969;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    </g>
-  </g>
-  <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(0,-161.53332)" />
-  <rect
-     style="display:none;fill:#11aad8;fill-opacity:1;stroke:none;stroke-width:0.74418014;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.28140702"
-     id="rect6303"
-     width="135.46666"
-     height="135.46666"
-     x="0"
-     y="7.1207683e-006"
-     ry="5.0931063"
-     inkscape:label="background" />
-  <g
-     inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="icon"
      style="display:inline">
