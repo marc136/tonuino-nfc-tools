@@ -109,7 +109,17 @@ fun readFromTag(tag: Tag): UByteArray {
         Log.e("$TAG.readFromTag", ex.toString())
     }
 
-    return result
+    return dropTrailingZeros(result)
+}
+
+@ExperimentalUnsignedTypes
+fun dropTrailingZeros(bytes: UByteArray): UByteArray {
+    if (bytes.size == 0) return bytes
+
+    val lastNonZeroIndex = bytes.indexOfLast { value -> value > 0u }
+    if (lastNonZeroIndex == 0) return ubyteArrayOf()
+
+    return bytes.sliceArray(0..lastNonZeroIndex)
 }
 
 /**
@@ -138,7 +148,6 @@ fun readFromTag(mifare: MifareClassic): UByteArray {
             Log.i(TAG, "This is a Tonuino MifareClassic tag")
         }
 
-        // todo: trim trailing zeros?
         result = block
     } else {
         Log.e(TAG, "Authentication of sector $tonuinoSector failed!")
@@ -185,7 +194,8 @@ fun writeTag(mifare: MifareClassic, data: TagData): WriteResult {
         Log.i(
             TAG, "Wrote ${byteArrayToHex(data.bytes)} to tag ${tagIdAsString(
                 mifare.tag
-            )}")
+            )}"
+        )
         result = WriteResult.SUCCESS
     } else {
         result = WriteResult.AUTHENTICATION_FAILURE
