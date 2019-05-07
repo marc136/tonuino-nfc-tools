@@ -3,7 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              tools:context=".EditExtended" android:orientation="vertical">
+              tools:context=".ui.edit.EditExtended" android:orientation="vertical">
 
     <TextView
             android:text="@string/edit_extended_intro"

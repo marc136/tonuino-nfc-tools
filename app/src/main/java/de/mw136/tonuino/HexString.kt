@@ -1,4 +1,4 @@
-package com.example.myapplication
+package de.mw136.tonuino
 
 private val characters = "0123456789ABCDEF".toCharArray()
 

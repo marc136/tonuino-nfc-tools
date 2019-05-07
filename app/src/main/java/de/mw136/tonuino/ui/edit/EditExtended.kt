@@ -1,4 +1,4 @@
-package com.example.myapplication
+package de.mw136.tonuino.ui.edit
 
 import android.content.Context
 import android.os.Bundle
@@ -6,9 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import de.mw136.tonuino.*
+import de.mw136.tonuino.nfc.EditNfcData
+import de.mw136.tonuino.nfc.TagData
+import de.mw136.tonuino.nfc.WhichByte
 
 /**
  * From https://developer.android.com/guide/components/fragments#Creating

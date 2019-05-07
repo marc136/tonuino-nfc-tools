@@ -1,4 +1,4 @@
-package com.example.myapplication
+package de.mw136.tonuino.ui
 
 import android.content.Intent
 import android.nfc.Tag
@@ -6,6 +6,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import de.mw136.tonuino.*
+import de.mw136.tonuino.nfc.NfcIntentActivity
+import de.mw136.tonuino.nfc.TagData
+import de.mw136.tonuino.nfc.readFromTag
+import de.mw136.tonuino.nfc.tagIdAsString
 
 @ExperimentalUnsignedTypes
 class ReadActivity() : NfcIntentActivity() {

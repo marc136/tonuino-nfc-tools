@@ -1,10 +1,8 @@
-package com.example.myapplication
+package de.mw136.tonuino.ui.edit
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import android.util.Log
-import java.lang.RuntimeException
 
 @ExperimentalUnsignedTypes
 class EditPagerAdapter(fm: FragmentManager?, val fragments: Array<EditFragment>) : FragmentPagerAdapter(fm) {

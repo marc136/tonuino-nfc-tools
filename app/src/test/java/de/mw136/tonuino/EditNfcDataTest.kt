@@ -1,9 +1,14 @@
-package com.example.myapplication
+package de.mw136.tonuino
 
-import com.example.myapplication.test.*
+import de.mw136.tonuino.nfc.EditNfcData
+import de.mw136.tonuino.nfc.TagData
+import de.mw136.tonuino.nfc.WhichByte
+import de.mw136.tonuino.test.*
+import de.mw136.tonuino.ui.edit.EditFragment
 import org.junit.Assert.*
 import org.junit.Test
 
+@ExperimentalUnsignedTypes
 class EditNfcDataTest {
     @Test
     fun increaseByteArray() {
@@ -48,8 +53,6 @@ class EditNfcDataTest {
 @ExperimentalUnsignedTypes
 class Simple : EditNfcData {
     override var tagData: TagData
-    override var currentEditFragment: EditFragment? = null
-    override var triggerRefreshTextOnCurrentFragment: Boolean = false
     override val fragments: Array<EditFragment> = arrayOf()
 
     constructor() : this(ubyteArrayOf())

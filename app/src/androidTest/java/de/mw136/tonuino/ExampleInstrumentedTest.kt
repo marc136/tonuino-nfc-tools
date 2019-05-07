@@ -1,4 +1,4 @@
-package com.example.myapplication
+package de.mw136.tonuino
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
-        assertEquals("com.example.myapplication", appContext.packageName)
+        assertEquals("de.mw136.tonuino", appContext.packageName)
     }
 }

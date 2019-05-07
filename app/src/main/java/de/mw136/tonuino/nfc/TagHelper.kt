@@ -1,4 +1,4 @@
-package com.example.myapplication
+package de.mw136.tonuino.nfc
 
 import android.nfc.FormatException
 import android.nfc.Tag
@@ -7,13 +7,16 @@ import android.nfc.tech.MifareClassic
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.Log
+import de.mw136.tonuino.byteArrayToHex
+import de.mw136.tonuino.hexToBytes
 
 private const val TAG = "TagHelper"
 private const val tonuinoSector = 1
 @ExperimentalUnsignedTypes
 private val tonuinoCookie = hexToBytes("1337b347").toList() // TODO add to expert settings
 @ExperimentalUnsignedTypes
-private val factoryKey = hexToBytes("FFFFFFFFFFFF") // factory preset, same as MifareClassic.KEY_DEFAULT
+private val factoryKey =
+    hexToBytes("FFFFFFFFFFFF") // factory preset, same as MifareClassic.KEY_DEFAULT
 
 
 @ExperimentalUnsignedTypes
@@ -138,7 +141,7 @@ fun readFromTag(mifare: MifareClassic): UByteArray {
         // todo: trim trailing zeros?
         result = block
     } else {
-        Log.e(TAG, "Authentication of sector ${tonuinoSector} failed!")
+        Log.e(TAG, "Authentication of sector $tonuinoSector failed!")
     }
 
     mifare.close()
@@ -170,7 +173,7 @@ fun writeTonuino(tag: Tag, data: TagData): WriteResult {
 
 @ExperimentalUnsignedTypes
 fun writeTag(mifare: MifareClassic, data: TagData): WriteResult {
-    var result = WriteResult.UNSUPPORTED_FORMAT
+    var result: WriteResult
     mifare.connect()
 
     val key = factoryKey.asByteArray() // TODO allow configuration
@@ -179,7 +182,10 @@ fun writeTag(mifare: MifareClassic, data: TagData): WriteResult {
         // NOTE: This could truncates data, if we have more than 16 Byte (= MifareClassic.BLOCK_SIZE)
         val block = data.toFixedLengthBuffer(MifareClassic.BLOCK_SIZE)
         mifare.writeBlock(blockIndex, block)
-        Log.i(TAG, "Wrote ${byteArrayToHex(data.bytes)} to tag ${tagIdAsString(mifare.tag)}")
+        Log.i(
+            TAG, "Wrote ${byteArrayToHex(data.bytes)} to tag ${tagIdAsString(
+                mifare.tag
+            )}")
         result = WriteResult.SUCCESS
     } else {
         result = WriteResult.AUTHENTICATION_FAILURE

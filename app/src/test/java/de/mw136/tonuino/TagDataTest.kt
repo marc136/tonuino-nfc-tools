@@ -1,7 +1,8 @@
-package com.example.myapplication
+package de.mw136.tonuino
 
 import android.nfc.tech.MifareClassic
-import com.example.myapplication.test.*
+import de.mw136.tonuino.nfc.TagData
+import de.mw136.tonuino.test.*
 import org.junit.Assert.*
 import org.junit.Test
 

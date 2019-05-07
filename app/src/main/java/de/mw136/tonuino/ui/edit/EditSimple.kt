@@ -1,4 +1,4 @@
-package com.example.myapplication
+package de.mw136.tonuino.ui.edit
 
 import android.content.Context
 import android.os.Bundle
@@ -7,6 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import de.mw136.tonuino.*
+import de.mw136.tonuino.nfc.EditNfcData
+import de.mw136.tonuino.nfc.TagData
+import de.mw136.tonuino.nfc.WhichByte
 
 private const val TAG = "EditSimple"
 

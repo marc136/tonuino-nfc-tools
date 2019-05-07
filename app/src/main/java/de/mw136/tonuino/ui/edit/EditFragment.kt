@@ -1,7 +1,8 @@
-package com.example.myapplication
+package de.mw136.tonuino.ui.edit
 
 import android.support.v4.app.Fragment
 import android.util.Log
+import de.mw136.tonuino.nfc.TagData
 
 @ExperimentalUnsignedTypes
 abstract class EditFragment : Fragment() {

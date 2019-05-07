@@ -1,6 +1,6 @@
-package com.example.myapplication
+package de.mw136.tonuino.nfc
 
-import android.util.Log
+import de.mw136.tonuino.ui.edit.EditFragment
 
 @ExperimentalUnsignedTypes
 interface EditNfcData {

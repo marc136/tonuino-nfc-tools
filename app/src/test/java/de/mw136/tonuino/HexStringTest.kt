@@ -1,4 +1,4 @@
-package com.example.myapplication
+package de.mw136.tonuino
 
 import org.junit.Test
 import org.junit.Assert.*
