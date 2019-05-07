@@ -55,32 +55,6 @@ class EditSimple : EditFragment() {
         val view = inflater.inflate(R.layout.fragment_edit_simple, container, false)
 
         folder = view.findViewById(R.id.folder)
-
-        mode = view.findViewById(R.id.mode)
-        modeDescription = view.findViewById(R.id.mode_description)
-
-        special = view.findViewById(R.id.special)
-        special.validateInputAndSetByte(WhichByte.SPECIAL, 0, 255)
-        specialLabel = view.findViewById(R.id.special_label)
-        specialDescription = view.findViewById(R.id.special_description)
-        specialRow = view.findViewById(R.id.special_row)
-
-        special2 = view.findViewById(R.id.special2)
-        special2.validateInputAndSetByte(WhichByte.SPECIAL2, 0, 255)
-        special2Description = view.findViewById(R.id.special2_description)
-        special2Row = view.findViewById(R.id.special2_row)
-
-        return view
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.i(TAG, "onResume()")
-        if (listener == null) {
-            Log.i(TAG, "onCreateView(), listener is null")
-            return
-        }
-
         // initialize spinner for 'folder'
         val folders = (1..99).map { it.toString().padStart(2, '0') }
         ArrayAdapter<String>(activity!!.baseContext, android.R.layout.simple_spinner_item, folders).also {
@@ -96,6 +70,7 @@ class EditSimple : EditFragment() {
             }
         }
 
+        mode = view.findViewById(R.id.mode)
         // initialize spinner for 'mode'
         ArrayAdapter.createFromResource(
             activity!!.baseContext,
@@ -115,6 +90,20 @@ class EditSimple : EditFragment() {
                 refreshUi(listener!!.tagData)
             }
         }
+        modeDescription = view.findViewById(R.id.mode_description)
+
+        special = view.findViewById(R.id.special)
+        special.validateInputAndSetByte(WhichByte.SPECIAL, 0, 255)
+        specialLabel = view.findViewById(R.id.special_label)
+        specialDescription = view.findViewById(R.id.special_description)
+        specialRow = view.findViewById(R.id.special_row)
+
+        special2 = view.findViewById(R.id.special2)
+        special2.validateInputAndSetByte(WhichByte.SPECIAL2, 0, 255)
+        special2Description = view.findViewById(R.id.special2_description)
+        special2Row = view.findViewById(R.id.special2_row)
+
+        return view
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
