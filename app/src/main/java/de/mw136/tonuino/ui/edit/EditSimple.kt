@@ -50,6 +50,7 @@ class EditSimple : EditFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        propagateChanges = false
         Log.i(TAG, "onCreateView()")
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_edit_simple, container, false)
@@ -65,8 +66,11 @@ class EditSimple : EditFragment() {
 
             @ExperimentalUnsignedTypes
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                this@EditSimple.listener?.setByte(WhichByte.FOLDER, (position + 1).toUByte())
-                refreshUi(listener!!.tagData)
+
+                if (this@EditSimple.propagateChanges) {
+                    this@EditSimple.listener?.setByte(WhichByte.FOLDER, (position + 1).toUByte())
+                    refreshUi(listener!!.tagData)
+                }
             }
         }
 
@@ -86,8 +90,10 @@ class EditSimple : EditFragment() {
 
             @ExperimentalUnsignedTypes
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                this@EditSimple.listener?.setByte(WhichByte.MODE, (position + 1).toUByte())
-                refreshUi(listener!!.tagData)
+                if (propagateChanges) {
+                    this@EditSimple.listener?.setByte(WhichByte.MODE, (position + 1).toUByte())
+                    refreshUi(listener!!.tagData)
+                }
             }
         }
         modeDescription = view.findViewById(R.id.mode_description)
@@ -103,6 +109,7 @@ class EditSimple : EditFragment() {
         special2Description = view.findViewById(R.id.special2_description)
         special2Row = view.findViewById(R.id.special2_row)
 
+        refreshUi(listener!!.tagData)
         return view
     }
 
