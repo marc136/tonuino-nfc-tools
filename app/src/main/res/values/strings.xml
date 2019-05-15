@@ -10,9 +10,7 @@
     </string>
     <string name="main_nfcadapter_error">Fehler</string>
     <string name="main_nfcadapter_is_null">Leider hat dieses Gerät keine Unterstützung für NFC!</string>
-    <string name="main_nfcadapter_disabled">"NFC ist auf diesem Gerät verfügbar, aber gerade nicht aktiviert.\nBitte
-        aktiviere NFC in den Einstellungen."
-    </string>
+    <string name="main_nfcadapter_disabled">"NFC ist auf diesem Gerät verfügbar, aber gerade nicht aktiviert.\nBitte aktiviere NFC in den Einstellungen."</string>
     <string name="main_read_tag_headline">Tags Lesen</string>
     <string name="main_read_tag_description">Sobald dieses Gerät auf einem NFC-kompatiblen RFID Tag, das TonUINO Daten
         beinhält, platziert wird, werden die Daten gelesen und angezeigt.
@@ -57,7 +55,9 @@
     <string name="edit_mode_unknown">Der Modus \'%d\' ist unbekannt.</string>
 
     <string name="edit_write_button">Daten auf Tag %s schreiben</string>
-    <string name="edit_write_description">Damit die Daten sicher geschrieben werden, den Empfänger ruhig auf das NFC Tag halten/legen und dann den Button betätigen.</string>
+    <string name="edit_write_description">Damit die Daten sicher geschrieben werden, den Empfänger ruhig auf das NFC Tag
+        halten/legen und dann den Button betätigen.
+    </string>
 
     <!-- Strings on the EditSimple fragment -->
     <string name="edit_simple_intro">Diese Ansicht erlaubt das einfache Auswählen der Einstellungen für eine NFC
