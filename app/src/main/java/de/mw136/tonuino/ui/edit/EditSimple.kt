@@ -194,21 +194,3 @@ class EditSimple : EditFragment() {
         }
     }
 }
-
-class SpinnerListener(val which: WhichByte) : AdapterView.OnItemSelectedListener {
-    override fun onNothingSelected(parent: AdapterView<*>) {}
-
-    @ExperimentalUnsignedTypes
-    override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-        // An item was selected. You can retrieve the selected item using
-        Log.d(TAG, "spinner $position")
-        parent.getItemAtPosition(position)
-        val max = parent.resources.getStringArray(R.array.edit_mode).size
-        if (position < max) {
-            (parent.context as EditNfcData).setByte(which, (position + 1).toUByte())
-
-        } else {
-            Log.w(TAG, "Spinner selected element $position, but only values smaller than $max are allowed.")
-        }
-    }
-}
