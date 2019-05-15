@@ -1,5 +1,6 @@
 package de.mw136.tonuino.nfc
 
+import android.util.Log
 import de.mw136.tonuino.ui.edit.EditFragment
 
 @ExperimentalUnsignedTypes
@@ -14,6 +15,7 @@ interface EditNfcData {
             tagData.bytes += UByteArray(diff) { 0u }
         }
         if (tagData.bytes[which.index] != value) {
+//            Log.w("Tag.setByte", "${which.name} ${value.toString()}")
             tagData.bytes[which.index] = value
             fragments.forEach { fragment ->
                 if (fragment.isVisible) {

@@ -70,6 +70,17 @@
         nicht bekannt sind.
     </string>
 
+    <!-- Strings on EditHex fragment -->
+    <string name="edit_hex_intro">In dieser Ansicht können beliebige Werte eingetragen werden.</string>
+    <string name="edit_hex_disclaimer">Wenn die ersten vier Byte geändert werden, muss auch das Cookie auch im Tonuino
+        Quellcode den selben Wert haben. Sonst wird die Karte nicht mehr korrekt erkannt.
+    </string>
+    <string name="edit_hex_bytes_label">Bytes (in Hexadezimaler Schreibweise)</string>
+    <string name="edit_hex_whitespace">Leerzeichen und Zeilenumbrüche werden ignoriert.</string>
+    <string name="edit_hex_zeropad">Es werden immer ganze Sektoren geschrieben. Der Rest des Sektors wird mit \'0x0\'
+        aufgefüllt.
+    </string>
+
     <!-- Strings on ReadActivity -->
     <string name="read_title">Tag %s</string>
     <string name="read_intro">Gelesene Daten</string>
@@ -77,8 +88,5 @@
 
     <!-- Other strings -->
     <string name="play_mp3_file">Spielt Datei %03d.mp3 ab</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

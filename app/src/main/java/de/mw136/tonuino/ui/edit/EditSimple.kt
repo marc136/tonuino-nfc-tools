@@ -113,6 +113,13 @@ class EditSimple : EditFragment() {
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
+        // necessary because calling refreshUI from setUserVisibleHint does not paint the changes if it is called from
+        // the wrong thread. Happens e.g. when switching between EditHex and EditSimple using the EditPagerAdapter
+        refreshUi(listener!!.tagData)
+    }
+
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         Log.i(TAG, "setUserVisibleHint($isVisibleToUser)")

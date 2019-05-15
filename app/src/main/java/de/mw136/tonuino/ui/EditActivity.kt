@@ -9,10 +9,7 @@ import android.view.View
 import android.widget.Button
 import de.mw136.tonuino.*
 import de.mw136.tonuino.nfc.*
-import de.mw136.tonuino.ui.edit.EditExtended
-import de.mw136.tonuino.ui.edit.EditFragment
-import de.mw136.tonuino.ui.edit.EditPagerAdapter
-import de.mw136.tonuino.ui.edit.EditSimple
+import de.mw136.tonuino.ui.edit.*
 
 
 @ExperimentalUnsignedTypes
@@ -23,7 +20,8 @@ class EditActivity() : NfcIntentActivity(), EditNfcData {
     public override lateinit var tagData: TagData
     override val fragments: Array<EditFragment> = arrayOf(
         EditSimple(),
-        EditExtended()
+        EditExtended(),
+        EditHex()
     )
 
 

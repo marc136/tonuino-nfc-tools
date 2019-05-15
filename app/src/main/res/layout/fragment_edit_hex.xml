@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              tools:context=".ui.edit.EditHex" android:orientation="vertical">
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_hex_intro"
+            android:id="@+id/intro"/>
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_hex_disclaimer"
+            android:id="@+id/disclaimer"/>
+    <TextView
+            android:text="@string/edit_hex_bytes_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/bytes_label"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"/>
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:gravity="start|top"
+            android:ems="10"
+            android:digits="0123456789abcdefABCDEF"
+            android:id="@+id/bytes"/>
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_hex_whitespace"
+            android:id="@+id/whitespace"/>
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_hex_zeropad"
+            android:id="@+id/zero_pad"/>
+</LinearLayout>
