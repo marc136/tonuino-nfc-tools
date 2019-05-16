@@ -29,7 +29,13 @@ class TagData(var bytes: UByteArray = ubyteArrayOf()) : Parcelable {
     private val versionIndex = 4 // TODO remove magic byte index number
 
     val cookie: UByteArray
-        get() = bytes.sliceArray(0 until versionIndex)
+        get() {
+            if (bytes.size < versionIndex) {
+                return ubyteArrayOf(0u, 0u, 0u, 0u )
+            } else {
+                return bytes.sliceArray(0 until versionIndex)
+            }
+        }
     val version: UByte
         get() = getAtWithDefault(versionIndex)
     val folder: UByte
