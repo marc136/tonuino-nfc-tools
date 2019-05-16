@@ -11,6 +11,7 @@
     <string name="main_nfcadapter_error">Fehler</string>
     <string name="main_nfcadapter_is_null">Leider hat dieses Gerät keine Unterstützung für NFC!</string>
     <string name="main_nfcadapter_disabled">"NFC ist auf diesem Gerät verfügbar, aber gerade nicht aktiviert.\nBitte aktiviere NFC in den Einstellungen."</string>
+    <string name="main_nfcadapter_settings">Einstellungen öffnen</string>
     <string name="main_read_tag_headline">Tags Lesen</string>
     <string name="main_read_tag_description">Sobald dieses Gerät auf einem NFC-kompatiblen RFID Tag, das TonUINO Daten
         beinhält, platziert wird, werden die Daten gelesen und angezeigt.
@@ -88,5 +89,4 @@
 
     <!-- Other strings -->
     <string name="play_mp3_file">Spielt Datei %03d.mp3 ab</string>
-
 </resources>

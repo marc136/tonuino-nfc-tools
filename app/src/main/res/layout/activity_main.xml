@@ -41,32 +41,42 @@
                       android:layout_height="wrap_content"
                       android:textColor="#FFFFFF"
                       android:id="@+id/error_text"/>
+            <Button
+                    android:text="@string/main_nfcadapter_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/nfc_settings"
+                    android:onClick="openNfcSettings" />
         </LinearLayout>
 
         <Space android:layout_width="match_parent" android:layout_height="16dp"/>
-        <TextView
-                android:text="@string/main_read_tag_headline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"/>
-        <TextView
-                android:text="@string/main_read_tag_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        <Space android:layout_width="match_parent" android:layout_height="16dp"/>
-        <TextView
-                android:text="@string/main_write_tag_headline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"/>
-        <TextView
-                android:text="@string/main_write_tag_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        <Button
-                android:text="@string/main_write_tag_button"
+        <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="showWriteActivity"/>
+                android:layout_height="match_parent" android:id="@+id/enabled_container">
+            <TextView
+                    android:text="@string/main_read_tag_headline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"/>
+            <TextView
+                    android:text="@string/main_read_tag_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            <Space android:layout_width="match_parent" android:layout_height="16dp"/>
+            <TextView
+                    android:text="@string/main_write_tag_headline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"/>
+            <TextView
+                    android:text="@string/main_write_tag_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            <Button
+                    android:text="@string/main_write_tag_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="showWriteActivity"/>
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

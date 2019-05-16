@@ -14,7 +14,6 @@ import de.mw136.tonuino.nfc.readFromTag
 @ExperimentalUnsignedTypes
 class MainActivity : NfcIntentActivity() {
     override val TAG = "MainActivity"
-    private var nfcAvailable = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,21 +25,33 @@ class MainActivity : NfcIntentActivity() {
 
         val errorContainer = findViewById<View>(R.id.error_container)
         val errorView = findViewById<TextView>(R.id.error_text)
+        val openNfcSettingsButton = findViewById<View>(R.id.nfc_settings)
+        val enabledContainer = findViewById<View>(R.id.enabled_container)
 
         if (nfcAdapter == null) {
             errorContainer.visibility = View.VISIBLE
             errorView.text = getString(R.string.main_nfcadapter_is_null)
+            openNfcSettingsButton.visibility = View.GONE
+            enabledContainer.visibility = View.GONE
+
         } else if (!nfcAdapter!!.isEnabled) {
             errorContainer.visibility = View.VISIBLE
             errorView.text = getString(R.string.main_nfcadapter_disabled)
+            openNfcSettingsButton.visibility = View.VISIBLE
+            enabledContainer.visibility = View.GONE
+
         } else {
-            nfcAvailable = true
+            enabledContainer.visibility = View.VISIBLE
             errorContainer.visibility = View.GONE
         }
     }
 
     fun showWriteActivity(view: View) {
         startActivity(Intent(view.context, EditActivity::class.java))
+    }
+
+    fun openNfcSettings(view: View) {
+        startActivity(Intent(android.provider.Settings.ACTION_NFC_SETTINGS))
     }
 
     override fun onNfcTag(tag: Tag) {
