@@ -1,5 +1,25 @@
 # Readme
 
+Android app to write and read NFC tags that can be used on the [TonUINO DIY music box](https://tonuino.de/).
+
+The app will be released on the [play store](https://play.google.com/store/apps/details?id=de.mw136.tonuino) 
+and [f-droid](https://gitlab.com/fdroid/fdroiddata/blob/master/CONTRIBUTING.md) 
+once it is considered stable.
+
+## TODO
+
+- Add English translation
+- Hide on-screen-keyboard when switching between edit fragments
+- Add entry "unknown <#>" to mode spinner on EditSimple fragment
+- Add support for Tonuino 2.1
+- Add support for futher NFC tag technologies
+- Simulate NFC tag
+- Use proper Material design theming instead of faking it
+    - MainActivity if NFC is not available
+- Use data binding
+
+
+
 ## Tonuino 2.0.x
 [Repository](https://github.com/xfjx/TonUINO/blob/d15df6c7bb53bc970e4def43fd3e93fd82c13086/Tonuino.ino)
 
@@ -36,7 +56,7 @@ Wird nur in bestimmten Modi benutzt für:
 How discovered NFC tags are dispatched to activities: 
 https://developer.android.com/guide/topics/connectivity/nfc/nfc.html#dispatching
 
-Currently only Mifare Classic is used, but look in the future into generic NfcA.
+Currently only Mifare Classic, but I want to look into supporting generic NfcA in the future.
 Links:
 
 - [Android Tag Technology (NfcA, NfcB, ..)](https://developer.android.com/guide/topics/connectivity/nfc/advanced-nfc)
@@ -44,15 +64,3 @@ Links:
 - [Stackoverflow answer with general help on NfcA](https://stackoverflow.com/a/40303293)
 - [Summary of Open Source projects using Android's NfcA API](https://www.programcreek.com/java-api-examples/index.php?api=android.nfc.tech.NfcA)
     - [Example from above's list that actually uses NfcA (and not Mifare)](https://www.programcreek.com/java-api-examples/?code=ProjectMAXS/maxs/maxs-master/module-nfc/src/org/projectmaxs/module/nfc/tech/NfcAHandler.java#)
-
-
-
-## TODO
-
-- use data binding
-- hide on-screen-keyboard when switching between edit fragments
-- Add entry "unknown <#>" to mode spinner on EditSimple fragment
-- Add support for Tonuino 2.1
-- Use proper Material design theming instead of faking it
-    - MainActivity if NFC is not available
-
