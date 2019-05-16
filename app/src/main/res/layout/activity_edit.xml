@@ -9,8 +9,8 @@
 
     <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
+            android:layout_height="wrap_content" android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
             android:text="Zur Zeit ist es nicht möglich, das TonUINO Identifikations-Cookie zu ändern."
     />
     <android.support.design.widget.TabLayout
@@ -37,16 +37,20 @@
     <android.support.v4.view.ViewPager
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
             android:id="@+id/edit_main_pager" android:layout_weight="1"/>
     <Button
             android:text="@string/main_write_tag_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="writeTag"
+            android:layout_marginTop="16dp"
             android:id="@+id/write_button"/>
     <TextView
             android:text="@string/edit_write_description"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/write_description"/>
+            android:layout_height="wrap_content" android:id="@+id/write_description"
+            android:layout_marginTop="8dp" android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp" android:layout_marginEnd="16dp"/>
 </LinearLayout>
