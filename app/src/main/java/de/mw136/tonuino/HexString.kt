@@ -25,8 +25,3 @@ fun hexToBytes(hex: String): UByteArray {
     conv.forEachIndexed { index, byte -> result[index] = byte }
     return result
 }
-
-@ExperimentalUnsignedTypes
-fun hexToByte(hex: CharSequence): UByte {
-    return hex.toString().toUByte(radix = 16)
-}

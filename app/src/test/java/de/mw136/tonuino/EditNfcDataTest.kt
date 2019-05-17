@@ -53,11 +53,16 @@ class EditNfcDataTest {
 @ExperimentalUnsignedTypes
 class Simple : EditNfcData {
     override var tagData: TagData
-    override val fragments: Array<EditFragment> = arrayOf()
+    override val fragments: Array<EditFragment> = arrayOf(SimpleEditFragment())
 
     constructor() : this(ubyteArrayOf())
 
     constructor(bytes: UByteArray) {
         tagData = TagData(bytes)
     }
+}
+
+class SimpleEditFragment : EditFragment() {
+    override fun refreshDescriptions(data: TagData) {}
+    override fun refreshInputs(data: TagData) {}
 }
