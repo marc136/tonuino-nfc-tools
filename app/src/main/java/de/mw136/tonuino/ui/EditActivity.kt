@@ -82,7 +82,7 @@ class EditActivity() : NfcIntentActivity(), EditNfcData {
                 }
                 WriteResult.UNSUPPORTED_FORMAT -> {
                     setTitle(R.string.written_unsupported_tag_type)
-                    setMessage(getString(R.string.written_tag_technologies, techListOf(tag).joinToString(", ")))
+                    setMessage(getString(R.string.nfc_tag_technologies, techListOf(tag).joinToString(", ")))
                 }
                 WriteResult.AUTHENTICATION_FAILURE -> {
                     setTitle(R.string.written_title_failure)
@@ -96,12 +96,12 @@ class EditActivity() : NfcIntentActivity(), EditNfcData {
                 }
                 WriteResult.UNKNOWN_ERROR -> {
                     setTitle(R.string.written_unknown_error)
-                    setMessage(getString(R.string.written_tag_technologies, techListOf(tag).joinToString(", ")))
+                    setMessage(getString(R.string.nfc_tag_technologies, techListOf(tag).joinToString(", ")))
                     showRetryButton = true
                 }
             }
 
-            setPositiveButton(getString(R.string.written_button_ok)) { _, _ -> }
+            setPositiveButton(getString(R.string.button_ok)) { _, _ -> }
             if (showRetryButton) {
                 setNegativeButton(getString(R.string.written_button_retry)) { _, _ -> writeTag() }
             }

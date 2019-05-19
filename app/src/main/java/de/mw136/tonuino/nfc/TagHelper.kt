@@ -101,12 +101,11 @@ class TagData(var bytes: UByteArray = ubyteArrayOf()) : Parcelable {
 @ExperimentalUnsignedTypes
 fun readFromTag(tag: Tag): UByteArray {
     val id = tagIdAsString(tag)
-    val techList = tag.techList
     var result = ubyteArrayOf()
 
     try {
-        Log.i(TAG, "Tag $id techList: ${techList.joinToString(", ")}")
-        if (techList.contains(MifareClassic::class.java.name)) {
+        Log.i(TAG, "Tag $id techList: ${techListOf(tag).joinToString(", ")}")
+        if (tag.techList.contains(MifareClassic::class.java.name)) {
             MifareClassic.get(tag)?.use { mifare -> result = readFromTag(mifare) }
         } else {
             Log.e("$TAG.readFromTag", "Tag ${id} is not a MifareClassic tag and not supported")

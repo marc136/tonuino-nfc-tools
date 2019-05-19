@@ -63,6 +63,8 @@ class MainActivity : NfcIntentActivity() {
                 putExtra(PARCEL_TAGDATA, TagData(bytes))
             }
             startActivity(intent)
+        } else {
+            showReadErrorModalDialog(tag)
         }
     }
 }

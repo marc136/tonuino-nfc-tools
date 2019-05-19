@@ -79,6 +79,11 @@ class ReadActivity() : NfcIntentActivity() {
     override fun onNfcTag(tag: Tag) {
         val bytes = readFromTag(tag)
         Log.d(TAG, "bytes: ${byteArrayToHex(bytes).joinToString(" ")}")
-        displayTonuinoInfo(tag, TagData(bytes))
+
+        if (bytes.isNotEmpty()) {
+            displayTonuinoInfo(tag, TagData(bytes))
+        } else {
+            showReadErrorModalDialog(tag)
+        }
     }
 }

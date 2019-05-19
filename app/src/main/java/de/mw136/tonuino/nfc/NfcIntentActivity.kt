@@ -1,5 +1,6 @@
 package de.mw136.tonuino.nfc
 
+import android.app.AlertDialog
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.IntentFilter
@@ -11,6 +12,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
+import de.mw136.tonuino.R
 
 @ExperimentalUnsignedTypes
 abstract class NfcIntentActivity : AppCompatActivity() {
@@ -58,6 +60,16 @@ abstract class NfcIntentActivity : AppCompatActivity() {
         Toast.makeText(this, "Tag ${id} gefunden", Toast.LENGTH_LONG).show()
 
         return onNfcTag(tag)
+    }
+
+    fun showReadErrorModalDialog(tag: Tag) {
+        with(AlertDialog.Builder(this)) {
+            setTitle(R.string.nfc_read_tag_failure)
+            setMessage(getString(R.string.nfc_tag_technologies, techListOf(tag).joinToString(", ")))
+
+            setPositiveButton(getString(R.string.button_ok)) { _, _ -> }
+            create().show()
+        }
     }
 
     companion object {
