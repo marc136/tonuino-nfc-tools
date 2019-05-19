@@ -9,6 +9,7 @@ import android.os.Parcelable
 import android.util.Log
 import de.mw136.tonuino.byteArrayToHex
 import de.mw136.tonuino.hexToBytes
+import java.io.IOException
 
 private const val TAG = "TagHelper"
 private const val tonuinoSector = 1
@@ -188,8 +189,13 @@ fun writeTonuino(tag: Tag, data: TagData): WriteResult {
 
 @ExperimentalUnsignedTypes
 fun writeTag(mifare: MifareClassic, data: TagData): WriteResult {
-    var result: WriteResult
-    mifare.connect()
+    val result: WriteResult
+    try {
+        mifare.connect()
+    } catch (ex: IOException) {
+        // is e.g. thrown if the NFC tag was removed
+        return WriteResult.TAG_UNAVAILABLE
+    }
 
     val key = factoryKey.asByteArray() // TODO allow configuration
     if (mifare.authenticateSectorWithKeyB(tonuinoSector, key)) {
@@ -210,4 +216,9 @@ fun writeTag(mifare: MifareClassic, data: TagData): WriteResult {
     mifare.close()
 
     return result
+}
+
+fun techListOf(tag: Tag?): List<String> {
+    // shorten fully qualified class names, e.g. android.nfc.tech.MifareClassic -> MifareClassic
+    return tag?.techList?.map { str -> str.drop(str.lastIndexOf('.') + 1) } ?: listOf()
 }

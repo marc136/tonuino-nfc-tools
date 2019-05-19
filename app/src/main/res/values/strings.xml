@@ -82,6 +82,17 @@
         aufgefüllt.
     </string>
 
+    <!-- Strings on write result modal dialog -->
+    <string name="written_title_failure">Fehler</string>
+    <string name="written_success">Erfolg: Daten wurden geschrieben.</string>
+    <string name="written_unsupported_tag_type">Die App kann auf diese Art NFC Tag nicht schreiben</string>
+    <string name="written_tag_technologies">"Der Tag unsterstützt diese Technologien:\n%s"</string>
+    <string name="written_authentication_failure">Authentifizierung am NFC Tag ist fehlgeschlagen.</string>
+    <string name="written_tag_unavailable">Es konnte kein NFC Tag gefunden werden.</string>
+    <string name="written_unknown_error">Ein unbekannter Fehler ist aufgetreten</string>
+    <string name="written_button_ok">Ok</string>
+    <string name="written_button_retry">Nochmal versuchen</string>
+
     <!-- Strings on ReadActivity -->
     <string name="read_title">Tag %s</string>
     <string name="read_intro">Gelesene Daten</string>

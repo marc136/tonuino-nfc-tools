@@ -1,5 +1,6 @@
 package de.mw136.tonuino.ui
 
+import android.app.AlertDialog
 import android.nfc.Tag
 import android.os.Bundle
 import android.support.design.widget.TabLayout
@@ -55,13 +56,57 @@ class EditActivity() : NfcIntentActivity(), EditNfcData {
     }
 
     @Suppress("UNUSED_PARAMETER")
-    fun writeTag(view: View) {
-        if (tag == null) return
+    fun onClickWriteTagButton(view: View) {
+        if (tag == null) {
+            showModalDialog(WriteResult.TAG_UNAVAILABLE)
+        } else {
+            writeTag()
+        }
+    }
 
+    private fun writeTag() {
         Log.w("$TAG.writeTag", "will write to tag ${tagIdAsString(tag!!)}")
         val result = writeTonuino(tag!!, tagData)
-
         Log.w(TAG, "result ${result}")
+
+        showModalDialog(result)
+    }
+
+    private fun showModalDialog(result: WriteResult) {
+        with(AlertDialog.Builder(this)) {
+            var showRetryButton = false
+
+            when (result) {
+                WriteResult.SUCCESS -> {
+                    setMessage(R.string.written_success)
+                }
+                WriteResult.UNSUPPORTED_FORMAT -> {
+                    setTitle(R.string.written_unsupported_tag_type)
+                    setMessage(getString(R.string.written_tag_technologies, techListOf(tag).joinToString(", ")))
+                }
+                WriteResult.AUTHENTICATION_FAILURE -> {
+                    setTitle(R.string.written_title_failure)
+                    setMessage(R.string.written_authentication_failure)
+                    showRetryButton = true
+                }
+                WriteResult.TAG_UNAVAILABLE -> {
+                    setTitle(R.string.written_title_failure)
+                    setMessage(R.string.written_tag_unavailable)
+                    showRetryButton = true
+                }
+                WriteResult.UNKNOWN_ERROR -> {
+                    setTitle(R.string.written_unknown_error)
+                    setMessage(getString(R.string.written_tag_technologies, techListOf(tag).joinToString(", ")))
+                    showRetryButton = true
+                }
+            }
+
+            setPositiveButton(getString(R.string.written_button_ok)) { _, _ -> }
+            if (showRetryButton) {
+                setNegativeButton(getString(R.string.written_button_retry)) { _, _ -> writeTag() }
+            }
+            create().show()
+        }
     }
 
     override fun onNfcTag(tag: Tag) {
