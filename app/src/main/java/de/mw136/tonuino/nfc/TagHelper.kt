@@ -32,7 +32,7 @@ class TagData(var bytes: UByteArray = ubyteArrayOf()) : Parcelable {
     val cookie: UByteArray
         get() {
             if (bytes.size < versionIndex) {
-                return ubyteArrayOf(0u, 0u, 0u, 0u )
+                return ubyteArrayOf(0u, 0u, 0u, 0u)
             } else {
                 return bytes.sliceArray(0 until versionIndex)
             }
