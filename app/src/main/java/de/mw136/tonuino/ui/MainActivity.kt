@@ -10,6 +10,7 @@ import de.mw136.tonuino.*
 import de.mw136.tonuino.nfc.NfcIntentActivity
 import de.mw136.tonuino.nfc.TagData
 import de.mw136.tonuino.nfc.readFromTag
+import de.mw136.tonuino.BuildConfig
 
 @ExperimentalUnsignedTypes
 class MainActivity : NfcIntentActivity() {
@@ -22,6 +23,10 @@ class MainActivity : NfcIntentActivity() {
 
     override fun onResume() {
         super.onResume()
+
+        val version = BuildConfig.VERSION_NAME + "#" + BuildConfig.VERSION_CODE
+        Log.i(TAG,"Version ${BuildConfig.VERSION_NAME} build #${BuildConfig.VERSION_CODE}")
+        supportActionBar?.title = "${getString(R.string.app_name)} ${getString(R.string.app_version, version)}"
 
         val errorContainer = findViewById<View>(R.id.error_container)
         val errorView = findViewById<TextView>(R.id.error_text)

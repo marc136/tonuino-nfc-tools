@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">TonUINO NFC Tools</string>
+    <string name="app_version">(v%s)</string>
 
     <!-- Strings on MainActivity -->
     <string name="main_intro_line1">Diese App erlaubt das Lesen und Schreiben NFC-kompatibler RFID Tags für die TonUINO
