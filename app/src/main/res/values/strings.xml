@@ -57,6 +57,7 @@
     <string name="edit_mode_unknown">Der Modus \'%d\' ist unbekannt.</string>
 
     <string name="edit_write_button">Daten auf Tag %s schreiben</string>
+    <string name="edit_write_button_no_tag">Ohne Tag kann nicht geschrieben werden</string>
     <string name="edit_write_description">Damit die Daten sicher geschrieben werden, den Empfänger ruhig auf das NFC Tag
         halten/legen und dann den Button betätigen.
     </string>

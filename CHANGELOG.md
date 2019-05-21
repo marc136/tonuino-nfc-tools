@@ -4,6 +4,7 @@ This file gives a general overview, look into the git log for more information.
 ## unreleased
 - Display build number on main activity
 - Fixed minor typos
+- Disable write button if no tag is available
 
 ## 0.3.0
 - Show error dialog when reading of a tag fails

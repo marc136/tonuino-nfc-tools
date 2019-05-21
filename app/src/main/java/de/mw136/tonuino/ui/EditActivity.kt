@@ -25,7 +25,6 @@ class EditActivity() : NfcIntentActivity(), EditNfcData {
         EditHex()
     )
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
@@ -53,6 +52,20 @@ class EditActivity() : NfcIntentActivity(), EditNfcData {
 
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
+
+        enableWriteButtonIfTagPresent()
+    }
+
+    fun enableWriteButtonIfTagPresent() {
+        findViewById<Button>(R.id.write_button)?.apply {
+            if (this@EditActivity.tag == null) {
+                setText(getString(R.string.edit_write_button_no_tag))
+                isEnabled = false
+            } else {
+                setText(getString(R.string.edit_write_button, tagIdAsString(this@EditActivity.tag!!)))
+                isEnabled = true
+            }
+        }
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -115,6 +128,6 @@ class EditActivity() : NfcIntentActivity(), EditNfcData {
         Log.i("$TAG.onNfcTag", "Tag $tagId")
 //        supportActionBar?.title = getString(R.string.read_title, tagId)
 
-        findViewById<Button>(R.id.write_button).text = getString(R.string.edit_write_button, tagId)
+        enableWriteButtonIfTagPresent()
     }
 }
