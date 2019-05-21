@@ -17,6 +17,7 @@ once it is considered stable.
 - Use proper Material design theming instead of faking it
     - MainActivity if NFC is not available
 - Use data binding
+- CI instead of manual builds
 
 
 
@@ -64,3 +65,15 @@ Links:
 - [Stackoverflow answer with general help on NfcA](https://stackoverflow.com/a/40303293)
 - [Summary of Open Source projects using Android's NfcA API](https://www.programcreek.com/java-api-examples/index.php?api=android.nfc.tech.NfcA)
     - [Example from above's list that actually uses NfcA (and not Mifare)](https://www.programcreek.com/java-api-examples/?code=ProjectMAXS/maxs/maxs-master/module-nfc/src/org/projectmaxs/module/nfc/tech/NfcAHandler.java#)
+
+## CI
+Building, signing and uploading is a hassle, look into a CI workflow.
+Links:
+
+- [Using own jenkins instance](https://medium.com/@amit.bhandari/android-continuous-integration-and-delivery-next-level-android-development-cfc67405a56b)
+- [Using gitlab CI](https://about.gitlab.com/2018/10/24/setting-up-gitlab-ci-for-android-projects/)
+- [travis](https://docs.travis-ci.com/user/languages/android/)
+- [circleci](https://circleci.com/docs/2.0/language-android/)
+- Deploying to Google Play
+    - Android Studio Addin [Gradle Play Publisher](https://github.com/Triple-T/gradle-play-publisher)
+    - command line [fastlane](https://docs.fastlane.tools/getting-started/android/setup/)
