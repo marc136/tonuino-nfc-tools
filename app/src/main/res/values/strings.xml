@@ -101,5 +101,5 @@
     <string name="button_ok">Ok</string>
     <string name="play_mp3_file">Spielt Datei %03d.mp3 ab</string>
     <string name="nfc_read_tag_failure">Fehler: Konnte keine Daten vom NFC Tag lesen</string>
-    <string name="nfc_tag_technologies">"Der Tag unsterstützt diese Technologien:\n%s"</string>
+    <string name="nfc_tag_technologies">"Gerät und Tag unterstützen diese Technologien:\n%s"</string>
 </resources>
