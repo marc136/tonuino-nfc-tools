@@ -68,6 +68,7 @@ class ReadActivity() : NfcIntentActivity() {
         findViewById<TextView>(id).text = byte.toString()
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun gotoEditActivity(view: View) {
         val intent = Intent(this, EditActivity::class.java).apply {
             putExtra(PARCEL_TAG, tag)

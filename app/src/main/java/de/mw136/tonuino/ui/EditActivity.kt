@@ -17,9 +17,8 @@ import de.mw136.tonuino.nfc.*
 import de.mw136.tonuino.ui.edit.*
 import java.io.IOException
 
-
 @ExperimentalUnsignedTypes
-class EditActivity() : NfcIntentActivity(), EditNfcData {
+class EditActivity : NfcIntentActivity(), EditNfcData {
     override val TAG = "EditActivity"
 
     var tag: TagTechnology? = null

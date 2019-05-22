@@ -55,6 +55,7 @@ class MainActivity : NfcIntentActivity() {
         startActivity(Intent(view.context, EditActivity::class.java))
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun openNfcSettings(view: View) {
         startActivity(Intent(android.provider.Settings.ACTION_NFC_SETTINGS))
     }
