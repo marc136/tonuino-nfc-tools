@@ -2,6 +2,8 @@
 This file gives a general overview, look into the git log for more information.
 
 ## unreleased
+
+## 0.3.1
 - Display build number on main activity
 - Fixed minor typos
 - Disable write button if no tag is available or if it is removed
