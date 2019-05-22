@@ -4,6 +4,7 @@ import android.nfc.FormatException
 import android.nfc.Tag
 import android.nfc.TagLostException
 import android.nfc.tech.MifareClassic
+import android.nfc.tech.TagTechnology
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.Log
@@ -19,6 +20,9 @@ private val tonuinoCookie = hexToBytes("1337b347").toList() // TODO add to exper
 private val factoryKey =
     hexToBytes("FFFFFFFFFFFF") // factory preset, same as MifareClassic.KEY_DEFAULT
 
+
+@ExperimentalUnsignedTypes
+fun tagIdAsString(tag: TagTechnology) = tagIdAsString(tag.tag)
 
 @ExperimentalUnsignedTypes
 fun tagIdAsString(tag: Tag): String {
@@ -98,6 +102,14 @@ class TagData(var bytes: UByteArray = ubyteArrayOf()) : Parcelable {
     }
 }
 
+fun connectTo(tag: Tag): TagTechnology? {
+    if (tag.techList.contains(MifareClassic::class.java.name)) {
+        return MifareClassic.get(tag)?.apply { connect() }
+    } else {
+        throw FormatException("Can only handle MifareClassic")
+    }
+}
+
 @ExperimentalUnsignedTypes
 fun readFromTag(tag: Tag): UByteArray {
     val id = tagIdAsString(tag)
@@ -166,14 +178,13 @@ fun readFromTag(mifare: MifareClassic): UByteArray {
 enum class WriteResult { SUCCESS, UNSUPPORTED_FORMAT, AUTHENTICATION_FAILURE, TAG_UNAVAILABLE, UNKNOWN_ERROR }
 
 @ExperimentalUnsignedTypes
-fun writeTonuino(tag: Tag, data: TagData): WriteResult {
+fun writeTonuino(tag: TagTechnology, data: TagData): WriteResult {
     var result = WriteResult.UNSUPPORTED_FORMAT
-    val techList = tag.techList
-    Log.i("$TAG.write", "Supported technologies on tag ${tagIdAsString(tag)}: ${techList.joinToString(", ")}")
 
     try {
-        if (techList.contains(MifareClassic::class.java.name)) {
-            MifareClassic.get(tag)?.use { mifare -> result = writeTag(mifare, data) }
+        result = when (tag) {
+            is MifareClassic -> writeTag(tag, data)
+            else -> WriteResult.UNSUPPORTED_FORMAT
         }
     } catch (ex: TagLostException) {
         result = WriteResult.TAG_UNAVAILABLE
@@ -190,7 +201,7 @@ fun writeTonuino(tag: Tag, data: TagData): WriteResult {
 fun writeTag(mifare: MifareClassic, data: TagData): WriteResult {
     val result: WriteResult
     try {
-        mifare.connect()
+        if (!mifare.isConnected) mifare.connect()
     } catch (ex: IOException) {
         // is e.g. thrown if the NFC tag was removed
         return WriteResult.TAG_UNAVAILABLE
@@ -216,6 +227,8 @@ fun writeTag(mifare: MifareClassic, data: TagData): WriteResult {
 
     return result
 }
+
+fun techListOf(tag: TagTechnology?) = techListOf(tag?.tag)
 
 fun techListOf(tag: Tag?): List<String> {
     // shorten fully qualified class names, e.g. android.nfc.tech.MifareClassic -> MifareClassic

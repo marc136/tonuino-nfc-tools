@@ -41,11 +41,12 @@
             android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
             android:id="@+id/edit_main_pager" android:layout_weight="1"/>
     <Button
-            android:text="@string/main_write_tag_button"
+            android:text="@string/edit_write_button_no_tag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="onClickWriteTagButton"
             android:layout_marginTop="16dp"
+            android:enabled="false"
             android:id="@+id/write_button"/>
     <TextView
             android:text="@string/edit_write_description"

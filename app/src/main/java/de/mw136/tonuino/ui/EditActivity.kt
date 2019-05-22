@@ -1,24 +1,33 @@
 package de.mw136.tonuino.ui
 
 import android.app.AlertDialog
+import android.nfc.FormatException
 import android.nfc.Tag
+import android.nfc.tech.TagTechnology
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import de.mw136.tonuino.*
 import de.mw136.tonuino.nfc.*
 import de.mw136.tonuino.ui.edit.*
+import java.io.IOException
 
 
 @ExperimentalUnsignedTypes
 class EditActivity() : NfcIntentActivity(), EditNfcData {
     override val TAG = "EditActivity"
 
-    var tag: Tag? = null
-    public override lateinit var tagData: TagData
+    var tag: TagTechnology? = null
+    private val handler = Handler()
+    private lateinit var isTagConnected: Runnable
+
+    override lateinit var tagData: TagData
+
     override val fragments: Array<EditFragment> = arrayOf(
         EditSimple(),
         EditExtended(),
@@ -28,9 +37,6 @@ class EditActivity() : NfcIntentActivity(), EditNfcData {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
-
-        tag = intent.getParcelableExtra<Tag>(PARCEL_TAG) ?: null
-        tagData = intent.getParcelableExtra<TagData>(PARCEL_TAGDATA) ?: TagData.createDefault()
 
         val viewPager = findViewById<ViewPager>(R.id.edit_main_pager)
         viewPager.adapter = EditPagerAdapter(supportFragmentManager, fragments)
@@ -53,35 +59,60 @@ class EditActivity() : NfcIntentActivity(), EditNfcData {
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
 
-        enableWriteButtonIfTagPresent()
+        tagData = intent.getParcelableExtra(PARCEL_TAGDATA) ?: TagData.createDefault()
+
+        isTagConnected = Runnable {
+            if (tag?.isConnected == true) {
+                // should be able to write to tag
+                pollTag()
+
+            } else {
+                tag = null
+                enableWriteButtonIfTagPresent()
+            }
+        }
+
+        intent.getParcelableExtra<Tag>(PARCEL_TAG)?.let { tag -> onNfcTag(tag) }
     }
 
-    fun enableWriteButtonIfTagPresent() {
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacksAndMessages(null)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        pollTag()
+    }
+
+    private fun pollTag() {
+        handler.postDelayed(isTagConnected, 321)
+    }
+
+    private fun enableWriteButtonIfTagPresent() {
         findViewById<Button>(R.id.write_button)?.apply {
             if (this@EditActivity.tag == null) {
                 setText(getString(R.string.edit_write_button_no_tag))
                 isEnabled = false
+                Toast.makeText(this@EditActivity, "Verbindung verloren", Toast.LENGTH_LONG).show()
             } else {
                 setText(getString(R.string.edit_write_button, tagIdAsString(this@EditActivity.tag!!)))
                 isEnabled = true
+                pollTag()
             }
         }
     }
 
     @Suppress("UNUSED_PARAMETER")
-    fun onClickWriteTagButton(view: View) {
-        if (tag == null) {
-            showModalDialog(WriteResult.TAG_UNAVAILABLE)
-        } else {
-            writeTag()
-        }
-    }
+    fun onClickWriteTagButton(view: View) = writeTag()
 
     private fun writeTag() {
-        Log.w("$TAG.writeTag", "will write to tag ${tagIdAsString(tag!!)}")
-        val result = writeTonuino(tag!!, tagData)
-        Log.w(TAG, "result ${result}")
-
+        var result = WriteResult.TAG_UNAVAILABLE
+        if (tag != null) {
+            Log.w("$TAG.writeTag", "will write to tag ${tagIdAsString(tag!!)}")
+            result = writeTonuino(tag!!, tagData)
+            Log.w("$TAG.writeTag", "result ${result}")
+        }
         showModalDialog(result)
     }
 
@@ -123,11 +154,21 @@ class EditActivity() : NfcIntentActivity(), EditNfcData {
     }
 
     override fun onNfcTag(tag: Tag) {
-        this.tag = tag
         val tagId = tagIdAsString(tag)
         Log.i("$TAG.onNfcTag", "Tag $tagId")
 //        supportActionBar?.title = getString(R.string.read_title, tagId)
-
-        enableWriteButtonIfTagPresent()
+        try {
+            this.tag = connectTo(tag)
+            enableWriteButtonIfTagPresent()
+        } catch (ex: IOException) {
+            // could not connect to tag
+            Log.w("$TAG.onNfcTag", "Could not connect to the NFC tag")
+        } catch (ex: FormatException) {
+            // unsupported tag format
+            Log.w("$TAG.onNfcNtag", "Unsupported format")
+        } catch (ex: Exception) {
+            // TODO display unexpected error
+            Log.e("$TAG.onNfcTag", ex.toString())
+        }
     }
 }
