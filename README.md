@@ -52,6 +52,20 @@ Wird nur in bestimmten Modi benutzt für:
 - mode 4: Titelnummer
 - mode 6: Platzhalter, bisher ohne Funktion
 
+## Tonuino 2.1.0
+[Repository](https://github.com/xfjx/TonUINO/blob/DEV/Tonuino.ino)
+
+### Daten
+
+| # | name | range | description |
+| --- | --- | --- | --- |
+| 0 | cookie | uint32 | Identifiziert Tonuino, erwartet `0x1337b347` |
+| 4 | version | uint8 | immer 2 |
+| 5 | folder | uint8 | Werte von 1 bis 99, siehe [dfplayer doku](https://wiki.dfrobot.com/DFPlayer_Mini_SKU_DFR0299#target_1)  |
+| 6 | mode | uint8 | Werte von 1 bis 5, siehe nächste Tabelle |
+| 7 | special | uint8 | |
+
+
 
 ## NFC
 How discovered NFC tags are dispatched to activities: 
