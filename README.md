@@ -8,7 +8,6 @@ once it is considered stable.
 
 ## TODO
 
-- Add English translation
 - Hide on-screen-keyboard when switching between edit fragments
 - Add entry "unknown <#>" to mode spinner on EditSimple fragment
 - Add support for Tonuino 2.1

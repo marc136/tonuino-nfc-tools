@@ -3,104 +3,107 @@
     <string name="app_version">(v%s)</string>
 
     <!-- Strings on MainActivity -->
-    <string name="main_intro_line1">Diese App erlaubt das Lesen und Schreiben NFC-kompatibler RFID Tags für die TonUINO
-        DIY-Musikbox.
+    <string name="main_intro_line1">This app can read and write NFC-compatible RFID Tags for the TonUINO DIY music
+        box.
     </string>
-    <string name="main_intro_line2">Mehr Informationen zu dem TonUINO Projekt sind unter https://www.voss.earth/tonuino
-        und https://discourse.voss.earth zu finden.
+    <string name="main_intro_line2">More information about the TonUINO project is available at
+        https://www.voss.earth/tonuino and https://discourse.voss.earth (mostly German).
     </string>
-    <string name="main_nfcadapter_error">Fehler</string>
-    <string name="main_nfcadapter_is_null">Leider hat dieses Gerät keine Unterstützung für NFC!</string>
-    <string name="main_nfcadapter_disabled">"NFC ist auf diesem Gerät verfügbar, aber gerade nicht aktiviert.\nBitte aktiviere NFC in den Einstellungen."</string>
-    <string name="main_nfcadapter_settings">Einstellungen öffnen</string>
-    <string name="main_read_tag_headline">Tags Lesen</string>
-    <string name="main_read_tag_description">Sobald dieses Gerät auf einem NFC-kompatiblen RFID Tag, das TonUINO Daten
-        beinhält, platziert wird, werden die Daten gelesen und angezeigt.
+    <string name="main_nfcadapter_error">Error</string>
+    <string name="main_nfcadapter_is_null">This device does not support NFC. The functionality is not available.
     </string>
-    <string name="main_write_tag_headline">Tags Schreiben</string>
-    <string name="main_write_tag_description">Beim Beschreiben können auch bereits bestehende Daten auf dem Tag
-        überschrieben werden.
+    <string name="main_nfcadapter_disabled">"NFC is available, but currently deactivated.\nPlease enable NFC in the device settings."
     </string>
-    <string name="main_write_tag_button">Tag Beschreiben</string>
-
+    <string name="main_nfcadapter_settings">Open settings</string>
+    <string name="main_read_tag_headline">Read tags</string>
+    <string name="main_read_tag_description">If this device is placed on a supported NFC-compatible RFID tag, which
+        contains TonUINO data, the data will be read and displayed.
+    </string>
+    <string name="main_write_tag_headline">Write tags</string>
+    <string name="main_write_tag_description">Existing data on the tag will be overwritten.</string>
+    <string name="main_write_tag_button">Write data on tag</string>
 
     <!-- Strings used on EditActivity -->
+    <string name="edit_intro">Right now, only Tonuino 2.0.1 Tags are fully supported. Arbitrary data may be entered via
+        the \'Extended\' or \'Bytes\' tabs.
+    </string>
+    <string name="edit_tab_simple">Default</string>
+    <string name="edit_tab_extended">Extended</string>
+    <string name="edit_tab_bytes">Bytes</string>
     <string name="edit_cookie_label">Cookie</string>
     <string name="edit_version_label">Version</string>
-    <string name="edit_folder_label">Ordner</string>
-    <string name="edit_mode_label">Modus</string>
+    <string name="edit_folder_label">Folder</string>
+    <string name="edit_mode_label">Mode</string>
     <string name="edit_special_label">Extra</string>
-    <string name="edit_special_label_for_album_mode">Titel</string>
+    <string name="edit_special_label_for_album_mode">Title</string>
     <string name="edit_special2_label">Extra 2</string>
 
     <string name="edit_hidden_label">hidden</string>
-    <string name="edit_limit_numeric_value">Bitte eine Zahl zwischen %d und %d eingeben.</string>
+    <string name="edit_limit_numeric_value">Please enter a number between %d and %d.</string>
 
     <string-array name="edit_mode">
-        <item>Hörspiel</item>
+        <item>Audio book (single file)</item>
         <item>Album</item>
         <item>Party</item>
-        <item>Einzel</item>
-        <item>Hörbuch</item>
+        <item>Single</item>
+        <item>Audio book (multiple files)</item>
         <item>Admin</item>
     </string-array>
     <string-array name="edit_mode_description">
-        <item>Ein zufälliger Titel aus dem gewählten Ordner wird abgespielt.</item>
-        <item>Spielt alle Titel des Ordners in numerischer Reihenfolge.</item>
-        <item>Spielt zufällige Titel des Ordners in Endlosschleife.</item>
-        <item>Spielt den gewählten Titel aus dem Ordner.</item>
-        <item>Spielt alle Titel des Ordners in numerischer Reihenfolge und speichert den Fortschritt, sodass beim
-            nächsten Verwenden der Karte beim aktuellen Titel begonnen wird.
+        <item>A random file from the chosen folder will be played.</item>
+        <item>Plays all files inside the folder in numerical order.</item>
+        <item>Plays random files inside the folder.</item>
+        <item>Plays only the chosen file from the selected folder.</item>
+        <item>Plays all files inside the folder in numerical order and keeps track of the last started file. This way
+            the tag will play where it left off the last time.
         </item>
-        <item>Admin-Karten werden in Tonuino 2.0.1 noch nicht unterstützt.</item>
+        <item>Tonuino 2.0.1 does not yet support admin tags.</item>
     </string-array>
-    <string name="edit_mode_unknown">Der Modus \'%d\' ist unbekannt.</string>
+    <string name="edit_mode_unknown">Mode \'%d\' is unknown.</string>
 
-    <string name="edit_write_button">Daten auf Tag %s schreiben</string>
-    <string name="edit_write_button_no_tag">Ohne Tag kann nicht geschrieben werden</string>
-    <string name="edit_write_description">Damit die Daten sicher geschrieben werden, den Empfänger ruhig auf das NFC Tag
-        halten/legen und dann den Button betätigen.
+    <string name="edit_write_button">Write data on tag %s</string>
+    <string name="edit_write_button_no_tag">Cannot write data without a tag</string>
+    <string name="edit_write_description">To increase the chances that the data will be successfully written, place the
+        device directly on top of the tag and then press the button to write.
     </string>
 
     <!-- Strings on the EditSimple fragment -->
-    <string name="edit_simple_intro">Diese Ansicht erlaubt das einfache Auswählen der Einstellungen für eine NFC
-        Karte.
-    </string>
+    <string name="edit_simple_intro">This view allows to select values for the NFC tag.</string>
 
     <!-- Strings on the EditExtended fragment -->
-    <string name="edit_ext_folder_description">Verwendet den Ordner /%02d.</string>
-    <string name="edit_extended_intro">Über diese erweiterte Ansicht können Werte eingegeben werden, die dieser App
-        nicht bekannt sind.
+    <string name="edit_ext_folder_description">Uses the folder /%02d.</string>
+    <string name="edit_extended_intro">This extended view can be used to enter values for TonUINO variants that this
+        app does not know about.
     </string>
 
     <!-- Strings on EditHex fragment -->
-    <string name="edit_hex_intro">In dieser Ansicht können beliebige Werte eingetragen werden.</string>
-    <string name="edit_hex_disclaimer">Wenn die ersten vier Byte geändert werden, muss auch das Cookie auch im Tonuino
-        Quellcode den selben Wert haben. Sonst wird die Karte nicht mehr korrekt erkannt.
+    <string name="edit_hex_intro">This view can be used to enter arbitrary data.</string>
+    <string name="edit_hex_disclaimer">The first four byte are used by TonUINO to recognize a usable tag. This cookie
+        must also be the same in the TonUINO source code. Otherwise the tag will not work.
     </string>
-    <string name="edit_hex_bytes_label">Bytes (in Hexadezimaler Schreibweise)</string>
-    <string name="edit_hex_whitespace">Leerzeichen und Zeilenumbrüche werden ignoriert.</string>
-    <string name="edit_hex_zeropad">Es werden immer ganze Sektoren geschrieben. Der Rest des Sektors wird mit \'0x0\'
-        aufgefüllt.
+    <string name="edit_hex_bytes_label">Bytes (hexadecimal)</string>
+    <string name="edit_hex_whitespace">Whitespace will be ignored.</string>
+    <string name="edit_hex_zeropad">This app will always write full sectors (size depends on tag). The rest of the
+        sector will be filled with \'0x0\'.
     </string>
 
     <!-- Strings on write result modal dialog -->
-    <string name="written_title_failure">Fehler</string>
-    <string name="written_success">Erfolg: Daten wurden geschrieben.</string>
-    <string name="written_unsupported_tag_type">Die App kann auf diese Art NFC Tag nicht schreiben</string>
-    <string name="written_authentication_failure">Authentifizierung am NFC Tag ist fehlgeschlagen.</string>
-    <string name="written_tag_unavailable">Es konnte kein NFC Tag gefunden werden.</string>
-    <string name="written_unknown_error">Ein unbekannter Fehler ist aufgetreten</string>
-    <string name="written_button_retry">Nochmal versuchen</string>
+    <string name="written_title_failure">Error</string>
+    <string name="written_success">Success: Wrote to tag.</string>
+    <string name="written_unsupported_tag_type">This app/device cannot write on this kind of NFC tag</string>
+    <string name="written_authentication_failure">Authenticating at the NFC Tag failed.</string>
+    <string name="written_tag_unavailable">No NFC tag available.</string>
+    <string name="written_unknown_error">An unknown error has occurred</string>
+    <string name="written_button_retry">Try again</string>
 
     <!-- Strings on ReadActivity -->
     <string name="read_title">Tag %s</string>
-    <string name="read_intro">Gelesene Daten</string>
-    <string name="read_edit_button">Bearbeiten</string>
+    <string name="read_intro">Read data</string>
+    <string name="read_edit_button">Edit</string>
 
     <!-- Other strings -->
     <string name="button_ok">Ok</string>
-    <string name="play_mp3_file">Spielt Datei %03d.mp3 ab</string>
-    <string name="nfc_read_tag_failure">Fehler: Konnte keine Daten vom NFC Tag lesen</string>
-    <string name="nfc_tag_technologies">"Gerät und Tag unterstützen diese Technologien:\n%s"</string>
+    <string name="play_mp3_file">Will play file %03d.mp3</string>
+    <string name="nfc_read_tag_failure">Error: Could not read data from NFC tag</string>
+    <string name="nfc_tag_technologies">"Device and tag support these technologies:\n%s"</string>
 </resources>

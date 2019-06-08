@@ -2,6 +2,8 @@
 This file gives a general overview, look into the git log for more information.
 
 ## unreleased
+- Add English translation
+
 
 ## 0.3.1
 - Display build number on main activity
