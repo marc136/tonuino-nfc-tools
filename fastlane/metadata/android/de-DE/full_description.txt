@@ -1,0 +1,6 @@
+Diese App erlaubt das einfache Beschreiben von NFC Tags für die Open Source TonUINO DIY Musikbox.
+Mehr Informationen zu TonUINO sind unter https://www.voss.earth/tonuino zu finden.
+
+Diese App wird nur funktionieren, wenn das Gerät NFC unterstützt.
+
+Es können auch die Inhalte des NFC Tags angezeigt werden, und mit zweimal drücken kann eine Tag kopiert oder verändert und dann beschrieben werden.

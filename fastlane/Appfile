@@ -1,0 +1,2 @@
+json_key_file("~/android/fastlane-tools-access-key.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name("de.mw136.tonuino") # e.g. com.krausefx.app

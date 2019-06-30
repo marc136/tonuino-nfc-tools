@@ -1,0 +1,6 @@
+This app simplifies writing of NFC tags for the open source TonUINO DIY music box.
+More information about TonUINO can be found at https://www.voss.earth/tonuino
+
+This app will only work if the device supports NFC.
+
+It also shows the content of written TonUINO NFC tags, and allows for simple copying or changing.
