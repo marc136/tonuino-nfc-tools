@@ -54,15 +54,31 @@ Wird nur in bestimmten Modi benutzt für:
 ## Tonuino 2.1.0
 [Repository](https://github.com/xfjx/TonUINO/blob/DEV/Tonuino.ino)
 
-### Daten
 
+#### Normal Tags
 | # | name | range | description |
 | --- | --- | --- | --- |
-| 0 | cookie | uint32 | Identifiziert Tonuino, erwartet `0x1337b347` |
-| 4 | version | uint8 | immer 2 |
-| 5 | folder | uint8 | Werte von 1 bis 99, siehe [dfplayer doku](https://wiki.dfrobot.com/DFPlayer_Mini_SKU_DFR0299#target_1)  |
-| 6 | mode | uint8 | Werte von 1 bis 5, siehe nächste Tabelle |
+| 0 | cookie | uint32 | Identifies a Tonuino tag, usually `0x1337b347` |
+| 4 | version | uint8 | always 2 |
+| 5 | folder | uint8 | Values from 1 to 99, see [dfplayer docs](https://wiki.dfrobot.com/DFPlayer_Mini_SKU_DFR0299#target_1)  |
+| 6 | mode | uint8 | Values from 1 to 5, see next table |
 | 7 | special | uint8 | |
+| 8 | special2 | uint8 | |
+
+TODO normal tags table
+
+#### Modifier Tags
+All have a folder value of 0
+
+| Modifier | byte 6 | byte 7 | Description |
+| --- | --- | --- | --- | --- |
+| SleepTimer | 1 | Play duration in minutes (255 max) | Pauses playback after timer |
+| FreezeDance | 2 | - | Randomly pauses the track after 5 to 30 seconds |
+| Locked | 3 | - | All buttons are locked and no new card will be read |
+| ToddlerMode | 4 | - | All buttons are locked |
+| KindergardenMode | 5 | - | Previous and back buttons are locked. Adding a new card will not stop the current track but will schedule it as next track |
+| RepeatSingleModifier | 6 | - | Repeat current track |
+| FeedbackModifier | 6 | - | Will e.g. tell volume before changing it |
 
 
 
