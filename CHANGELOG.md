@@ -2,8 +2,11 @@
 This file gives a general overview, look into the git log for more information.
 
 ## unreleased
-- Add English translation
 
+
+## 0.4.0
+- Add English translation
+- Preparation for fdroid listing 
 
 ## 0.3.1
 - Display build number on main activity
