@@ -28,6 +28,10 @@ jobs:
           path: app/build/test-results
 
       - run:
+          name: write keystore.jks
+          command: echo $TONUINO_KEYSTORE | base64 -di | tee keystore.jks app/keystore.jks >/dev/null
+
+      - run:
           name: Build apk
           command: ./gradlew assembleRelease
       - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
