@@ -3,6 +3,8 @@ This file gives a general overview, look into the git log for more information.
 
 ## unreleased
 
+## 0.4.1
+- Add signing for github release
 
 ## 0.4.0
 - Add English translation
