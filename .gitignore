@@ -3,13 +3,16 @@
 /local.properties
 .idea
 .DS_Store
-/build
 /captures
 .externalNativeBuild
 
 # fastlane
 fastlane/report.xml
 
+# build folders
+/build
 app/release/
 app/debug/
+
+# others
 res/_*

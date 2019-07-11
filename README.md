@@ -71,7 +71,7 @@ TODO normal tags table
 All have a folder value of 0
 
 | Modifier | byte 6 | byte 7 | Description |
-| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- |
 | SleepTimer | 1 | Play duration in minutes (255 max) | Pauses playback after timer |
 | FreezeDance | 2 | - | Randomly pauses the track after 5 to 30 seconds |
 | Locked | 3 | - | All buttons are locked and no new card will be read |
