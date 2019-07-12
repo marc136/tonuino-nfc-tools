@@ -8,7 +8,7 @@ interface EditNfcData {
     var tagData: TagData
     val fragments: Array<EditFragment>
 
-    fun setByte(which: WhichByte, value: UByte) {
+    fun setByte(which: WhichByte, value: UByte, fullRefresh: Boolean = false) {
         val diff = which.index - tagData.bytes.lastIndex
         if (diff > 0) {
             // increase buffer size
@@ -17,13 +17,19 @@ interface EditNfcData {
         if (tagData.bytes[which.index] != value) {
 //            Log.w("Tag.setByte", "${which.name} ${value.toString()}")
             tagData.bytes[which.index] = value
+            if (fullRefresh) return
+
             fragments.forEach { fragment ->
                 if (fragment.isVisible) {
-                    fragment.refreshDescriptions(tagData)
+                    if (fullRefresh) {
+                        fragment.refreshUi(tagData)
+                    } else {
+                        fragment.refreshDescriptions(tagData)
+                    }
                 }
             }
         }
     }
 }
 
-enum class WhichByte(val index: Int) { FOLDER(5), MODE(6), SPECIAL(7), SPECIAL2(8) }
+enum class WhichByte(val index: Int) { VERSION(4), FOLDER(5), MODE(6), SPECIAL(7), SPECIAL2(8) }

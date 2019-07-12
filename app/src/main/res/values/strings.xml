@@ -27,6 +27,12 @@
     <string name="edit_intro">Right now, only Tonuino 2.0.1 Tags are fully supported. Arbitrary data may be entered via
         the \'Extended\' or \'Bytes\' tabs.
     </string>
+    <string name="edit_tonuino_version_label">Select tag type</string>
+    <string-array name="edit_tonuino_tag_types">
+        <item>Tonuino 2.0.x</item>
+        <item>Tonuino 2.1</item>
+        <item>Tonuino 2.1 Modifier Tag</item>
+    </string-array>
     <string name="edit_tab_simple">Default</string>
     <string name="edit_tab_extended">Extended</string>
     <string name="edit_tab_bytes">Bytes</string>

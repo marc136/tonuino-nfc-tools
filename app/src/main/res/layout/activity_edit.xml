@@ -13,6 +13,25 @@
             android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
             android:text="@string/edit_intro"
     />
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp" android:layout_marginEnd="16dp">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:textStyle="bold"
+                android:text="@string/edit_tonuino_version_label"/>
+        <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/tag_type_selector"
+                android:entries="@array/edit_tonuino_tag_types"/>
+    </LinearLayout>
+
     <android.support.design.widget.TabLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

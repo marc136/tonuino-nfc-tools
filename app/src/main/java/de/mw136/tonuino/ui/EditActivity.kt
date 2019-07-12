@@ -10,8 +10,7 @@ import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.Toast
+import android.widget.*
 import de.mw136.tonuino.*
 import de.mw136.tonuino.nfc.*
 import de.mw136.tonuino.ui.edit.*
@@ -37,6 +36,28 @@ class EditActivity : NfcIntentActivity(), EditNfcData {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
 
+        val tagType = findViewById<Spinner>(R.id.tag_type_selector)
+        tagType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                Log.i(TAG, "TODO tag type selection: selected ${position}")
+                val version: UByte = when (position) {
+                    0 -> 1u
+                    1, 2 -> 2u
+                    else -> {
+                        Log.e(TAG, "tag type at position ${position} was not implememented.")
+                        return
+                    }
+                }
+
+                if (tagData.version != version) {
+                    setByte(WhichByte.VERSION, version, fullRefresh = true)
+                }
+            }
+        }
+
+        // Switch between input implementations
         val viewPager = findViewById<ViewPager>(R.id.edit_main_pager)
         viewPager.adapter = EditPagerAdapter(supportFragmentManager, fragments)
         val tabLayout = findViewById<TabLayout>(R.id.edit_main_tabs)
