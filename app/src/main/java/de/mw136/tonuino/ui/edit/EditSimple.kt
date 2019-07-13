@@ -12,8 +12,6 @@ import de.mw136.tonuino.nfc.EditNfcData
 import de.mw136.tonuino.nfc.TagData
 import de.mw136.tonuino.nfc.WhichByte
 
-private const val TAG = "EditSimple"
-
 
 @ExperimentalUnsignedTypes
 class EditSimple : EditFragment() {
