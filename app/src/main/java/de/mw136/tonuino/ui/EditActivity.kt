@@ -25,9 +25,10 @@ class EditActivity : NfcIntentActivity(), EditNfcData {
     private lateinit var isTagConnected: Runnable
 
     override lateinit var tagData: TagData
+    private val editSimpleContainer = EditSimpleContainer()
 
     override val fragments: Array<EditFragment> = arrayOf(
-        EditSimple(),
+        editSimpleContainer,
         EditExtended(),
         EditHex()
     )
@@ -49,6 +50,13 @@ class EditActivity : NfcIntentActivity(), EditNfcData {
                         Log.e(TAG, "tag type at position ${position} was not implememented.")
                         return
                     }
+                }
+
+                when (position) {
+                    2 ->
+                        editSimpleContainer.useModifierTagEditUi()
+                    else ->
+                        editSimpleContainer.useNormalTagEditUi()
                 }
 
                 if (tagData.version != version) {
