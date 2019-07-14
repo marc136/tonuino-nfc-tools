@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import de.mw136.tonuino.R
 import de.mw136.tonuino.nfc.EditNfcData
 import de.mw136.tonuino.nfc.TagData
+import de.mw136.tonuino.nfc.WhichByte
 import de.mw136.tonuino.ui.edit.simple.EditSimple
+import de.mw136.tonuino.ui.edit.simple.ModifierTag
 
 
 enum class TagType { Normal, Modifier }
@@ -18,8 +20,7 @@ enum class TagType { Normal, Modifier }
 class EditSimpleContainer : EditFragment() {
     private var listener: EditNfcData? = null
     override val TAG = "EditSimpleContainer"
-    private lateinit var childView: ViewGroup
-    private lateinit var child: EditFragment
+    private var child: EditFragment? = null
 
     private var tagType = TagType.Normal
 
@@ -46,8 +47,16 @@ class EditSimpleContainer : EditFragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_edit_simple_container, container, false)
 
-        child = EditSimple()
-        fragmentManager?.beginTransaction()!!.replace(R.id.children, child).commit()
+        if (listener?.tagData?.isModifierTag() ?: false) {
+            Log.e(TAG, "useModifierTagEditUi")
+            tagType = TagType.Modifier
+            child = ModifierTag()
+        } else {
+            Log.e(TAG, "useNormalTagEditUi")
+            tagType = TagType.Normal
+            child = EditSimple()
+        }
+        fragmentManager!!.beginTransaction()!!.replace(R.id.children, child!!).commit()
 
         return view
     }
@@ -79,7 +88,7 @@ class EditSimpleContainer : EditFragment() {
     override fun refreshInputs(data: TagData) {
         Log.i("$TAG:refreshInputs", data.toString())
         try {
-            child.refreshInputs(data)
+            child?.refreshInputs(data)
         } catch (ex: Exception) {
             // ignore
         }
@@ -88,7 +97,7 @@ class EditSimpleContainer : EditFragment() {
     override fun refreshDescriptions(data: TagData) {
         Log.i("$TAG:refreshDescriptions", data.toString())
         try {
-            child.refreshDescriptions(data)
+            child?.refreshDescriptions(data)
         } catch (ex: Exception) {
             // ignore
         }
@@ -96,16 +105,23 @@ class EditSimpleContainer : EditFragment() {
 
     fun useNormalTagEditUi() {
         if (tagType != TagType.Normal) {
+            listener?.setByte(WhichByte.FOLDER, 1u)
+            tagType = TagType.Normal
+        }
+        if (!(child is EditSimple)) {
             child = EditSimple()
-            fragmentManager?.beginTransaction()!!.replace(R.id.children, child).commit()
+            fragmentManager!!.beginTransaction()!!.replace(R.id.children, child!!).commit()
         }
     }
 
     fun useModifierTagEditUi() {
         if (tagType != TagType.Modifier) {
-            throw NotImplementedError("useModifierTagEditUi was not implemented")
-//            child = EditSimple()
-//            fragmentManager?.beginTransaction()!!.replace(R.id.children, child).commit()
+            listener?.setByte(WhichByte.FOLDER, 0u)
+            tagType = TagType.Modifier
+        }
+        if (!(child is ModifierTag)) {
+            child = ModifierTag()
+            fragmentManager!!.beginTransaction()!!.replace(R.id.children, child!!).commit()
         }
     }
 }

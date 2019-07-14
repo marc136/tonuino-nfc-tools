@@ -56,6 +56,10 @@ class TagData(var bytes: UByteArray = ubyteArrayOf()) : Parcelable {
         return bytes.elementAtOrElse(index) { default }
     }
 
+    fun isModifierTag(): Boolean {
+        return version == 2u.toUByte() && folder == 0u.toUByte()
+    }
+
     constructor(parcel: Parcel) : this() {
         bytes = parcel.createByteArray()?.toUByteArray() ?: ubyteArrayOf()
     }

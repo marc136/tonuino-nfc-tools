@@ -31,6 +31,7 @@
     <string name="edit_mode_label">Modus</string>
     <string name="edit_special_label">Extra</string>
     <string name="edit_special_label_for_album_mode">Titel</string>
+    <string name="edit_special_label_for_modifier_sleep_timer">Minuten</string>
     <string name="edit_special2_label">Extra 2</string>
 
     <string name="edit_hidden_label">hidden</string>
@@ -55,6 +56,25 @@
         <item>Admin-Karten werden in Tonuino 2.0.1 noch nicht unterstützt.</item>
     </string-array>
     <string name="edit_mode_unknown">Der Modus \'%d\' ist unbekannt.</string>
+
+    <string-array name="edit_modifier_tags">
+        <item>Einschlaf Modus</item>
+        <item>Pausetanz Modus</item>
+        <item>Sperre</item>
+        <item>Kleinkind Modus</item>
+        <item>Kindergarten Modus</item>
+        <item>Titel wiederholen</item>
+        <item>Audio-Feedback</item>
+    </string-array>
+    <string-array name="edit_modifier_tags_description">
+        <item>Pausiert die Wiedergabe nach Ablauf der gewählten Zeit.</item>
+        <item>Pausiert die Wiedergabe zufällig alle 5 bis 30 Sekunden.</item>
+        <item>Alle Tasten werden gesperrt und keine neuen Tags werden gelesen.</item>
+        <item>Alle Tasten werden gesperrt.</item>
+        <item>Die vor- und zurück Tasten werden gesperrt. Ein neuer Tag wird nicht sofort abgespielt, sondern erst nachdem der aktuelle beendet wurde.</item>
+        <item>Wiederholt den aktuellen Titel.</item>
+        <item>Gib zum Beispiel die Lautstärke aus, bevor sie geändert wird.</item>
+    </string-array>
 
     <string name="edit_write_button">Daten auf Tag %s schreiben</string>
     <string name="edit_write_button_no_tag">Ohne Tag kann nicht geschrieben werden</string>
@@ -113,6 +133,7 @@
     <!-- Other strings -->
     <string name="button_ok">Ok</string>
     <string name="play_mp3_file">Spielt Datei %03d.mp3 ab</string>
+    <string name="play_timer">Die Wiedergabe wird nach %d Minuten pausiert</string>
     <string name="nfc_read_tag_failure">Fehler: Konnte keine Daten vom NFC Tag lesen</string>
     <string name="nfc_tag_technologies">"Gerät und Tag unterstützen diese Technologien:\n%s"</string>
 </resources>

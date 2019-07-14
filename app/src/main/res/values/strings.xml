@@ -42,6 +42,7 @@
     <string name="edit_mode_label">Mode</string>
     <string name="edit_special_label">Extra</string>
     <string name="edit_special_label_for_album_mode">Title</string>
+    <string name="edit_special_label_for_modifier_sleep_timer">Minutes</string>
     <string name="edit_special2_label">Extra 2</string>
 
     <string name="edit_hidden_label">hidden</string>
@@ -66,6 +67,25 @@
         <item>Tonuino 2.0.1 does not yet support admin tags.</item>
     </string-array>
     <string name="edit_mode_unknown">Mode \'%d\' is unknown.</string>
+
+    <string-array name="edit_modifier_tags">
+        <item>Sleep timer</item>
+        <item>Freeze dance</item>
+        <item>Locked</item>
+        <item>Toddler mode</item>
+        <item>Kindergarden mode</item>
+        <item>Repeat single tag</item>
+        <item>Feedback modifier</item>
+    </string-array>
+    <string-array name="edit_modifier_tags_description">
+        <item>Pauses playback after timer</item>
+        <item>Randomly pauses the track after 5 to 30 seconds</item>
+        <item>All buttons are locked and no new card will be read</item>
+        <item>All buttons are locked</item>
+        <item>Previous and back buttons are locked. Adding a new card will not stop the current track but will schedule it as next track</item>
+        <item>Repeat current track</item>
+        <item>Will e.g. tell volume before changing it</item>
+    </string-array>
 
     <string name="edit_write_button">Write data on tag %s</string>
     <string name="edit_write_button_no_tag">Cannot write data without a tag</string>
@@ -110,6 +130,7 @@
     <!-- Other strings -->
     <string name="button_ok">Ok</string>
     <string name="play_mp3_file">Will play file %03d.mp3</string>
+    <string name="play_timer">Will pause playing after %d minutes</string>
     <string name="nfc_read_tag_failure">Error: Could not read data from NFC tag</string>
     <string name="nfc_tag_technologies">"Device and tag support these technologies:\n%s"</string>
 </resources>

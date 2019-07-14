@@ -3,7 +3,8 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              tools:context=".ui.edit.simple.EditSimple" android:orientation="vertical">
+              tools:context=".ui.edit.simple.ModifierTag"
+              android:orientation="vertical">
 
     <TextView
             android:layout_width="match_parent"
@@ -15,26 +16,6 @@
             android:layout_height="wrap_content"
             android:stretchColumns="1">
 
-        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="0dp">
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:textStyle="bold"
-                    android:text="@string/edit_folder_label"/>
-            <Spinner
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/folder"
-                    android:spinnerMode="dialog"/>
-        </TableRow>
-        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="0dp">
-            <TextView
-                    android:text=""
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_span="2"
-                    android:id="@+id/edit_simple_folder_description"/>
-        </TableRow>
         <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="0dp">
             <TextView
                     android:layout_width="match_parent"
@@ -80,31 +61,5 @@
                     android:layout_span="2"
                     android:id="@+id/special_description"/>
         </TableRow>
-        <TableRow android:id="@+id/special_row"
-                  android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="48dp">
-            <TextView
-                    android:text="@string/edit_special2_label"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/edit_simple_special2_label"
-                    android:layout_marginRight="8dp"
-                    android:textStyle="bold"/>
-            <EditText
-                    android:text="0"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:ems="10"
-                    android:id="@+id/special2"/>
-        </TableRow>
-        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="0dp">
-            <TextView
-                    android:text=""
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_span="2"
-                    android:id="@+id/special2_description"/>
-        </TableRow>
     </TableLayout>
-
 </LinearLayout>

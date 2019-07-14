@@ -79,7 +79,7 @@ class EditExtended : EditFragment() {
         special2 = view.findViewById(R.id.special2)
         special2.validateInputAndSetByte(WhichByte.SPECIAL2, 0, 255)
         special2Description = view.findViewById(R.id.special2_description)
-        special2Row = view.findViewById(R.id.special2_row)
+        special2Row = view.findViewById(R.id.special_row)
 
         refreshUi(listener!!.tagData)
         return view

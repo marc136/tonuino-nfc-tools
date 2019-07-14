@@ -7,29 +7,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import de.mw136.tonuino.*
+
+import de.mw136.tonuino.R
 import de.mw136.tonuino.nfc.EditNfcData
 import de.mw136.tonuino.nfc.TagData
 import de.mw136.tonuino.nfc.WhichByte
 import de.mw136.tonuino.ui.edit.EditFragment
+import de.mw136.tonuino.validateInputAndSetByte
 
-
-@ExperimentalUnsignedTypes
-class EditSimple : EditFragment() {
+class ModifierTag : EditFragment() {
     private var listener: EditNfcData? = null
-    override val TAG = "EditSimple"
+    override val TAG = "ModifierTag"
 
-    private lateinit var folder: Spinner
     private lateinit var mode: Spinner
+    private lateinit var modeLabel: TextView
     private lateinit var modeDescription: TextView
     private lateinit var special: EditText
     private lateinit var specialLabel: TextView
     private lateinit var specialDescription: TextView
     private lateinit var specialRow: View
-    private lateinit var special2: EditText
-    private lateinit var special2Label: TextView
-    private lateinit var special2Description: TextView
-    private lateinit var special2Row: View
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -52,32 +48,13 @@ class EditSimple : EditFragment() {
         propagateChanges = false
         Log.i(TAG, "onCreateView()")
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_edit_simple, container, false)
-
-        folder = view.findViewById(R.id.folder)
-        // initialize spinner for 'folder'
-        val folders = (1..99).map { it.toString().padStart(2, '0') }
-        ArrayAdapter<String>(activity!!.baseContext, android.R.layout.simple_spinner_item, folders).also {
-            folder.adapter = it
-        }
-        folder.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-
-            @ExperimentalUnsignedTypes
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-
-                if (this@EditSimple.propagateChanges) {
-                    this@EditSimple.listener?.setByte(WhichByte.FOLDER, (position + 1).toUByte())
-                    refreshUi(listener!!.tagData)
-                }
-            }
-        }
+        val view = inflater.inflate(R.layout.fragment_modifier_tag, container, false)
 
         mode = view.findViewById(R.id.mode)
         // initialize spinner for 'mode'
         ArrayAdapter.createFromResource(
             activity!!.baseContext,
-            R.array.edit_mode, android.R.layout.simple_spinner_item
+            R.array.edit_modifier_tags, android.R.layout.simple_spinner_item
         ).also { adapter ->
             // Specify the layout to use when the list of choices appears
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -90,23 +67,18 @@ class EditSimple : EditFragment() {
             @ExperimentalUnsignedTypes
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 if (propagateChanges) {
-                    this@EditSimple.listener?.setByte(WhichByte.MODE, (position + 1).toUByte())
+                    this@ModifierTag.listener?.setByte(WhichByte.MODE, (position + 1).toUByte())
                     refreshUi(listener!!.tagData)
                 }
             }
         }
         modeDescription = view.findViewById(R.id.mode_description)
 
+        specialLabel = view.findViewById(R.id.special_label)
         special = view.findViewById(R.id.special)
         special.validateInputAndSetByte(WhichByte.SPECIAL, 0, 255)
-        specialLabel = view.findViewById(R.id.special_label)
         specialDescription = view.findViewById(R.id.special_description)
         specialRow = view.findViewById(R.id.special_row)
-
-        special2 = view.findViewById(R.id.special2)
-        special2.validateInputAndSetByte(WhichByte.SPECIAL2, 0, 255)
-        special2Description = view.findViewById(R.id.special2_description)
-        special2Row = view.findViewById(R.id.special_row)
 
         refreshUi(listener!!.tagData)
         return view
@@ -139,12 +111,6 @@ class EditSimple : EditFragment() {
     override fun refreshInputs(data: TagData) {
         Log.i("$TAG:refreshInputs", data.toString())
 
-        val folderIndex = data.folder.toInt() - 1
-        Log.w("$TAG:refreshFolderSpinner", "index=$folderIndex, count=${folder.adapter.count}")
-        if (folderIndex in 0..folder.adapter.count) {
-            folder.setSelection(folderIndex, false)
-        }
-
         val modeIndex = data.mode.toInt() - 1
         val arr = resources.getStringArray(R.array.edit_mode_description)
         if (modeIndex < arr.size) {
@@ -152,18 +118,13 @@ class EditSimple : EditFragment() {
         }
 
         special.setText(data.special.toString())
-
-        special2.setText(data.special2.toString())
     }
 
     override fun refreshDescriptions(data: TagData) {
         Log.i("$TAG:refreshDescriptions", data.toString())
 
-        val folderIndex = data.folder.toInt() - 1
-        Log.i("$TAG:refreshFolderSpinner", "index=$folderIndex, count=${folder.adapter.count}")
-
         val modeIndex = data.mode.toInt() - 1
-        val arr = resources.getStringArray(R.array.edit_mode_description)
+        val arr = resources.getStringArray(R.array.edit_modifier_tags_description)
         modeDescription.text = if (modeIndex in 0..arr.size) {
             arr[modeIndex]
         } else {
@@ -171,25 +132,24 @@ class EditSimple : EditFragment() {
         }
 
         refreshSpecialRow(modeIndex + 1, data.special.toInt())
-
-        // always hide special2 for now as it is not used in Tonuino 2.0.1
-        special2Row.visibility = View.GONE
     }
 
     private fun refreshSpecialRow(mode: Int, value: Int) {
         when (mode) {
-            1, 2, 3, 5 -> {
+            1 -> {
+                specialRow.visibility = View.VISIBLE
+                specialLabel.text = getString(R.string.edit_special_label_for_modifier_sleep_timer)
+                specialDescription.visibility = View.VISIBLE
+                specialDescription.text = getString(R.string.play_timer, value)
+            }
+
+            2, 3, 4, 5, 6, 7 -> {
                 specialRow.visibility = View.GONE
                 specialLabel.text = getString(R.string.edit_hidden_label)
                 specialDescription.visibility = View.GONE
                 specialDescription.text = getString(R.string.edit_hidden_label)
             }
-            4 -> {
-                specialRow.visibility = View.VISIBLE
-                specialLabel.text = getString(R.string.edit_special_label_for_album_mode)
-                specialDescription.visibility = View.VISIBLE
-                specialDescription.text = getString(R.string.play_mp3_file, value)
-            }
+
             else -> {
                 // unknown modes
                 specialRow.visibility = View.VISIBLE
