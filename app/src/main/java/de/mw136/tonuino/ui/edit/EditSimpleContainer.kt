@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import de.mw136.tonuino.R
 import de.mw136.tonuino.nfc.EditNfcData
 import de.mw136.tonuino.nfc.TagData
+import de.mw136.tonuino.ui.edit.simple.EditSimple
 
 
 enum class TagType { Normal, Modifier }

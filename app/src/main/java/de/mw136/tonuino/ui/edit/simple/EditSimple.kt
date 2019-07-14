@@ -1,4 +1,4 @@
-package de.mw136.tonuino.ui.edit
+package de.mw136.tonuino.ui.edit.simple
 
 import android.content.Context
 import android.os.Bundle
@@ -11,6 +11,7 @@ import de.mw136.tonuino.*
 import de.mw136.tonuino.nfc.EditNfcData
 import de.mw136.tonuino.nfc.TagData
 import de.mw136.tonuino.nfc.WhichByte
+import de.mw136.tonuino.ui.edit.EditFragment
 
 
 @ExperimentalUnsignedTypes
