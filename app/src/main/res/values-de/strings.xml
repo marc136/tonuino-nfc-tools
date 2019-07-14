@@ -92,6 +92,7 @@
     <string name="edit_extended_intro">Über diese erweiterte Ansicht können Werte eingegeben werden, die dieser App
         nicht bekannt sind.
     </string>
+    <string name="ext_folder_description_modifier">Dies ist ein Modifizierungs-Tag (Admin Karte).</string>
 
     <!-- Strings on EditHex fragment -->
     <string name="edit_intro">Zur Zeit werden nur Tonuino 2.0.1 Tags komplett unterstützt. Aber beliebige Daten können

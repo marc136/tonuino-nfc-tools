@@ -79,7 +79,7 @@ class EditExtended : EditFragment() {
         special2 = view.findViewById(R.id.special2)
         special2.validateInputAndSetByte(WhichByte.SPECIAL2, 0, 255)
         special2Description = view.findViewById(R.id.special2_description)
-        special2Row = view.findViewById(R.id.special_row)
+        special2Row = view.findViewById(R.id.special2_row)
 
         refreshUi(listener!!.tagData)
         return view
@@ -118,6 +118,54 @@ class EditExtended : EditFragment() {
     override fun refreshDescriptions(data: TagData) {
         Log.i("$TAG:refreshDescriptions", data.toString())
 
+        if (data.isModifierTag()) {
+            refreshModifierTagDescriptions(data)
+        } else {
+            refreshNormalTagDescriptions(data)
+        }
+    }
+
+    private fun refreshModifierTagDescriptions(data: TagData) {
+        folderDescription.text = getString(R.string.ext_folder_description_modifier)
+        val mode_ = data.mode.toInt()
+        if (mode_ in 1..7) {
+            modeDescription.visibility = View.VISIBLE
+            val text = resources.getStringArray(R.array.edit_modifier_tags)[mode_ - 1] + ": " +
+                    resources.getStringArray(R.array.edit_modifier_tags_description)[mode_ - 1]
+            modeDescription.text = text
+        } else {
+            Log.w("$TAG:refreshDescriptions", "Cannot display a description for unknown modifier mode '$mode_'.")
+            modeDescription.visibility = View.GONE
+            modeDescription.text = ""
+        }
+
+        when (mode_) {
+            1 -> {
+                specialRow.visibility = View.VISIBLE
+                specialLabel.text = getString(R.string.edit_special_label_for_modifier_sleep_timer)
+                specialDescription.visibility = View.VISIBLE
+                specialDescription.text = getString(R.string.play_timer, data.special.toInt())
+            }
+            2, 3, 4, 5, 6, 7 -> {
+                specialRow.visibility = View.GONE
+                specialLabel.text = getString(R.string.edit_hidden_label)
+                specialDescription.visibility = View.GONE
+                specialDescription.text = getString(R.string.edit_hidden_label)
+            }
+            else -> {
+                // unknown modes
+                specialRow.visibility = View.VISIBLE
+                specialLabel.text = getString(R.string.edit_special_label)
+                specialDescription.visibility = View.GONE
+                specialDescription.text = getString(R.string.edit_hidden_label)
+            }
+        }
+
+        // always hide special2 for now as it is not used for Tonuino 2.1 modifier cards
+        special2Row.visibility = View.GONE
+    }
+
+    private fun refreshNormalTagDescriptions(data: TagData) {
         folderDescription.text = getString(R.string.edit_ext_folder_description, data.folder.toInt())
 
         val mode_ = data.mode.toInt()
@@ -127,12 +175,12 @@ class EditExtended : EditFragment() {
                     resources.getStringArray(R.array.edit_mode_description)[mode_ - 1]
             modeDescription.text = text
         } else {
-            Log.w("$TAG:refreshDescriptions", "Cannot display a description for unknown mode '$mode_'.")
+            Log.w("$TAG:refreshNormalTagDescriptions", "Cannot display a description for unknown mode '$mode_'.")
             modeDescription.visibility = View.GONE
             modeDescription.text = ""
         }
 
-        refreshSpecialDescription(mode_.toInt(), data.special.toInt())
+        refreshSpecialDescription(data.mode.toInt(), data.special.toInt())
 
         // always hide special2 for now as it is not used in Tonuino 2.0.1
         special2Row.visibility = View.GONE

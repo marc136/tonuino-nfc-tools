@@ -98,6 +98,8 @@
 
     <!-- Strings on the EditExtended fragment -->
     <string name="edit_ext_folder_description">Uses the folder /%02d.</string>
+    <string name="ext_folder_description_modifier">This is a modifier tag.</string>
+
     <string name="edit_extended_intro">This extended view can be used to enter values for TonUINO variants that this
         app does not know about.
     </string>
