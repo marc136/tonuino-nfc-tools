@@ -78,7 +78,7 @@ All have a folder value of 0
 | ToddlerMode | 4 | - | All buttons are locked |
 | KindergardenMode | 5 | - | Previous and back buttons are locked. Adding a new card will not stop the current track but will schedule it as next track |
 | RepeatSingleModifier | 6 | - | Repeat current track |
-| FeedbackModifier | 6 | - | Will e.g. tell volume before changing it |
+| FeedbackModifier | 7 | - | Will e.g. tell volume before changing it |
 
 
 
