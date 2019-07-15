@@ -80,7 +80,7 @@
                     android:layout_span="2"
                     android:id="@+id/special_description"/>
         </TableRow>
-        <TableRow android:id="@+id/special_row"
+        <TableRow android:id="@+id/special2_row"
                   android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="48dp">
             <TextView
                     android:text="@string/edit_special2_label"
