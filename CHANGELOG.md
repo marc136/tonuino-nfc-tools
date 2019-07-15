@@ -2,6 +2,9 @@
 This file gives a general overview, look into the git log for more information.
 
 ## unreleased
+- Add support for Tonuino 2.1 (dev) tags
+  - DONE: Modifier (Admin) tags  
+  - TODO: Play card  
 
 ## 0.4.1
 - Add signing for github release
