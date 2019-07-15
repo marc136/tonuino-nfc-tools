@@ -24,9 +24,6 @@
     <string name="main_write_tag_button">Write data on tag</string>
 
     <!-- Strings used on EditActivity -->
-    <string name="edit_intro">Right now, only Tonuino 2.0.1 Tags are fully supported. Arbitrary data may be entered via
-        the \'Extended\' or \'Bytes\' tabs.
-    </string>
     <string name="edit_tonuino_version_label">Select tag type</string>
     <string-array name="edit_tonuino_tag_types">
         <item>Tonuino 2.0.x</item>

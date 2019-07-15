@@ -95,9 +95,6 @@
     <string name="ext_folder_description_modifier">Dies ist ein Modifizierungs-Tag (Admin Karte).</string>
 
     <!-- Strings on EditHex fragment -->
-    <string name="edit_intro">Zur Zeit werden nur Tonuino 2.0.1 Tags komplett unterstützt. Aber beliebige Daten können
-        unter \'Erweitert\' oder \'Bytes\' eingegeben werden.
-    </string>
     <string name="edit_tonuino_version_label">Art des Tags auswählen</string>
     <string-array name="edit_tonuino_tag_types">
         <item>Tonuino 2.0.x</item>
