@@ -183,7 +183,7 @@ enum class WriteResult { SUCCESS, UNSUPPORTED_FORMAT, AUTHENTICATION_FAILURE, TA
 
 @ExperimentalUnsignedTypes
 fun writeTonuino(tag: TagTechnology, data: TagData): WriteResult {
-    var result = WriteResult.UNSUPPORTED_FORMAT
+    var result: WriteResult
 
     try {
         result = when (tag) {

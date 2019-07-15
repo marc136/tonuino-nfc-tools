@@ -15,6 +15,7 @@ import de.mw136.tonuino.nfc.WhichByte
 import de.mw136.tonuino.ui.edit.EditFragment
 import de.mw136.tonuino.validateInputAndSetByte
 
+@ExperimentalUnsignedTypes
 class ModifierTag : EditFragment() {
     private var listener: EditNfcData? = null
     override val TAG = "ModifierTag"

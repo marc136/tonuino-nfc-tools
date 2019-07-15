@@ -62,6 +62,7 @@ class Simple : EditNfcData {
     }
 }
 
+@ExperimentalUnsignedTypes
 class SimpleEditFragment : EditFragment() {
     override fun refreshDescriptions(data: TagData) {}
     override fun refreshInputs(data: TagData) {}

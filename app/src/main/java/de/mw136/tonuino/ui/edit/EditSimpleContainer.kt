@@ -56,7 +56,7 @@ class EditSimpleContainer : EditFragment() {
             tagType = TagType.Normal
             child = EditSimple()
         }
-        fragmentManager!!.beginTransaction()!!.replace(R.id.children, child!!).commit()
+        fragmentManager!!.beginTransaction().replace(R.id.children, child!!).commit()
 
         return view
     }
@@ -110,7 +110,7 @@ class EditSimpleContainer : EditFragment() {
         }
         if (!(child is EditSimple)) {
             child = EditSimple()
-            fragmentManager!!.beginTransaction()!!.replace(R.id.children, child!!).commit()
+            fragmentManager!!.beginTransaction().replace(R.id.children, child!!).commit()
         }
     }
 
@@ -121,7 +121,7 @@ class EditSimpleContainer : EditFragment() {
         }
         if (!(child is ModifierTag)) {
             child = ModifierTag()
-            fragmentManager!!.beginTransaction()!!.replace(R.id.children, child!!).commit()
+            fragmentManager!!.beginTransaction().replace(R.id.children, child!!).commit()
         }
     }
 }
