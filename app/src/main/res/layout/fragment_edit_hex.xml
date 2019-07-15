@@ -11,6 +11,7 @@
             android:text="@string/edit_hex_intro"
             android:id="@+id/intro"/>
     <TextView
+            android:labelFor="@+id/bytes"
             android:text="@string/edit_hex_bytes_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/bytes_label"

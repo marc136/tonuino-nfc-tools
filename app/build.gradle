@@ -29,6 +29,11 @@ android {
             signingConfig signingConfigs.ci
         }
     }
+    lintOptions {
+        abortOnError true
+        disable 'Autofill', 'AllowBackup', 'GoogleAppIndexingWarning'
+    }
+
 }
 
 dependencies {

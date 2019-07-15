@@ -17,9 +17,10 @@
 
         <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="0dp">
             <TextView
+                    android:labelFor="@id/folder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:textStyle="bold"
                     android:text="@string/edit_folder_label"/>
             <Spinner
@@ -37,9 +38,10 @@
         </TableRow>
         <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="0dp">
             <TextView
+                    android:labelFor="@id/mode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:textStyle="bold"
                     android:text="@string/edit_mode_label"/>
             <Spinner
@@ -58,14 +60,14 @@
         <TableRow android:id="@+id/special_row"
                   android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="48dp">
             <TextView
+                    android:labelFor="@+id/special"
                     android:text="@string/edit_special_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/special_label"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:textStyle="bold"/>
             <EditText
-                    android:text="0"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
@@ -83,14 +85,14 @@
         <TableRow android:id="@+id/special2_row"
                   android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="48dp">
             <TextView
+                    android:labelFor="@id/special2"
                     android:text="@string/edit_special2_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/edit_simple_special2_label"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:textStyle="bold"/>
             <EditText
-                    android:text="0"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"

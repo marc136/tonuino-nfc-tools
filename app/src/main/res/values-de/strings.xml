@@ -109,7 +109,7 @@
     <string name="edit_tab_bytes">Bytes</string>
     <string name="edit_hex_intro">In dieser Ansicht können beliebige Werte eingetragen werden.</string>
     <string name="edit_hex_disclaimer">Wenn die ersten vier Byte geändert werden, muss auch das Cookie auch im Tonuino
-        Quellcode den selben Wert haben. Sonst wird die Karte nicht mehr korrekt erkannt.
+        Quellcode den gleichen Wert haben. Sonst wird die Karte nicht mehr korrekt erkannt.
     </string>
     <string name="edit_hex_bytes_label">Bytes (in Hexadezimaler Schreibweise)</string>
     <string name="edit_hex_whitespace">Leerzeichen und Zeilenumbrüche werden ignoriert.</string>
@@ -132,7 +132,7 @@
     <string name="read_edit_button">Bearbeiten</string>
 
     <!-- Other strings -->
-    <string name="button_ok">Ok</string>
+    <string name="button_ok">OK</string>
     <string name="play_mp3_file">Spielt Datei %03d.mp3 ab</string>
     <string name="play_timer">Die Wiedergabe wird nach %d Minuten pausiert</string>
     <string name="nfc_read_tag_failure">Fehler: Konnte keine Daten vom NFC Tag lesen</string>

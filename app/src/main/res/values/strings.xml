@@ -73,7 +73,7 @@
         <item>Freeze dance</item>
         <item>Locked</item>
         <item>Toddler mode</item>
-        <item>Kindergarden mode</item>
+        <item>Kindergarten mode</item>
         <item>Repeat single tag</item>
         <item>Feedback modifier</item>
     </string-array>
@@ -130,7 +130,7 @@
     <string name="read_edit_button">Edit</string>
 
     <!-- Other strings -->
-    <string name="button_ok">Ok</string>
+    <string name="button_ok">OK</string>
     <string name="play_mp3_file">Will play file %03d.mp3</string>
     <string name="play_timer">Will pause playing after %d minutes</string>
     <string name="nfc_read_tag_failure">Error: Could not read data from NFC tag</string>
