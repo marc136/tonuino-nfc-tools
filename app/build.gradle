@@ -20,6 +20,8 @@ android {
             storePassword System.getenv('TONUINO_KEYSTORE_PASSWORD')
             keyAlias = System.getenv('TONUINO_KEY')
             keyPassword System.getenv('TONUINO_KEY_PASSWORD')
+            v1SigningEnabled true
+            v2SigningEnabled true
         }
     }
     buildTypes {
