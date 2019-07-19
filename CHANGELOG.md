@@ -1,7 +1,9 @@
 # Changelog
 This file gives a general overview, look into the git log for more information.
 
-## unreleased
+## unreleased 
+
+## 0.5.0
 - Add support for Tonuino 2.1 (dev) tags
   - DONE: Modifier (Admin) tags  
   - TODO: Play card  
