@@ -12,7 +12,8 @@ Google Play releases are built using [fastlane](https://docs.fastlane.tools/gett
 
 - Hide on-screen-keyboard when switching between edit fragments
 - Add entry "unknown <#>" to mode spinner on EditSimple fragment
-- Add support for futher NFC tag technologies
+- Allow users to write a note or title to the NFC tag
+- Add support for further NFC tag technologies
 - Simulate NFC tag
 - Use proper Material design theming instead of faking it
     - MainActivity if NFC is not available
