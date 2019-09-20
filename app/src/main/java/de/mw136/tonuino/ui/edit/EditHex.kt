@@ -15,6 +15,7 @@ import de.mw136.tonuino.byteArrayToHex
 import de.mw136.tonuino.hexToBytes
 import de.mw136.tonuino.nfc.EditNfcData
 import de.mw136.tonuino.nfc.TagData
+import java.util.*
 
 @ExperimentalUnsignedTypes
 class EditHex : EditFragment() {
@@ -110,6 +111,6 @@ class EditHex : EditFragment() {
 
     private fun formatBytes(bytes: String): String {
         // "012 3456789" -> "01 23 45 67 89"
-        return bytes.replace("\\s".toRegex(), "").toUpperCase().chunked(2).joinToString(" ")
+        return bytes.replace("\\s".toRegex(), "").toUpperCase(Locale.ENGLISH).chunked(2).joinToString(" ")
     }
 }

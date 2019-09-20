@@ -175,7 +175,7 @@ class EditExtended : EditFragment() {
                     resources.getStringArray(R.array.edit_mode_description)[mode_ - 1]
             modeDescription.text = text
         } else {
-            Log.w("$TAG:refreshNormalTagDescriptions", "Cannot display a description for unknown mode '$mode_'.")
+            Log.w("$TAG:refreshNormalTagDesc", "Cannot display a description for unknown mode '$mode_'.")
             modeDescription.visibility = View.GONE
             modeDescription.text = ""
         }
