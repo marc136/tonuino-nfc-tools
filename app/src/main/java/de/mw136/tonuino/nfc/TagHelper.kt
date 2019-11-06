@@ -4,6 +4,7 @@ import android.nfc.FormatException
 import android.nfc.Tag
 import android.nfc.TagLostException
 import android.nfc.tech.MifareClassic
+import android.nfc.tech.MifareUltralight
 import android.nfc.tech.TagTechnology
 import android.os.Parcel
 import android.os.Parcelable
@@ -123,11 +124,16 @@ fun readFromTag(tag: Tag): UByteArray {
         Log.i(TAG, "Tag $id techList: ${techListOf(tag).joinToString(", ")}")
         if (tag.techList.contains(MifareClassic::class.java.name)) {
             MifareClassic.get(tag)?.use { mifare -> result = readFromTag(mifare) }
+        } else if (tag.techList.contains(MifareUltralight::class.java.name)) {
+            MifareUltralight.get(tag)?.use { mifare -> result = readFromTag(mifare) }
         } else {
-            Log.e("$TAG.readFromTag", "Tag ${id} is not a MifareClassic tag and not supported")
+            Log.e(
+                "$TAG.readFromTag",
+                "Tag ${id} did not enumerate MifareClassic or MifareUltralight and is thus not supported"
+            )
         }
     } catch (ex: Exception) {
-        // e.g. android.nfc.TagLostException
+        // e.g. android.nfc.TagLostException, IOException
         Log.e("$TAG.readFromTag", ex.toString())
     }
 
@@ -179,6 +185,40 @@ fun readFromTag(mifare: MifareClassic): UByteArray {
     return result
 }
 
+/**
+ * Different MIFARE Ultralight formats, page size is 4 byte
+ * MIFARE Ultralight are 64 bytes, final 12 pages may be written to
+ * MIFARE Ultralight C are 192 bytes, first 8 and last 4 pages are not available
+ *
+ * Source: https://developer.android.com/reference/android/nfc/tech/MifareUltralight
+ */
+@ExperimentalUnsignedTypes
+fun readFromTag(mifare: MifareUltralight): UByteArray {
+    if (!mifare.isConnected) mifare.connect()
+    var result: UByteArray
+
+    val type_ = when (mifare.type) {
+        MifareUltralight.TYPE_ULTRALIGHT -> "ULTRALIGHT"
+        MifareUltralight.TYPE_ULTRALIGHT_C -> "ULTRALIGHT_C"
+        else -> "ULTRALIGHT (UNKNOWN)"
+    }
+
+    // tonuinoCookie should be in page 8
+    val block = mifare.readPages(8).toUByteArray()
+    // first 4 byte should match the tonuinoCookie
+    if (block.take(tonuinoCookie.size) == tonuinoCookie) {
+        Log.i(TAG, "This is a Tonuino MIFARE $type_ tag")
+    }
+
+    Log.i(TAG, "Bytes in sector: ${byteArrayToHex(block).joinToString(" ")}")
+
+    result = block
+
+    mifare.close()
+    return result
+}
+
+
 enum class WriteResult { SUCCESS, UNSUPPORTED_FORMAT, AUTHENTICATION_FAILURE, TAG_UNAVAILABLE, UNKNOWN_ERROR }
 
 @ExperimentalUnsignedTypes
@@ -188,6 +228,7 @@ fun writeTonuino(tag: TagTechnology, data: TagData): WriteResult {
     try {
         result = when (tag) {
             is MifareClassic -> writeTag(tag, data)
+            is MifareUltralight -> writeTag(tag, data)
             else -> WriteResult.UNSUPPORTED_FORMAT
         }
     } catch (ex: TagLostException) {
@@ -231,6 +272,36 @@ fun writeTag(mifare: MifareClassic, data: TagData): WriteResult {
 
     return result
 }
+
+@ExperimentalUnsignedTypes
+fun writeTag(mifare: MifareUltralight, data: TagData): WriteResult {
+    try {
+        if (!mifare.isConnected) mifare.connect()
+    } catch (ex: IOException) {
+        // is e.g. thrown if the NFC tag was removed
+        return WriteResult.TAG_UNAVAILABLE
+    }
+
+    val len = data.bytes.size
+
+    Log.i(TAG, "data byte size $len")
+
+    val pagesNeeded = Math.ceil(data.bytes.size.toDouble() / MifareUltralight.PAGE_SIZE).toInt()
+
+    val block = data.toFixedLengthBuffer(MifareUltralight.PAGE_SIZE * pagesNeeded)
+    for (index in 0 until pagesNeeded) {
+        val range = (index * MifareUltralight.PAGE_SIZE)..((index + 1) * MifareUltralight.PAGE_SIZE)
+        val part = block.slice(range).toByteArray()
+        mifare.writePage(8 + index, part)
+        Log.i(
+            TAG,
+            "Wrote ${byteArrayToHex(part.toUByteArray())} to tag ${tagIdAsString(mifare.tag)}"
+        )
+    }
+
+    return WriteResult.SUCCESS
+}
+
 
 fun techListOf(tag: TagTechnology?) = techListOf(tag?.tag)
 
