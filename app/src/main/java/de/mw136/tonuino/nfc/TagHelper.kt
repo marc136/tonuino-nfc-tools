@@ -110,8 +110,10 @@ class TagData(var bytes: UByteArray = ubyteArrayOf()) : Parcelable {
 fun connectTo(tag: Tag): TagTechnology? {
     if (tag.techList.contains(MifareClassic::class.java.name)) {
         return MifareClassic.get(tag)?.apply { connect() }
+    } else if (tag.techList.contains(MifareUltralight::class.java.name)) {
+        return MifareUltralight.get(tag)?.apply { connect() }
     } else {
-        throw FormatException("Can only handle MifareClassic")
+        throw FormatException("Can only handle MifareClassic and MifareUltralight")
     }
 }
 
