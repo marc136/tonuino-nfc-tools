@@ -291,14 +291,16 @@ fun writeTag(mifare: MifareUltralight, data: TagData): WriteResult {
     val pagesNeeded = Math.ceil(data.bytes.size.toDouble() / MifareUltralight.PAGE_SIZE).toInt()
 
     val block = data.toFixedLengthBuffer(MifareUltralight.PAGE_SIZE * pagesNeeded)
+    var current = 0
     for (index in 0 until pagesNeeded) {
-        val range = (index * MifareUltralight.PAGE_SIZE)..((index + 1) * MifareUltralight.PAGE_SIZE)
-        val part = block.slice(range).toByteArray()
+        val next = current + MifareUltralight.PAGE_SIZE
+        val part = block.slice(current until next).toByteArray()
         mifare.writePage(8 + index, part)
         Log.i(
             TAG,
             "Wrote ${byteArrayToHex(part.toUByteArray())} to tag ${tagIdAsString(mifare.tag)}"
         )
+        current = next
     }
 
     return WriteResult.SUCCESS
