@@ -10,14 +10,17 @@ Google Play releases are built using [fastlane](https://docs.fastlane.tools/gett
 
 ## TODO
 
-- Hide on-screen-keyboard when switching between edit fragments
-- Add entry "unknown <#>" to mode spinner on EditSimple fragment
-- Allow users to write a note or title to the NFC tag
-- Add support for further NFC tag technologies
-- Simulate NFC tag
-- Use proper Material design theming instead of faking it
+- [ ] Hide on-screen-keyboard when switching between edit fragments
+- [ ] Add entry "unknown <#>" to mode spinner on EditSimple fragment
+- [ ] Allow users to write a note or title to the NFC tag
+- [ ] Allow users to keep a list of tags
+- [ ] Add support for further NFC tag technologies
+  - [x] Mifare Ultralight
+  - [ ] Generic NfcA
+- [ ] Simulate NFC tag
+- [ ] Use proper Material design theming instead of faking it
     - MainActivity if NFC is not available
-- Use data binding
+- [ ] Use data binding
 
 
 ## Tonuino 2.0.x
