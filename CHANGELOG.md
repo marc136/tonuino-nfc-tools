@@ -3,6 +3,9 @@ This file gives a general overview, look into the git log for more information.
 
 ## unreleased
 
+## 0.6.0
+- Add support for reading and writing MifareUltralight NFC tags
+
 ## 0.5.2
 - Allow Android 4.0.0 users to install the app
 
