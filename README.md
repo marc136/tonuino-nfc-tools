@@ -88,7 +88,7 @@ All have a folder value of 0
 How discovered NFC tags are dispatched to activities: 
 https://developer.android.com/guide/topics/connectivity/nfc/nfc.html#dispatching
 
-Currently only Mifare Classic, but I want to look into supporting generic NfcA in the future.
+Currently only Mifare Classic and Ultralight, but I want to look into supporting generic NfcA in the future.
 Links:
 
 - [Android Tag Technology (NfcA, NfcB, ..)](https://developer.android.com/guide/topics/connectivity/nfc/advanced-nfc)
@@ -96,3 +96,12 @@ Links:
 - [Stackoverflow answer with general help on NfcA](https://stackoverflow.com/a/40303293)
 - [Summary of Open Source projects using Android's NfcA API](https://www.programcreek.com/java-api-examples/index.php?api=android.nfc.tech.NfcA)
     - [Example from above's list that actually uses NfcA (and not Mifare)](https://www.programcreek.com/java-api-examples/?code=ProjectMAXS/maxs/maxs-master/module-nfc/src/org/projectmaxs/module/nfc/tech/NfcAHandler.java#)
+- [Example of writing NTAG215 tags (for cloning Amiibos)](https://github.com/HiddenRamblings/TagMo)
+  - ...but they [use Mifare Ultralight](https://github.com/HiddenRamblings/TagMo/blob/master/app/src/main/java/com/hiddenramblings/tagmo/NfcActivity.java#L152)
+  - [Explanation how to use it](https://www.reddit.com/r/Amiibomb/comments/5ywlol/howto_the_easy_guide_to_making_your_own_amiibo/)
+
+## NFC Host Card Emulation
+It would be great if the app also can act as an NFC tag to simulate TonUINO tags, some links to this:
+
+- [Official Android docs](https://developer.android.com/guide/topics/connectivity/nfc/hce.html#HCE)
+
