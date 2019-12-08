@@ -93,7 +93,7 @@
                     android:text="@string/edit_special2_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edit_ext_special2_label"
+                    android:id="@+id/special2_label"
                     android:layout_marginEnd="8dp"
                     android:textStyle="bold"/>
             <EditText

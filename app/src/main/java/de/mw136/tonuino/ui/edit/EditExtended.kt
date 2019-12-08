@@ -78,6 +78,7 @@ class EditExtended : EditFragment() {
 
         special2 = view.findViewById(R.id.special2)
         special2.validateInputAndSetByte(WhichByte.SPECIAL2, 0, 255)
+        special2Label = view.findViewById(R.id.special2_label)
         special2Description = view.findViewById(R.id.special2_description)
         special2Row = view.findViewById(R.id.special2_row)
 
@@ -145,12 +146,16 @@ class EditExtended : EditFragment() {
                 specialLabel.text = getString(R.string.edit_special_label_for_modifier_sleep_timer)
                 specialDescription.visibility = View.VISIBLE
                 specialDescription.text = getString(R.string.play_timer, data.special.toInt())
+
+                special2Row.visibility = View.GONE
             }
             2, 3, 4, 5, 6, 7 -> {
                 specialRow.visibility = View.GONE
                 specialLabel.text = getString(R.string.edit_hidden_label)
                 specialDescription.visibility = View.GONE
                 specialDescription.text = getString(R.string.edit_hidden_label)
+
+                special2Row.visibility = View.GONE
             }
             else -> {
                 // unknown modes
@@ -158,11 +163,14 @@ class EditExtended : EditFragment() {
                 specialLabel.text = getString(R.string.edit_special_label)
                 specialDescription.visibility = View.GONE
                 specialDescription.text = getString(R.string.edit_hidden_label)
+
+                // special2 is not used for Tonuino 2.1 modifier cards, but might be useful to others
+                special2Row.visibility = View.VISIBLE
+                special2Label.text = getString(R.string.edit_special2_label)
+                special2Description.visibility = View.GONE
+                special2Description.text = getString(R.string.edit_hidden_label)
             }
         }
-
-        // always hide special2 for now as it is not used for Tonuino 2.1 modifier cards
-        special2Row.visibility = View.GONE
     }
 
     private fun refreshNormalTagDescriptions(data: TagData) {
@@ -181,9 +189,6 @@ class EditExtended : EditFragment() {
         }
 
         refreshSpecialDescription(data.mode.toInt(), data.special.toInt())
-
-        // always hide special2 for now as it is not used in Tonuino 2.0.1
-        special2Row.visibility = View.GONE
     }
 
     private fun refreshSpecialDescription(mode: Int, value: Int) {
@@ -193,12 +198,16 @@ class EditExtended : EditFragment() {
                 specialLabel.text = getString(R.string.edit_hidden_label)
                 specialDescription.visibility = View.GONE
                 specialDescription.text = getString(R.string.edit_hidden_label)
+
+                special2Row.visibility = View.GONE
             }
             4 -> {
                 specialRow.visibility = View.VISIBLE
                 specialLabel.text = getString(R.string.edit_special_label_for_album_mode)
                 specialDescription.visibility = View.VISIBLE
                 specialDescription.text = getString(R.string.play_mp3_file, value)
+
+                special2Row.visibility = View.GONE
             }
             else -> {
                 // unknown modes
@@ -206,6 +215,11 @@ class EditExtended : EditFragment() {
                 specialLabel.text = getString(R.string.edit_special_label)
                 specialDescription.visibility = View.GONE
                 specialDescription.text = getString(R.string.edit_hidden_label)
+
+                special2Row.visibility = View.VISIBLE
+                special2Label.text = getString(R.string.edit_special2_label)
+                special2Description.visibility = View.GONE
+                special2Description.text = getString(R.string.edit_hidden_label)
             }
         }
     }
