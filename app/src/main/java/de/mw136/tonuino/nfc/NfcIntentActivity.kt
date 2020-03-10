@@ -53,7 +53,7 @@ abstract class NfcIntentActivity : AppCompatActivity() {
     }
 
     override fun onNewIntent(intent: Intent) {
-        val tag: Tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
+        val tag: Tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG) ?: return
         Log.i(TAG, "onNewIntent tag: ${tag.id}")
 
         val id = tagIdAsString(tag)

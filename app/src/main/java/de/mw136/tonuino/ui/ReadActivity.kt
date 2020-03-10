@@ -23,8 +23,8 @@ class ReadActivity() : NfcIntentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_read)
 
-        tag = intent.getParcelableExtra<Tag>(PARCEL_TAG)
-        tagData = intent.getParcelableExtra<TagData>(PARCEL_TAGDATA)
+        tag = intent.getParcelableExtra<Tag>(PARCEL_TAG) ?: return
+        tagData = intent.getParcelableExtra<TagData>(PARCEL_TAGDATA) ?: return
 
         displayTonuinoInfo(tag, tagData)
     }
