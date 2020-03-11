@@ -49,6 +49,10 @@ class MainActivity : NfcIntentActivity() {
             enabledContainer.visibility = View.VISIBLE
             errorContainer.visibility = View.GONE
         }
+
+        if (BuildConfig.DEBUG) {
+            enabledContainer.visibility = View.VISIBLE
+        }
     }
 
     fun showWriteActivity(view: View) {
