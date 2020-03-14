@@ -8,6 +8,31 @@ import de.mw136.tonuino.nfc.EditNfcData
 import de.mw136.tonuino.nfc.WhichByte
 
 
+/**
+ * In order for this to work, the textChanged events must abort when the element does not have focus.
+ *
+ * ```kotlin
+ * editText.addTextChangedListener(object : TextWatcher {
+ *     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+ *         if (!myTextBox.hasFocus()) return
+ *         // propagate changes
+ *     }
+ * })
+ * ```
+ *
+ * See also https://stackoverflow.com/a/33151589
+ */
+fun EditText.setTextWithoutFocus(text: String) {
+    val hadFocus = hasFocus()
+    if (hadFocus) {
+        clearFocus()
+    }
+    setText(text)
+    if (hadFocus) {
+        requestFocus()
+    }
+}
+
 fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
@@ -37,7 +62,10 @@ fun EditText.validateInputAndSetByte(which: WhichByte, min: Int = 0, max: Int = 
     if (max > 255) throw IllegalArgumentException("max must not be greater than 255")
     if (max < 0) throw IllegalArgumentException("min must not be smaller than 0")
     if (min > max) throw java.lang.IllegalArgumentException("min must be smaller than max")
-    return (this.addValidator(which, resources.getString(R.string.edit_limit_numeric_value, min, max)) { str ->
+    return (this.addValidator(
+        which,
+        resources.getString(R.string.edit_limit_numeric_value, min, max)
+    ) { str ->
         try {
             val int = str.toInt()
             return@addValidator int >= min && int <= max

@@ -132,4 +132,17 @@
     <string name="play_timer">Will pause playing after %d minutes</string>
     <string name="nfc_read_tag_failure">Error: Could not read data from NFC tag</string>
     <string name="nfc_tag_technologies">"Device and tag support these technologies:\n%s"</string>
+
+    <!-- Auto-generated for BulkEditActivity -->
+    <string name="title_activity_bulk_edit">BulkEditActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="bulkedit_button_start_writing">Abarbeiten starten</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <!-- New fields below -->
 </resources>
