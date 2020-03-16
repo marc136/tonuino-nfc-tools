@@ -2,7 +2,7 @@
 This file gives a general overview, look into the git log for more information.
 
 ## unreleased
-- <nothing>
+- Migrate to AndroidX
 
 ## 0.6.1
 - Allow users to write Special2 field on EditExtended form

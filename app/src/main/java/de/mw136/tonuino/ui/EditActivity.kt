@@ -6,8 +6,8 @@ import android.nfc.Tag
 import android.nfc.tech.TagTechnology
 import android.os.Bundle
 import android.os.Handler
-import android.support.design.widget.TabLayout
-import android.support.v4.view.ViewPager
+import com.google.android.material.tabs.TabLayout
+import androidx.viewpager.widget.ViewPager
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -66,7 +66,7 @@ class EditActivity : NfcIntentActivity(), EditNfcData {
         }
 
         // Switch between input implementations
-        val viewPager = findViewById<ViewPager>(R.id.edit_main_pager)
+        val viewPager = findViewById<androidx.viewpager.widget.ViewPager>(R.id.edit_main_pager)
         viewPager.adapter = EditPagerAdapter(supportFragmentManager, fragments)
         val tabLayout = findViewById<TabLayout>(R.id.edit_main_tabs)
 

@@ -25,28 +25,28 @@
                 android:entries="@array/edit_tonuino_tag_types"/>
     </LinearLayout>
 
-    <android.support.design.widget.TabLayout
+    <com.google.android.material.tabs.TabLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edit_main_tabs"
             android:minHeight="?attr/actionBarSize">
 
-        <android.support.design.widget.TabItem
+        <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/edit_tab_simple"/>
 
-        <android.support.design.widget.TabItem
+        <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/edit_tab_extended"/>
 
-        <android.support.design.widget.TabItem
+        <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/edit_tab_bytes"/>
-    </android.support.design.widget.TabLayout>
-    <android.support.v4.view.ViewPager
+    </com.google.android.material.tabs.TabLayout>
+    <androidx.viewpager.widget.ViewPager
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"

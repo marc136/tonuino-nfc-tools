@@ -1,6 +1,6 @@
 package de.mw136.tonuino.ui.edit
 
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.util.Log
 import de.mw136.tonuino.nfc.TagData
 

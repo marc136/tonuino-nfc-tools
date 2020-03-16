@@ -1,8 +1,8 @@
 package de.mw136.tonuino.ui.edit
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 
 @ExperimentalUnsignedTypes
 class EditPagerAdapter(fm: FragmentManager?, val fragments: Array<EditFragment>) : FragmentPagerAdapter(fm) {
