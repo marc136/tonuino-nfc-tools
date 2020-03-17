@@ -29,7 +29,7 @@ class BulkWriteActivity : NfcIntentActivity() {
         // Use the 'by viewModels()' Kotlin property delegate
         // from the activity-ktx artifact
         val model: BulkEditViewModel by viewModels()
-        model.currentLine.observe(this, Observer<String>{ _ ->
+        model.currentLine.observe(this, Observer<String> { _ ->
             // update UI
         })
 
