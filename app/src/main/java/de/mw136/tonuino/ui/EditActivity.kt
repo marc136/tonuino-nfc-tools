@@ -7,7 +7,6 @@ import android.nfc.tech.TagTechnology
 import android.os.Bundle
 import android.os.Handler
 import com.google.android.material.tabs.TabLayout
-import androidx.viewpager.widget.ViewPager
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -118,7 +117,7 @@ class EditActivity : NfcIntentActivity(), EditNfcData {
     }
 
     private fun enableWriteButtonIfTagPresent() {
-        findViewById<Button>(R.id.write_button)?.apply {
+        findViewById<Button>(R.id.button_write)?.apply {
             if (this@EditActivity.tag == null) {
                 setText(getString(R.string.edit_write_button_no_tag))
                 isEnabled = false

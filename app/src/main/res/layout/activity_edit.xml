@@ -59,7 +59,7 @@
             android:onClick="onClickWriteTagButton"
             android:layout_marginTop="16dp"
             android:enabled="false"
-            android:id="@+id/write_button"/>
+            android:id="@+id/button_write"/>
     <TextView
             android:text="@string/edit_write_description"
             android:layout_width="match_parent"

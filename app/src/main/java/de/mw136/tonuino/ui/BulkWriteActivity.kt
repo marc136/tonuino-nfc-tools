@@ -1,24 +1,31 @@
 package de.mw136.tonuino.ui
 
+import android.nfc.FormatException
 import android.nfc.Tag
+import android.nfc.tech.TagTechnology
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.activity.viewModels
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import de.mw136.tonuino.BulkEditViewModel
 import de.mw136.tonuino.R
-import de.mw136.tonuino.byteArrayToHex
 import de.mw136.tonuino.nfc.NfcIntentActivity
-import de.mw136.tonuino.nfc.TagData
-import de.mw136.tonuino.nfc.readFromTag
-
+import de.mw136.tonuino.nfc.connectTo
+import de.mw136.tonuino.nfc.tagIdAsString
 import kotlinx.android.synthetic.main.bulkwrite_activity.*
+import java.io.IOException
 
 @ExperimentalUnsignedTypes
 class BulkWriteActivity : NfcIntentActivity() {
     override val TAG = "BulkActivity"
+
+    var tag: TagTechnology? = null
+    private val handler = Handler()
+    private lateinit var isTagConnected: Runnable
+    private val model: BulkEditViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,26 +35,59 @@ class BulkWriteActivity : NfcIntentActivity() {
         // Re-created activities receive the same MyViewModel instance created by the first activity.
         // Use the 'by viewModels()' Kotlin property delegate
         // from the activity-ktx artifact
-        val model: BulkEditViewModel by viewModels()
         model.currentLine.observe(this, Observer<String> { _ ->
             // update UI
         })
-
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
+
+        isTagConnected = Runnable {
+            if (tag?.isConnected == true) {
+                // should be able to write to tag
+                pollTag()
+
+            } else {
+                model.removeTag()
+            }
+        }
     }
 
 
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacksAndMessages(null)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        pollTag()
+    }
+
+    private fun pollTag() {
+        handler.postDelayed(isTagConnected, 321)
+    }
+
     override fun onNfcTag(tag: Tag) {
-        Log.d(TAG, "onNfcTag ${byteArrayToHex(tag.id.toUByteArray())}")
-        val bytes = readFromTag(tag)
-        Log.d(TAG, "bytes: ${byteArrayToHex(bytes).joinToString(" ")}")
-
-        if (bytes.isNotEmpty()) {
-
+        val tagId = tagIdAsString(tag)
+        Log.i("$TAG.onNfcTag", "Tag $tagId")
+//        supportActionBar?.title = getString(R.string.read_title, tagId)
+        try {
+            connectTo(tag)?.let {
+                this.tag = it
+                model.setTag(it)
+            }
+        } catch (ex: IOException) {
+            // could not connect to tag
+            Log.w("$TAG.onNfcTag", "Could not connect to the NFC tag")
+        } catch (ex: FormatException) {
+            // unsupported tag format
+            Log.w("$TAG.onNfcNtag", "Unsupported format")
+        } catch (ex: Exception) {
+            // TODO display unexpected error
+            Log.e("$TAG.onNfcTag", ex.toString())
         }
     }
 }

@@ -1,5 +1,6 @@
 package de.mw136.tonuino.ui.bulk
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,10 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import de.mw136.tonuino.*
+import de.mw136.tonuino.nfc.WriteResult
+import de.mw136.tonuino.nfc.tagIdAsString
+import de.mw136.tonuino.nfc.techListOf
+import de.mw136.tonuino.nfc.writeTonuino
 
 
 @ExperimentalUnsignedTypes
@@ -64,7 +70,6 @@ class BulkWriteFragment : Fragment() {
             viewModel.previousLine()
         }
 
-
         buttonNext.setOnClickListener {
             viewModel.nextLine()
         }
@@ -73,6 +78,81 @@ class BulkWriteFragment : Fragment() {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
 
+        val writeButton = view.findViewById<Button>(R.id.button_write)
+        viewModel.tag.observe(viewLifecycleOwner, Observer { tag ->
+            if (tag == null) {
+                writeButton.setText(getString(R.string.edit_write_button_no_tag))
+                writeButton.isEnabled = false
+                Toast.makeText(activity, "Verbindung verloren", Toast.LENGTH_LONG).show()
+            } else {
+                writeButton.setText(getString(R.string.edit_write_button, tagIdAsString(tag)))
+                writeButton.isEnabled = true
+            }
+        })
+
         view.clearFocus()
+    }
+
+
+    @Suppress("UNUSED_PARAMETER")
+    fun onClickWriteTagButton(view: View) = writeTag()
+
+    private fun writeTag() {
+        var result = WriteResult.TAG_UNAVAILABLE
+
+        viewModel.tag.value?.let {
+            Log.w("$TAG.writeTag", "will write to tag ${tagIdAsString(it)}")
+            TODO("tagData was not yet set")
+//            result = writeTonuino(it, tagData)
+//            Log.w("$TAG.writeTag", "result ${result}")
+        }
+        showModalDialog(result)
+    }
+
+    private fun showModalDialog(result: WriteResult) {
+        with(AlertDialog.Builder(activity)) {
+            var showRetryButton = false
+
+            when (result) {
+                WriteResult.SUCCESS -> {
+                    setMessage(R.string.written_success)
+                }
+                WriteResult.UNSUPPORTED_FORMAT -> {
+                    setTitle(R.string.written_unsupported_tag_type)
+                    setMessage(
+                        getString(
+                            R.string.nfc_tag_technologies,
+                            techListOf(viewModel.tag.value).joinToString(", ")
+                        )
+                    )
+                }
+                WriteResult.AUTHENTICATION_FAILURE -> {
+                    setTitle(R.string.written_title_failure)
+                    setMessage(R.string.written_authentication_failure)
+                    showRetryButton = true
+                }
+                WriteResult.TAG_UNAVAILABLE -> {
+                    setTitle(R.string.written_title_failure)
+                    setMessage(R.string.written_tag_unavailable)
+                    showRetryButton = true
+                }
+                WriteResult.UNKNOWN_ERROR -> {
+                    setTitle(R.string.written_unknown_error)
+                    setMessage(
+                        getString(
+                            R.string.nfc_tag_technologies,
+                            techListOf(viewModel.tag.value).joinToString(", ")
+                        )
+                    )
+                    showRetryButton = true
+                }
+            }
+
+            setPositiveButton(getString(R.string.button_ok)) { _, _ -> }
+            if (showRetryButton) {
+                setNegativeButton(getString(R.string.written_button_retry)) { _, _ -> writeTag() }
+            }
+            create().show()
+        }
     }
 }

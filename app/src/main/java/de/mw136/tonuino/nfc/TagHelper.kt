@@ -15,8 +15,10 @@ import java.io.IOException
 
 private const val TAG = "TagHelper"
 private const val tonuinoSector = 1
+
 @ExperimentalUnsignedTypes
 private val tonuinoCookie = hexToBytes("1337b347").toList() // TODO add to expert settings
+
 @ExperimentalUnsignedTypes
 private val factoryKey =
     hexToBytes("FFFFFFFFFFFF") // factory preset, same as MifareClassic.KEY_DEFAULT

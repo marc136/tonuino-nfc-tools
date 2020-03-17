@@ -1,5 +1,6 @@
 package de.mw136.tonuino
 
+import android.nfc.tech.TagTechnology
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -57,10 +58,23 @@ class BulkEditViewModel : ViewModel() {
         get() = currentLineIndex > 0
 
     fun previousLine() {
-        if (currentLineIndex > 0){
+        if (currentLineIndex > 0) {
             currentLineIndex--
             _currentLine.value = lines[currentLineIndex]
         }
+    }
+
+    // NFC tag entity for writing
+
+    private var _tag: MutableLiveData<TagTechnology?> = MutableLiveData(null)
+    val tag: LiveData<TagTechnology?> = _tag
+
+    fun removeTag() {
+        _tag.value = null
+    }
+
+    fun setTag(tech: TagTechnology) {
+        _tag.value = tech
     }
 }
 
