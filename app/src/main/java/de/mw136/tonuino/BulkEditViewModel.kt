@@ -52,6 +52,16 @@ class BulkEditViewModel : ViewModel() {
             _currentLine.value = lines[currentLineIndex]
         }
     }
+
+    val hasPrevious: Boolean
+        get() = currentLineIndex > 0
+
+    fun previousLine() {
+        if (currentLineIndex > 0){
+            currentLineIndex--
+            _currentLine.value = lines[currentLineIndex]
+        }
+    }
 }
 
 

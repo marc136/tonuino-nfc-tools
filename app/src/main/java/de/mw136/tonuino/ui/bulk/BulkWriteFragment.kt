@@ -35,7 +35,8 @@ class BulkWriteFragment : Fragment() {
         val tagTitle = view.findViewById<TextView>(R.id.text_tag_title)
         val tagBytes = view.findViewById<TextView>(R.id.text_bytes)
         val lines = view.findViewById<TextView>(R.id.description)
-        buttonNext = view.findViewById<Button>(R.id.button_next)
+        val buttonNext = view.findViewById<Button>(R.id.button_next)
+        val buttonPrev = view.findViewById<Button>(R.id.button_prev)
 
         viewModel.currentLine.observe(viewLifecycleOwner, Observer { current ->
             Log.i(TAG, "currentLine changed to $current")
@@ -45,7 +46,7 @@ class BulkWriteFragment : Fragment() {
                 viewModel.lineCount
             )
 
-            Log.e(TAG, "viewModel.hasNext ${viewModel.hasNext}")
+            buttonPrev.isEnabled = viewModel.hasPrevious
             buttonNext.isEnabled = viewModel.hasNext
 
             val tag = TagWithComment.of(current)
@@ -58,6 +59,11 @@ class BulkWriteFragment : Fragment() {
                 tagBytes.setText('"' + current + '"')
             }
         })
+
+        buttonPrev.setOnClickListener {
+            viewModel.previousLine()
+        }
+
 
         buttonNext.setOnClickListener {
             viewModel.nextLine()

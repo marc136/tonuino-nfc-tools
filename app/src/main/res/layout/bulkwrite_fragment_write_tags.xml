@@ -15,6 +15,58 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+            android:id="@+id/text_tag_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Titel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description" />
+
+    <TextView
+            android:id="@+id/text_bytes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Inhalt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_tag_title" />
+
+    <Button
+            android:id="@+id/button_write"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="Daten schreiben"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_bytes" />
+
+    <Button
+            android:id="@+id/button_prev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="Vorige Zeile"
+            app:layout_constraintEnd_toStartOf="@id/button_next"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@+id/button_write" />
+
+    <Button
+            android:id="@+id/button_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="Nächste Zeile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_prev"
+            app:layout_constraintTop_toBottomOf="@+id/button_write" />
+
     <Button
             android:id="@+id/button_back"
             android:layout_width="wrap_content"
@@ -23,42 +75,7 @@
             android:text="Liste bearbeiten"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.116"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-            android:id="@+id/text_tag_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Titel"
-            app:layout_constraintTop_toBottomOf="@+id/description"
-            tools:layout_editor_absoluteX="159dp" />
-
-    <Button
-            android:id="@+id/button_write"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
-            android:text="Daten schreiben"
-            app:layout_constraintTop_toBottomOf="@+id/text_bytes"
-            tools:layout_editor_absoluteX="93dp" />
-
-    <Button
-            android:id="@+id/button_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="108dp"
-            android:text="Nächste Zeile"
-            app:layout_constraintTop_toBottomOf="@+id/button_write"
-            tools:layout_editor_absoluteX="93dp" />
-
-    <TextView
-            android:id="@+id/text_bytes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="Inhalt"
-            app:layout_constraintTop_toBottomOf="@+id/text_tag_title"
-            tools:layout_editor_absoluteX="159dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
