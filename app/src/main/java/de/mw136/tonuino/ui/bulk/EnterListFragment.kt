@@ -15,6 +15,7 @@ import de.mw136.tonuino.BulkEditViewModel
 import de.mw136.tonuino.R
 
 
+@ExperimentalUnsignedTypes
 class EnterListFragment : Fragment() {
     private val viewModel: BulkEditViewModel by activityViewModels()
 
@@ -35,7 +36,7 @@ class EnterListFragment : Fragment() {
 
         val myTextBox = view.findViewById(R.id.editText) as EditText
 
-        myTextBox.setText(viewModel.lines.value?.joinToString (separator = "\n"))
+        myTextBox.setText(viewModel.lines.joinToString(separator = "\n"))
         myTextBox.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
                 viewModel.setLines(s)

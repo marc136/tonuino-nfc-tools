@@ -4,30 +4,74 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.lang.Exception
+
+const val TAG = "BulkEditViewModel"
 
 // Patterns and Antipatterns about ViewModels https://medium.com/androiddevelopers/viewmodels-and-livedata-patterns-antipatterns-21efaef74a54
 
 // Information how to save/load data, see first https://developer.android.com/jetpack/docs/guide#overview
 // and then https://developer.android.com/topic/libraries/architecture/viewmodel-savedstate
 
+@ExperimentalUnsignedTypes
 class BulkEditViewModel : ViewModel() {
     // https://medium.com/@taman.neupane/basic-example-of-livedata-and-viewmodel-14d5af922d0
-    private val _lines: MutableLiveData<List<String>> = abc()
-    val lines: LiveData<List<String>>
-        get() = _lines
-    private val _currentLine: MutableLiveData<Int> = MutableLiveData(0)
-    val currentLine: LiveData<Int>
-        get() = _currentLine
+    var lines: List<String> = abc()
+        private set
 
-    fun abc(): MutableLiveData<List<String>> {
+    var currentLineIndex: Int = 0
+        private set
+    private var _currentLine: MutableLiveData<String> = MutableLiveData(lines[currentLineIndex])
+    val currentLine: LiveData<String> = _currentLine
+
+    val lineCount: Int
+        get() = lines.size
+
+    private fun abc(): List<String> {
         Log.w("Bulk", "BulkEditViewModel constructor was called")
-        return MutableLiveData(listOf("abc", "def"))
+        return listOf(
+            "1337B3470101040500;Erste Karte",
+            "1337B3470204083D5A;Guten Morgen"
+        )
     }
 
     fun setLines(input: CharSequence) {
-        Log.w("Bulk", "setLines with ${input.toString()}")
-        _lines.value = input.lines()
-        Log.w("Bulk", "lines is now ${_lines.value?.joinToString("/n")}")
+        lines = input.lines()
+        Log.w("Bulk", "lines is now ${lines.joinToString("/n")}")
+        if (lines.isNotEmpty() && lines[0].isNotEmpty()) {
+            _currentLine.value = lines[0]
+        }
     }
 
+    val hasNext: Boolean
+        get() = lines.size > currentLineIndex + 1
+
+    fun nextLine() {
+        if (currentLineIndex + 1 < lines.size) {
+            currentLineIndex++
+            _currentLine.value = lines[currentLineIndex]
+        }
+    }
+}
+
+
+@ExperimentalUnsignedTypes
+class TagWithComment(val bytes: UByteArray, val title: String) {
+
+    companion object {
+        fun of(str: String): TagWithComment? {
+            // TODO add tests
+            val parts = str.split(";", " ")
+            if (parts.isNotEmpty()) {
+                val first: UByteArray = hexToBytes(parts[0])
+                val rest = parts.drop(1).joinToString(" ")
+                Log.w("Bulk", "first: $first")
+                Log.w("Bulk", "rest: $rest")
+                if (first.isNotEmpty()) {
+                    return TagWithComment(first, rest)
+                }
+            }
+            return null
+        }
+    }
 }

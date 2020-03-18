@@ -10,6 +10,7 @@ import de.mw136.tonuino.R
 
 import kotlinx.android.synthetic.main.bulkwrite_activity.*
 
+@ExperimentalUnsignedTypes
 class BulkWriteActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +22,7 @@ class BulkWriteActivity : AppCompatActivity() {
         // Use the 'by viewModels()' Kotlin property delegate
         // from the activity-ktx artifact
         val model: BulkEditViewModel by viewModels()
-        model.lines.observe(this, Observer<List<String>>{ lines ->
+        model.currentLine.observe(this, Observer<String>{ _ ->
             // update UI
         })
 
