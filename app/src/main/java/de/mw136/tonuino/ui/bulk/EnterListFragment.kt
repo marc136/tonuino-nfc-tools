@@ -3,6 +3,7 @@ package de.mw136.tonuino.ui.bulk
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,5 +47,8 @@ class EnterListFragment : Fragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
+
+        myTextBox.setHorizontallyScrolling(true)
+        myTextBox.setMovementMethod(ScrollingMovementMethod())
     }
 }
