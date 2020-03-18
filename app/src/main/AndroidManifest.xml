@@ -17,6 +17,7 @@
         <activity
                 android:name=".ui.BulkWriteActivity"
                 android:label="@string/title_activity_bulk_edit"
+                android:windowSoftInputMode="adjustResize"
                 android:parentActivityName=".ui.MainActivity"></activity>
         <activity android:name=".ui.MainActivity">
             <intent-filter>
