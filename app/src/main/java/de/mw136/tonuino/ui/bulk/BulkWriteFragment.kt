@@ -91,6 +91,8 @@ class BulkWriteFragment : Fragment() {
             } else {
                 writeButton.setText(getString(R.string.edit_write_button, tagIdAsString(tag)))
                 writeButton.isEnabled = true
+
+                // TODO add option to instantly write data when a tag is found
             }
         })
 
@@ -118,6 +120,7 @@ class BulkWriteFragment : Fragment() {
 
             when (result) {
                 WriteResult.SUCCESS -> {
+                    // TODO add "next line" button
                     setMessage(R.string.written_success)
                 }
                 WriteResult.UNSUPPORTED_FORMAT -> {
