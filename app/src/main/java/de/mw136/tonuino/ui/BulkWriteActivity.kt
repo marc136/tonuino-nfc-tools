@@ -39,11 +39,6 @@ class BulkWriteActivity : NfcIntentActivity() {
             // update UI
         })
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
-
         isTagConnected = Runnable {
             if (tag?.isConnected == true) {
                 // should be able to write to tag
