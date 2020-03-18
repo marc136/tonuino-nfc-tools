@@ -134,4 +134,23 @@
     <string name="play_timer">Die Wiedergabe wird nach %d Minuten pausiert</string>
     <string name="nfc_read_tag_failure">Fehler: Konnte keine Daten vom NFC Tag lesen</string>
     <string name="nfc_tag_technologies">"Gerät und Tag unterstützen diese Technologien:\n%s"</string>
+
+
+    <!-- BulkEditActivity and its fragments -->
+    <string name="bulk_activity_title">Stapelverarbeitung</string>
+
+    <string name="bulk_edit_label">Edit List</string>
+    <string name="bulk_edit_description">Hier kann pro Zeile ein Tag eingetragen werden. Zuerst kommt die Bytefolge, dann ein \';\', und dann kann eine beliebige Beschreibung folgen.\nBeispiel:\n1337B3470101040500;Erste Karte</string>
+    <string name="bulk_edit_button_start_writing">Abarbeiten starten</string>
+
+    <string name="bulk_write_label">Write Tags</string>
+    <string name="bulk_write_line_number">Zeile %d von %d</string>
+    <string name="bulk_write_title_caption">Titel</string>
+    <string name="bulk_write_content_caption">Inhalt</string>
+    <string name="bulk_write_button_write">Daten schreiben</string>
+    <string name="bulk_write_button_prev">Vorige Zeile</string>
+    <string name="bulk_write_button_next">Nächste Zeile</string>
+    <string name="bulk_write_button_back">Liste bearbeiten</string>
+
+    <!-- New fields below -->
 </resources>

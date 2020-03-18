@@ -10,7 +10,7 @@
             android:id="@+id/description"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Hier kann pro Zeile ein Tag eingetragen werden. Zuerst kommt die Bytefolge, dann ein ';', und dann kann eine beliebige Beschreibung folgen.\nBeispiel:\n1337B3470101040500;Erste Karte"
+            android:text="@string/bulk_edit_description"
             app:layout_constraintBottom_toTopOf="@+id/editText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -25,24 +25,24 @@
             android:gravity="start|top"
             android:inputType="textMultiLine"
             android:isScrollContainer="true"
-            android:scrollHorizontally="true"
             android:scrollbars="vertical|horizontal"
+            android:scrollHorizontally="true"
             app:layout_constraintBottom_toTopOf="@+id/button_start"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/description" />
+            app:layout_constraintTop_toBottomOf="@+id/description"
+            tools:ignore="LabelFor" />
 
     <Button
             android:id="@+id/button_start"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/bulkwrite_button_start_writing"
+            android:text="@string/bulk_edit_button_start_writing"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editText" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

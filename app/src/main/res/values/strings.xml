@@ -133,17 +133,21 @@
     <string name="nfc_read_tag_failure">Error: Could not read data from NFC tag</string>
     <string name="nfc_tag_technologies">"Device and tag support these technologies:\n%s"</string>
 
-    <!-- Auto-generated for BulkEditActivity -->
-    <string name="title_activity_bulk_edit">BulkEditActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="bulkwrite_button_start_writing">Abarbeiten starten</string>
-    <string name="bulkwrite_line_number">Zeile %d von %d</string>
+    <!-- BulkEditActivity and its fragments -->
+    <string name="bulk_activity_title">Bulk write tags</string>
 
+    <string name="bulk_edit_label">Edit List</string>
+    <string name="bulk_edit_description">You can add multiple TonUINO tags in bulk here. Write one tag per line following this format: Bytes to write, followed by \';\', and then you can add an optional description.\nFor example:\n1337B3470101040500;First tag</string>
+    <string name="bulk_edit_button_start_writing">Start bulk write</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="bulk_write_label">Write Tags</string>
+    <string name="bulk_write_line_number">Line %d of %d</string>
+    <string name="bulk_write_title_caption">Title</string>
+    <string name="bulk_write_content_caption">Content</string>
+    <string name="bulk_write_button_write">Write data</string>
+    <string name="bulk_write_button_prev">Previous line</string>
+    <string name="bulk_write_button_next">Next line</string>
+    <string name="bulk_write_button_back">Change list</string>
 
     <!-- New fields below -->
 </resources>

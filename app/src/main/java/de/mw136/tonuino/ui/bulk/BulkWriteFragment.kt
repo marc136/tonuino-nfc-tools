@@ -45,7 +45,7 @@ class BulkWriteFragment : Fragment() {
         viewModel.currentLine.observe(viewLifecycleOwner, Observer { current ->
             Log.i(TAG, "currentLine changed to $current")
             lines.text = getString(
-                R.string.bulkwrite_line_number,
+                R.string.bulk_write_line_number,
                 viewModel.currentLineIndex + 1,
                 viewModel.lineCount
             )
