@@ -14,16 +14,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import de.mw136.tonuino.*
-import de.mw136.tonuino.nfc.WriteResult
-import de.mw136.tonuino.nfc.tagIdAsString
-import de.mw136.tonuino.nfc.techListOf
-import de.mw136.tonuino.nfc.writeTonuino
+import de.mw136.tonuino.nfc.*
 
 
 @ExperimentalUnsignedTypes
 class BulkWriteFragment : Fragment() {
-    val TAG = "BulkActivity"
+    val TAG = "BulkWFrag"
     private val viewModel: BulkEditViewModel by activityViewModels()
+    private var tagData: TagWithComment? = null
 
     private lateinit var buttonNext: Button
 
@@ -57,12 +55,14 @@ class BulkWriteFragment : Fragment() {
 
             val tag = TagWithComment.of(current)
             if (tag != null) {
+                tagData = tag
                 tagTitle.setText(tag.title)
                 val str = byteArrayToHex(tag.bytes).joinToString(" ")
                 tagBytes.setText(str)
             } else {
                 tagTitle.setText("Konnte die Zeile nicht lesen")
                 tagBytes.setText('"' + current + '"')
+                tagData = null
             }
         })
 
@@ -79,6 +79,10 @@ class BulkWriteFragment : Fragment() {
         }
 
         val writeButton = view.findViewById<Button>(R.id.button_write)
+        writeButton.setOnClickListener {
+            writeTag()
+        }
+
         viewModel.tag.observe(viewLifecycleOwner, Observer { tag ->
             if (tag == null) {
                 writeButton.setText(getString(R.string.edit_write_button_no_tag))
@@ -93,18 +97,17 @@ class BulkWriteFragment : Fragment() {
         view.clearFocus()
     }
 
-
-    @Suppress("UNUSED_PARAMETER")
-    fun onClickWriteTagButton(view: View) = writeTag()
-
     private fun writeTag() {
         var result = WriteResult.TAG_UNAVAILABLE
-
+        Log.w(TAG, "called writeTag")
         viewModel.tag.value?.let {
+            Log.w(TAG, "has tag.value ${it}")
             Log.w("$TAG.writeTag", "will write to tag ${tagIdAsString(it)}")
-            TODO("tagData was not yet set")
-//            result = writeTonuino(it, tagData)
-//            Log.w("$TAG.writeTag", "result ${result}")
+
+            tagData?.bytes?.let { bytes ->
+                result = writeTonuino(it, TagData(bytes))
+            }
+            Log.w("$TAG.writeTag", "result ${result}")
         }
         showModalDialog(result)
     }
