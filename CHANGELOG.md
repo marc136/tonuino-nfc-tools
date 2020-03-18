@@ -3,6 +3,7 @@ This file gives a general overview, look into the git log for more information.
 
 ## unreleased
 - Migrate to AndroidX
+- Add bulk write activity
 
 ## 0.6.1
 - Allow users to write Special2 field on EditExtended form
