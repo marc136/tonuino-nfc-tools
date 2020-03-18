@@ -12,6 +12,20 @@ import org.junit.Assert.*
 class HexStringTest {
     @Test
     fun hexToBytes() {
+        assertArrayEquals(
+            ubyteArrayOf(0x12U, 0xAFU).toByteArray(),
+            hexToBytes("12AF").toByteArray()
+        )
+
+        assertArrayEquals(
+            "Should return an empty array if invalid number format is used",
+            ubyteArrayOf().toByteArray(),
+            hexToBytes("q1").toByteArray()
+        )
+    }
+
+    @Test
+    fun hexToBytesRoundTrip() {
         transformHex("")
         transformHex("FF")
         transformHex("FF4", "FF04")
