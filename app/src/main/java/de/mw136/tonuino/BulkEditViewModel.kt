@@ -17,7 +17,14 @@ const val TAG = "BulkEditViewModel"
 @ExperimentalUnsignedTypes
 class BulkEditViewModel : ViewModel() {
     // https://medium.com/@taman.neupane/basic-example-of-livedata-and-viewmodel-14d5af922d0
-    var lines: List<String> = abc()
+    var lines: List<String> = if (BuildConfig.DEBUG) {
+        listOf(
+            "1337B3470101040500;Erste Karte",
+            "1337B3470204083D5A;Guten Morgen"
+        )
+    } else {
+        listOf()
+    }
         private set
 
     var currentLineIndex: Int = 0
@@ -27,14 +34,6 @@ class BulkEditViewModel : ViewModel() {
 
     val lineCount: Int
         get() = lines.size
-
-    private fun abc(): List<String> {
-        Log.w("Bulk", "BulkEditViewModel constructor was called")
-        return listOf(
-            "1337B3470101040500;Erste Karte",
-            "1337B3470204083D5A;Guten Morgen"
-        )
-    }
 
     fun setLines(input: CharSequence) {
         lines = input.lines()
