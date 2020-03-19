@@ -22,6 +22,10 @@
     <string name="main_write_tag_headline">Write tags</string>
     <string name="main_write_tag_description">Existing data on the tag will be overwritten.</string>
     <string name="main_write_tag_button">Write data on tag</string>
+    <string name="main_write_bulk_headline">Bulk write tags</string>
+    <string name="main_write_bulk_description">You can provide a list of TonUINO tags to write.</string>
+    <string name="main_write_bulk_button">Enter bulk write list</string>
+
 
     <!-- Strings used on EditActivity -->
     <string name="edit_tonuino_version_label">Select tag type</string>

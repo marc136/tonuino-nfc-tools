@@ -13,15 +13,18 @@
     <string name="main_nfcadapter_is_null">Leider hat dieses Gerät keine Unterstützung für NFC!</string>
     <string name="main_nfcadapter_disabled">"NFC ist auf diesem Gerät verfügbar, aber gerade nicht aktiviert.\nBitte aktiviere NFC in den Einstellungen."</string>
     <string name="main_nfcadapter_settings">Einstellungen öffnen</string>
-    <string name="main_read_tag_headline">Tags Lesen</string>
+    <string name="main_read_tag_headline">Tag Lesen</string>
     <string name="main_read_tag_description">Sobald dieses Gerät auf einem NFC-kompatiblen RFID Tag, das TonUINO Daten
         beinhält, platziert wird, werden die Daten gelesen und angezeigt.
     </string>
-    <string name="main_write_tag_headline">Tags Schreiben</string>
+    <string name="main_write_tag_headline">Tag Schreiben</string>
     <string name="main_write_tag_description">Beim Beschreiben können auch bereits bestehende Daten auf dem Tag
         überschrieben werden.
     </string>
     <string name="main_write_tag_button">Tag Beschreiben</string>
+    <string name="main_write_bulk_headline">Tags Schreiben</string>
+    <string name="main_write_bulk_description">Es können auch mehrere Tags auf einmal eingegeben werden, die dann nacheinander geschrieben werden.</string>
+    <string name="main_write_bulk_button">Liste eingeben</string>
 
 
     <!-- Strings used on EditActivity -->
