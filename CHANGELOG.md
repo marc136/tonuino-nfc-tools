@@ -2,6 +2,9 @@
 This file gives a general overview, look into the git log for more information.
 
 ## unreleased
+<nothing>
+
+## 0.7.0
 - Migrate to AndroidX
 - Add bulk write activity
 
