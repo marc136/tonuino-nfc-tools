@@ -20,7 +20,7 @@
                     android:labelFor="@id/folder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="@dimen/margin_half"
                     android:textStyle="bold"
                     android:text="@string/edit_folder_label"/>
             <Spinner
@@ -41,7 +41,7 @@
                     android:labelFor="@id/mode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="@dimen/margin_half"
                     android:textStyle="bold"
                     android:text="@string/edit_mode_label"/>
             <Spinner
@@ -65,7 +65,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/special_label"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="@dimen/margin_half"
                     android:textStyle="bold"/>
             <EditText
                     android:layout_width="match_parent"
@@ -90,7 +90,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/edit_simple_special2_label"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="@dimen/margin_half"
                     android:textStyle="bold"/>
             <EditText
                     android:layout_width="match_parent"

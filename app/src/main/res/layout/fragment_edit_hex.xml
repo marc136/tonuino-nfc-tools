@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/bytes_label"
             android:textStyle="bold"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="@dimen/margin_half"/>
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

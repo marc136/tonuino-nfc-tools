@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
+        android:layout_margin="@dimen/margin_default"
         tools:context=".ui.BulkWriteActivity">
 
     <include layout="@layout/bulkwrite_content" />

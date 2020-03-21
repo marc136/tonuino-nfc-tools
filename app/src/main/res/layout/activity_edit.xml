@@ -11,12 +11,12 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp" android:layout_marginEnd="16dp">
+            android:layout_marginTop="@dimen/margin_half"
+            android:layout_marginStart="@dimen/margin_half" android:layout_marginEnd="@dimen/margin_half">
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="@dimen/margin_half"
                 android:textStyle="bold"
                 android:text="@string/edit_tonuino_version_label"/>
         <Spinner
@@ -49,21 +49,21 @@
     <androidx.viewpager.widget.ViewPager
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
+            android:layout_marginTop="@dimen/margin_half"
+            android:layout_marginStart="@dimen/margin_half" android:layout_marginEnd="@dimen/margin_half"
             android:id="@+id/edit_main_pager" android:layout_weight="1"/>
     <Button
             android:text="@string/edit_write_button_no_tag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="onClickWriteTagButton"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/margin_half"
             android:enabled="false"
             android:id="@+id/button_write"/>
     <TextView
             android:text="@string/edit_write_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/write_description"
-            android:layout_marginTop="8dp" android:layout_marginBottom="16dp"
-            android:layout_marginStart="16dp" android:layout_marginEnd="16dp"/>
+            android:layout_marginTop="@dimen/margin_half" android:layout_marginBottom="@dimen/margin_half"
+            android:layout_marginStart="@dimen/margin_half" android:layout_marginEnd="@dimen/margin_half"/>
 </LinearLayout>

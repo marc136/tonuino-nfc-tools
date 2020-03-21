@@ -9,7 +9,7 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="@dimen/margin_default"
             android:orientation="vertical">
 
         <TextView
@@ -27,10 +27,10 @@
                 android:id="@+id/error_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/margin_default"
                 android:background="#B00020"
                 android:orientation="vertical"
-                android:padding="8dp">
+                android:padding="@dimen/margin_half">
             <!-- TODO add proper theming
                 https://github.com/material-components/material-components-android/blob/master/docs/getting-started.md
                 values from here: https://material.io/design/color/the-color-system.html#color-theme-creation
@@ -59,7 +59,7 @@
 
         <Space
                 android:layout_width="match_parent"
-                android:layout_height="16dp" />
+                android:layout_height="@dimen/margin_default" />
 
         <LinearLayout
                 android:id="@+id/enabled_container"
@@ -80,7 +80,7 @@
 
             <Space
                     android:layout_width="match_parent"
-                    android:layout_height="16dp" />
+                    android:layout_height="@dimen/margin_default" />
 
             <TextView
                     android:layout_width="wrap_content"
@@ -101,7 +101,7 @@
 
             <Space
                     android:layout_width="match_parent"
-                    android:layout_height="16dp" />
+                    android:layout_height="@dimen/margin_default" />
 
             <TextView
                     android:layout_width="wrap_content"
