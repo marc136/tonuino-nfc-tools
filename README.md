@@ -14,14 +14,16 @@ Google Play releases are built using [fastlane](https://docs.fastlane.tools/gett
 - [ ] Add entry "unknown <#>" to mode spinner on EditSimple fragment
 - [ ] Allow users to write a note or title to the NFC tag
 - [ ] Allow users to keep a list of tags
+- [x] Allow users to write a bulk list of tags
 - [x] Add support for further NFC tag technologies
   - [x] Mifare Ultralight
-  - [ ] Generic NfcA
+  - ~[ ] Generic NfcA~
 - ~[ ] Simulate NFC tag~ (unfortunately not possible with current Android APIs
 - [ ] Use proper Material design theming instead of faking it
     - MainActivity if NFC is not available
 - [ ] Use data binding
-
+  - [x] on BulkWriteActivity
+  - [ ] on EditActivity
 
 ## Tonuino 2.0.x
 [Repository](https://github.com/xfjx/TonUINO/blob/d15df6c7bb53bc970e4def43fd3e93fd82c13086/Tonuino.ino)
@@ -102,6 +104,13 @@ Links:
 
 ## NFC Host Card Emulation
 It would be great if the app also can act as an NFC tag to simulate TonUINO tags, some links to this:
+[Official Android docs](https://developer.android.com/guide/topics/connectivity/nfc/hce.html#HCE)
 
-- [Official Android docs](https://developer.android.com/guide/topics/connectivity/nfc/hce.html#HCE)
+From a [question on Mifare support forum](https://www.mifare.net/support/forum/topic/creating-nfc-android-app-to-act-as-mifare-card-to-interact-with-mifare-readers/):
+>  Here is a very good example https://github.com/grundid/host-card-emulation-sample which will write to you "Hello Desktop!" The App emulates a MIFARE card with this AID 0xF0, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06 You should make your self familiar with the HCE code.
+>
+> In the other side you should have an NFC reader (in your case MIFARE NFC) which will be looking for the same AID as in the HCE App. Normally you should send this cmd to the Android phone from your reader after you have brought the two devices close enough 0x00 [CLA], 0xA4 [INS], 0x04, 0x00, 0x07 [Lc], 0xF0, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x00 [Le]
+
+
+
 
