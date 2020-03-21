@@ -120,11 +120,17 @@ class BulkWriteFragment : Fragment() {
     private fun showModalDialog(result: WriteResult) {
         with(AlertDialog.Builder(activity)) {
             var showRetryButton = false
+            var addOkButton = true
 
             when (result) {
                 WriteResult.SUCCESS -> {
-                    // TODO add "next line" button
                     setMessage(R.string.written_success)
+                    if (viewModel.hasNext) {
+                        setPositiveButton(R.string.bulk_write_button_next) { _, _ ->
+                            viewModel.nextLine()
+                        }
+                        addOkButton = false
+                    }
                 }
                 WriteResult.UNSUPPORTED_FORMAT -> {
                     setTitle(R.string.written_unsupported_tag_type)
@@ -157,7 +163,9 @@ class BulkWriteFragment : Fragment() {
                 }
             }
 
-            setPositiveButton(getString(R.string.button_ok)) { _, _ -> }
+            if (addOkButton) {
+                setPositiveButton(getString(R.string.button_ok)) { _, _ -> }
+            }
             if (showRetryButton) {
                 setNegativeButton(getString(R.string.written_button_retry)) { _, _ -> writeTag() }
             }
