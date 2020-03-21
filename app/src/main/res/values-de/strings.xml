@@ -28,6 +28,7 @@
 
 
     <!-- Strings used on EditActivity -->
+    <string name="edit_nfc_connection_lost">Verbindung verloren</string>
     <string name="edit_cookie_label">Cookie</string>
     <string name="edit_version_label">Version</string>
     <string name="edit_folder_label">Ordner</string>
@@ -131,13 +132,6 @@
     <string name="read_intro">Gelesene Daten</string>
     <string name="read_edit_button">Bearbeiten</string>
 
-    <!-- Other strings -->
-    <string name="button_ok">OK</string>
-    <string name="play_mp3_file">Spielt Datei %03d.mp3 ab</string>
-    <string name="play_timer">Die Wiedergabe wird nach %d Minuten pausiert</string>
-    <string name="nfc_read_tag_failure">Fehler: Konnte keine Daten vom NFC Tag lesen</string>
-    <string name="nfc_tag_technologies">"Gerät und Tag unterstützen diese Technologien:\n%s"</string>
-
 
     <!-- BulkEditActivity and its fragments -->
     <string name="bulk_activity_title">Stapelverarbeitung</string>
@@ -154,6 +148,14 @@
     <string name="bulk_write_button_prev">Vorige Zeile</string>
     <string name="bulk_write_button_next">Nächste Zeile</string>
     <string name="bulk_write_button_back">Liste bearbeiten</string>
+    <string name="bulk_write_invalid_line_format">Konnte die Zeile nicht lesen</string>
 
+    <!-- Other strings -->
+    <string name="button_ok">OK</string>
+    <string name="play_mp3_file">Spielt Datei %03d.mp3 ab</string>
+    <string name="play_timer">Die Wiedergabe wird nach %d Minuten pausiert</string>
+    <string name="nfc_tag_found">Tag %s gefunden</string>
+    <string name="nfc_read_tag_failure">Fehler: Konnte keine Daten vom NFC Tag lesen</string>
+    <string name="nfc_tag_technologies">"Gerät und Tag unterstützen diese Technologien:\n%s"</string>
     <!-- New fields below -->
 </resources>

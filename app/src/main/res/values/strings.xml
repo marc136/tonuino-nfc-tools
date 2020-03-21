@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">TonUINO NFC Tools</string>
     <string name="app_version">(v%s)</string>
 
@@ -28,6 +28,7 @@
 
 
     <!-- Strings used on EditActivity -->
+    <string name="edit_nfc_connection_lost">Verbindung verloren</string>
     <string name="edit_tonuino_version_label">Select tag type</string>
     <string-array name="edit_tonuino_tag_types">
         <item>Tonuino 2.0.x</item>
@@ -47,7 +48,7 @@
     <string name="edit_special2_label">Extra 2</string>
 
     <string name="edit_hidden_label">hidden</string>
-    <string name="edit_limit_numeric_value">Please enter a number between %d and %d.</string>
+    <string name="edit_limit_numeric_value" tools:ignore="PluralsCandidate">Please enter a number between %d and %d.</string>
 
     <string-array name="edit_mode">
         <item>Audio book (single file)</item>
@@ -130,13 +131,6 @@
     <string name="read_intro">Read data</string>
     <string name="read_edit_button">Edit</string>
 
-    <!-- Other strings -->
-    <string name="button_ok">OK</string>
-    <string name="play_mp3_file">Will play file %03d.mp3</string>
-    <string name="play_timer">Will pause playing after %d minutes</string>
-    <string name="nfc_read_tag_failure">Error: Could not read data from NFC tag</string>
-    <string name="nfc_tag_technologies">"Device and tag support these technologies:\n%s"</string>
-
     <!-- BulkEditActivity and its fragments -->
     <string name="bulk_activity_title">Bulk write tags</string>
 
@@ -152,6 +146,14 @@
     <string name="bulk_write_button_prev">Previous line</string>
     <string name="bulk_write_button_next">Next line</string>
     <string name="bulk_write_button_back">Change list</string>
+    <string name="bulk_write_invalid_line_format">Invalid line format</string>
 
+    <!-- Other strings -->
+    <string name="button_ok">OK</string>
+    <string name="play_mp3_file">Will play file %03d.mp3</string>
+    <string name="play_timer" tools:ignore="PluralsCandidate">Will pause playing after %d minutes</string>
+    <string name="nfc_tag_found">Tag %s gefunden</string>
+    <string name="nfc_read_tag_failure">Error: Could not read data from NFC tag</string>
+    <string name="nfc_tag_technologies">"Device and tag support these technologies:\n%s"</string>
     <!-- New fields below -->
 </resources>
