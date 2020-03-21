@@ -29,7 +29,7 @@ class EditSimpleContainer : EditFragment() {
         Log.i(TAG, "onAttach()")
         listener = context as EditNfcData
         if (listener == null) {
-            throw RuntimeException(context.toString() + " must implement EditNfcData")
+            throw RuntimeException("$context must implement EditNfcData")
         }
     }
 
@@ -47,7 +47,7 @@ class EditSimpleContainer : EditFragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_edit_simple_container, container, false)
 
-        if (listener?.tagData?.isModifierTag() ?: false) {
+        if (listener?.tagData?.isModifierTag() == true) {
             Log.e(TAG, "useModifierTagEditUi")
             tagType = TagType.Modifier
             child = ModifierTag()
@@ -56,7 +56,7 @@ class EditSimpleContainer : EditFragment() {
             tagType = TagType.Normal
             child = EditSimple()
         }
-        fragmentManager!!.beginTransaction().replace(R.id.children, child!!).commit()
+        requireFragmentManager().beginTransaction().replace(R.id.children, child!!).commit()
 
         return view
     }
@@ -110,7 +110,7 @@ class EditSimpleContainer : EditFragment() {
         }
         if (!(child is EditSimple)) {
             child = EditSimple()
-            fragmentManager!!.beginTransaction().replace(R.id.children, child!!).commit()
+            requireFragmentManager().beginTransaction().replace(R.id.children, child!!).commit()
         }
     }
 
@@ -121,7 +121,7 @@ class EditSimpleContainer : EditFragment() {
         }
         if (!(child is ModifierTag)) {
             child = ModifierTag()
-            fragmentManager!!.beginTransaction().replace(R.id.children, child!!).commit()
+            requireFragmentManager().beginTransaction().replace(R.id.children, child!!).commit()
         }
     }
 }

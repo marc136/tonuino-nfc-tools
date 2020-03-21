@@ -1,9 +1,9 @@
 package de.mw136.tonuino
 
-import android.os.Parcel
 import de.mw136.tonuino.nfc.TagData
 import de.mw136.tonuino.nfc.dropTrailingZeros
-import org.junit.Assert.*
+import org.junit.Assert.assertArrayEquals
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 

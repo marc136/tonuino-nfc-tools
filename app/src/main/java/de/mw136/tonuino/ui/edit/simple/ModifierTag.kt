@@ -21,7 +21,6 @@ class ModifierTag : EditFragment() {
     override val TAG = "ModifierTag"
 
     private lateinit var mode: Spinner
-    private lateinit var modeLabel: TextView
     private lateinit var modeDescription: TextView
     private lateinit var special: EditText
     private lateinit var specialLabel: TextView
@@ -33,7 +32,7 @@ class ModifierTag : EditFragment() {
         Log.i(TAG, "onAttach()")
         listener = context as EditNfcData
         if (listener == null) {
-            throw RuntimeException(context.toString() + " must implement EditNfcData")
+            throw RuntimeException("$context must implement EditNfcData")
         }
     }
 
@@ -54,7 +53,7 @@ class ModifierTag : EditFragment() {
         mode = view.findViewById(R.id.mode)
         // initialize spinner for 'mode'
         ArrayAdapter.createFromResource(
-            activity!!.baseContext,
+            requireActivity().baseContext,
             R.array.edit_modifier_tags, android.R.layout.simple_spinner_item
         ).also { adapter ->
             // Specify the layout to use when the list of choices appears

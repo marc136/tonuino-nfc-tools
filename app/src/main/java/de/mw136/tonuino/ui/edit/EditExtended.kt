@@ -45,7 +45,7 @@ class EditExtended : EditFragment() {
         if (context is EditNfcData) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement EditNfcData")
+            throw RuntimeException("$context must implement EditNfcData")
         }
     }
 

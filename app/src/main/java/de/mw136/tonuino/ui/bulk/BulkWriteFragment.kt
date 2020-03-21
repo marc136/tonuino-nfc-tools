@@ -1,19 +1,23 @@
 package de.mw136.tonuino.ui.bulk
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import de.mw136.tonuino.*
+import de.mw136.tonuino.BulkEditViewModel
+import de.mw136.tonuino.R
+import de.mw136.tonuino.TagWithComment
+import de.mw136.tonuino.byteArrayToHex
 import de.mw136.tonuino.nfc.*
 
 
@@ -23,8 +27,6 @@ class BulkWriteFragment : Fragment() {
     private val viewModel: BulkEditViewModel by activityViewModels()
     private var tagData: TagWithComment? = null
 
-    private lateinit var buttonNext: Button
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,6 +35,7 @@ class BulkWriteFragment : Fragment() {
         return inflater.inflate(R.layout.bulkwrite_fragment_write_tags, container, false)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -60,7 +63,7 @@ class BulkWriteFragment : Fragment() {
                 val str = byteArrayToHex(tag.bytes).joinToString(" ")
                 tagBytes.setText(str)
             } else {
-                tagTitle.setText("Konnte die Zeile nicht lesen")
+                tagTitle.setText(getString(R.string.bulk_write_invalid_line_format))
                 tagBytes.setText('"' + current + '"')
                 tagData = null
             }
@@ -87,7 +90,7 @@ class BulkWriteFragment : Fragment() {
             if (tag == null) {
                 writeButton.setText(getString(R.string.edit_write_button_no_tag))
                 writeButton.isEnabled = false
-                Toast.makeText(activity, "Verbindung verloren", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, getString(R.string.edit_nfc_connection_lost), Toast.LENGTH_LONG).show()
             } else {
                 writeButton.setText(getString(R.string.edit_write_button, tagIdAsString(tag)))
                 writeButton.isEnabled = true
@@ -103,13 +106,13 @@ class BulkWriteFragment : Fragment() {
         var result = WriteResult.TAG_UNAVAILABLE
         Log.w(TAG, "called writeTag")
         viewModel.tag.value?.let {
-            Log.w(TAG, "has tag.value ${it}")
+            Log.w(TAG, "has tag.value $it")
             Log.w("$TAG.writeTag", "will write to tag ${tagIdAsString(it)}")
 
             tagData?.bytes?.let { bytes ->
                 result = writeTonuino(it, TagData(bytes))
             }
-            Log.w("$TAG.writeTag", "result ${result}")
+            Log.w("$TAG.writeTag", "result $result")
         }
         showModalDialog(result)
     }

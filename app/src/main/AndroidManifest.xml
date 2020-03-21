@@ -18,7 +18,7 @@
                 android:name=".ui.BulkWriteActivity"
                 android:label="@string/bulk_activity_title"
                 android:windowSoftInputMode="adjustResize"
-                android:parentActivityName=".ui.MainActivity"></activity>
+                android:parentActivityName=".ui.MainActivity" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,10 +28,10 @@
         </activity>
         <activity
                 android:name=".ui.EditActivity"
-                android:parentActivityName=".ui.MainActivity"></activity>
+                android:parentActivityName=".ui.MainActivity" />
         <activity
                 android:name=".ui.ReadActivity"
-                android:parentActivityName=".ui.MainActivity"></activity>
+                android:parentActivityName=".ui.MainActivity" />
     </application>
 
 </manifest>

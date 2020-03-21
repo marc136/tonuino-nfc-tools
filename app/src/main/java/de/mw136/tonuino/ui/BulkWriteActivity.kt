@@ -8,13 +8,11 @@ import android.os.Handler
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import com.google.android.material.snackbar.Snackbar
 import de.mw136.tonuino.BulkEditViewModel
 import de.mw136.tonuino.R
 import de.mw136.tonuino.nfc.NfcIntentActivity
 import de.mw136.tonuino.nfc.connectTo
 import de.mw136.tonuino.nfc.tagIdAsString
-import kotlinx.android.synthetic.main.bulkwrite_activity.*
 import java.io.IOException
 
 @ExperimentalUnsignedTypes
@@ -79,7 +77,7 @@ class BulkWriteActivity : NfcIntentActivity() {
             Log.w("$TAG.onNfcTag", "Could not connect to the NFC tag")
         } catch (ex: FormatException) {
             // unsupported tag format
-            Log.w("$TAG.onNfcNtag", "Unsupported format")
+            Log.w("$TAG.onNfcTag", "Unsupported format")
         } catch (ex: Exception) {
             // TODO display unexpected error
             Log.e("$TAG.onNfcTag", ex.toString())

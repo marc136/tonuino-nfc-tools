@@ -27,7 +27,6 @@ class EditSimple : EditFragment() {
     private lateinit var specialDescription: TextView
     private lateinit var specialRow: View
     private lateinit var special2: EditText
-    private lateinit var special2Label: TextView
     private lateinit var special2Description: TextView
     private lateinit var special2Row: View
 
@@ -36,7 +35,7 @@ class EditSimple : EditFragment() {
         Log.i(TAG, "onAttach()")
         listener = context as EditNfcData
         if (listener == null) {
-            throw RuntimeException(context.toString() + " must implement EditNfcData")
+            throw RuntimeException("$context must implement EditNfcData")
         }
     }
 
@@ -57,7 +56,7 @@ class EditSimple : EditFragment() {
         folder = view.findViewById(R.id.folder)
         // initialize spinner for 'folder'
         val folders = (1..99).map { it.toString().padStart(2, '0') }
-        ArrayAdapter<String>(activity!!.baseContext, android.R.layout.simple_spinner_item, folders).also {
+        ArrayAdapter<String>(requireActivity().baseContext, android.R.layout.simple_spinner_item, folders).also {
             folder.adapter = it
         }
         folder.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -76,7 +75,7 @@ class EditSimple : EditFragment() {
         mode = view.findViewById(R.id.mode)
         // initialize spinner for 'mode'
         ArrayAdapter.createFromResource(
-            activity!!.baseContext,
+            requireActivity().baseContext,
             R.array.edit_mode, android.R.layout.simple_spinner_item
         ).also { adapter ->
             // Specify the layout to use when the list of choices appears

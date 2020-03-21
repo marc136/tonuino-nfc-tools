@@ -12,6 +12,7 @@ import android.util.Log
 import de.mw136.tonuino.byteArrayToHex
 import de.mw136.tonuino.hexToBytes
 import java.io.IOException
+import kotlin.math.ceil
 
 private const val TAG = "TagHelper"
 private const val tonuinoSector = 1
@@ -133,7 +134,7 @@ fun readFromTag(tag: Tag): UByteArray {
         } else {
             Log.e(
                 "$TAG.readFromTag",
-                "Tag ${id} did not enumerate MifareClassic or MifareUltralight and is thus not supported"
+                "Tag $id did not enumerate MifareClassic or MifareUltralight and is thus not supported"
             )
         }
     } catch (ex: Exception) {
@@ -146,7 +147,7 @@ fun readFromTag(tag: Tag): UByteArray {
 
 @ExperimentalUnsignedTypes
 fun dropTrailingZeros(bytes: UByteArray): UByteArray {
-    if (bytes.size == 0) return bytes
+    if (bytes.isEmpty()) return bytes
 
     val lastNonZeroIndex = bytes.indexOfLast { value -> value > 0u }
     if (lastNonZeroIndex == 0) return ubyteArrayOf()
@@ -290,7 +291,7 @@ fun writeTag(mifare: MifareUltralight, data: TagData): WriteResult {
 
     Log.i(TAG, "data byte size $len")
 
-    val pagesNeeded = Math.ceil(data.bytes.size.toDouble() / MifareUltralight.PAGE_SIZE).toInt()
+    val pagesNeeded = ceil(data.bytes.size.toDouble() / MifareUltralight.PAGE_SIZE).toInt()
 
     val block = data.toFixedLengthBuffer(MifareUltralight.PAGE_SIZE * pagesNeeded)
     var current = 0

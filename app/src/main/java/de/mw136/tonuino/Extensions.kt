@@ -68,7 +68,7 @@ fun EditText.validateInputAndSetByte(which: WhichByte, min: Int = 0, max: Int = 
     ) { str ->
         try {
             val int = str.toInt()
-            return@addValidator int >= min && int <= max
+            return@addValidator int in min..max
         } catch (ex: Exception) {
             return@addValidator false
         }

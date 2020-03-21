@@ -13,7 +13,7 @@ import de.mw136.tonuino.nfc.readFromTag
 import de.mw136.tonuino.nfc.tagIdAsString
 
 @ExperimentalUnsignedTypes
-class ReadActivity() : NfcIntentActivity() {
+class ReadActivity : NfcIntentActivity() {
     override val TAG = "ReadActivity"
 
     lateinit var tag: Tag

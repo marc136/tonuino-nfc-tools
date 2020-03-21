@@ -9,16 +9,16 @@ import android.nfc.Tag
 import android.nfc.tech.NfcA
 import android.nfc.tech.NfcB
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import de.mw136.tonuino.R
 
 @ExperimentalUnsignedTypes
 abstract class NfcIntentActivity : AppCompatActivity() {
     private lateinit var pendingIntent: PendingIntent
     protected var nfcAdapter: NfcAdapter? = null
-    abstract protected val TAG: String
+    protected abstract val TAG: String
 
     abstract fun onNfcTag(tag: Tag)
 
@@ -53,11 +53,12 @@ abstract class NfcIntentActivity : AppCompatActivity() {
     }
 
     override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
         val tag: Tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG) ?: return
         Log.i(TAG, "onNewIntent tag: ${tag.id}")
 
         val id = tagIdAsString(tag)
-        Toast.makeText(this, "Tag ${id} gefunden", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, getString(R.string.nfc_tag_found, id), Toast.LENGTH_LONG).show()
 
         return onNfcTag(tag)
     }

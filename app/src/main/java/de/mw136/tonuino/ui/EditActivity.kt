@@ -6,11 +6,14 @@ import android.nfc.Tag
 import android.nfc.tech.TagTechnology
 import android.os.Bundle
 import android.os.Handler
-import com.google.android.material.tabs.TabLayout
 import android.util.Log
 import android.view.View
-import android.widget.*
-import de.mw136.tonuino.*
+import android.widget.AdapterView
+import android.widget.Button
+import android.widget.Spinner
+import android.widget.Toast
+import com.google.android.material.tabs.TabLayout
+import de.mw136.tonuino.R
 import de.mw136.tonuino.nfc.*
 import de.mw136.tonuino.ui.edit.*
 import java.io.IOException
@@ -41,12 +44,12 @@ class EditActivity : NfcIntentActivity(), EditNfcData {
             override fun onNothingSelected(parent: AdapterView<*>) {}
 
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                Log.i(TAG, "TODO tag type selection: selected ${position}")
+                Log.i(TAG, "TODO tag type selection: selected $position")
                 val version: UByte = when (position) {
                     0 -> 1u
                     1, 2 -> 2u
                     else -> {
-                        Log.e(TAG, "tag type at position ${position} was not implememented.")
+                        Log.e(TAG, "tag type at position $position was not implemented.")
                         return
                     }
                 }
@@ -121,7 +124,7 @@ class EditActivity : NfcIntentActivity(), EditNfcData {
             if (this@EditActivity.tag == null) {
                 setText(getString(R.string.edit_write_button_no_tag))
                 isEnabled = false
-                Toast.makeText(this@EditActivity, "Verbindung verloren", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@EditActivity, getString(R.string.edit_nfc_connection_lost), Toast.LENGTH_LONG).show()
             } else {
                 setText(getString(R.string.edit_write_button, tagIdAsString(this@EditActivity.tag!!)))
                 isEnabled = true
@@ -138,7 +141,7 @@ class EditActivity : NfcIntentActivity(), EditNfcData {
         if (tag != null) {
             Log.w("$TAG.writeTag", "will write to tag ${tagIdAsString(tag!!)}")
             result = writeTonuino(tag!!, tagData)
-            Log.w("$TAG.writeTag", "result ${result}")
+            Log.w("$TAG.writeTag", "result $result")
         }
         showModalDialog(result)
     }
@@ -192,7 +195,7 @@ class EditActivity : NfcIntentActivity(), EditNfcData {
             Log.w("$TAG.onNfcTag", "Could not connect to the NFC tag")
         } catch (ex: FormatException) {
             // unsupported tag format
-            Log.w("$TAG.onNfcNtag", "Unsupported format")
+            Log.w("$TAG.onNfcTag", "Unsupported format")
         } catch (ex: Exception) {
             // TODO display unexpected error
             Log.e("$TAG.onNfcTag", ex.toString())

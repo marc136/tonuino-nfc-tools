@@ -30,7 +30,7 @@ class EditHex : EditFragment() {
         Log.i(TAG, "onAttach()")
         listener = context as EditNfcData
         if (listener == null) {
-            throw RuntimeException(context.toString() + " must implement EditNfcData")
+            throw RuntimeException("$context must implement EditNfcData")
         }
     }
 
@@ -68,7 +68,7 @@ class EditHex : EditFragment() {
                     bytesEdit.setSelection(cursorPosition)
                 }
             }
-        });
+        })
 
         refreshUi(listener!!.tagData)
         return view
