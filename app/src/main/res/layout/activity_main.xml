@@ -99,25 +99,10 @@
                     android:onClick="showWriteActivity"
                     android:text="@string/main_write_tag_button" />
 
-            <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/margin_default" />
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/main_write_bulk_headline"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/main_write_bulk_description" />
-
             <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="showWriteActivity"
+                    android:onClick="showBulkWriteActivity"
                     android:text="@string/main_write_bulk_button" />
         </LinearLayout>
     </LinearLayout>

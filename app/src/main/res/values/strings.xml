@@ -6,8 +6,7 @@
     <string name="main_intro_line1">This app can read and write NFC-compatible RFID Tags for the TonUINO DIY music
         box.
     </string>
-    <string name="main_intro_line2">More information about the TonUINO project is available at
-        https://www.voss.earth/tonuino and https://discourse.voss.earth (mostly German).
+    <string name="main_intro_line2">More information about the TonUINO project is available at https://www.tonuino.de (mostly German).
     </string>
     <string name="main_nfcadapter_error">Error</string>
     <string name="main_nfcadapter_is_null">This device does not support NFC. The functionality is not available.
@@ -22,8 +21,6 @@
     <string name="main_write_tag_headline">Write tags</string>
     <string name="main_write_tag_description">Existing data on the tag will be overwritten.</string>
     <string name="main_write_tag_button">Write data on tag</string>
-    <string name="main_write_bulk_headline">Bulk write tags</string>
-    <string name="main_write_bulk_description">You can provide a list of TonUINO tags to write.</string>
     <string name="main_write_bulk_button">Enter bulk write list</string>
 
 

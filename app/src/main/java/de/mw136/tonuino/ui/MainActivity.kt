@@ -6,11 +6,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
-import de.mw136.tonuino.*
+import de.mw136.tonuino.BuildConfig
+import de.mw136.tonuino.R
+import de.mw136.tonuino.byteArrayToHex
 import de.mw136.tonuino.nfc.NfcIntentActivity
 import de.mw136.tonuino.nfc.TagData
 import de.mw136.tonuino.nfc.readFromTag
-import de.mw136.tonuino.BuildConfig
 
 @ExperimentalUnsignedTypes
 class MainActivity : NfcIntentActivity() {
@@ -25,8 +26,9 @@ class MainActivity : NfcIntentActivity() {
         super.onResume()
 
         val version = BuildConfig.VERSION_NAME + "#" + BuildConfig.VERSION_CODE
-        Log.i(TAG,"Version ${BuildConfig.VERSION_NAME} build #${BuildConfig.VERSION_CODE}")
-        supportActionBar?.title = "${getString(R.string.app_name)} ${getString(R.string.app_version, version)}"
+        Log.i(TAG, "Version ${BuildConfig.VERSION_NAME} build #${BuildConfig.VERSION_CODE}")
+        supportActionBar?.title =
+            "${getString(R.string.app_name)} ${getString(R.string.app_version, version)}"
 
         val errorContainer = findViewById<View>(R.id.error_container)
         val errorView = findViewById<TextView>(R.id.error_text)
@@ -56,8 +58,11 @@ class MainActivity : NfcIntentActivity() {
     }
 
     fun showWriteActivity(view: View) {
+        startActivity(Intent(view.context, EditActivity::class.java))
+    }
+
+    fun showBulkWriteActivity(view: View) {
         startActivity(Intent(view.context, BulkWriteActivity::class.java))
-//        startActivity(Intent(view.context, EditActivity::class.java))
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -78,4 +83,5 @@ class MainActivity : NfcIntentActivity() {
             showReadErrorModalDialog(tag)
         }
     }
+
 }
