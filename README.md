@@ -2,6 +2,8 @@
 
 Android app to write and read NFC tags that can be used on the [TonUINO DIY music box](https://tonuino.de/).
 
+For discussion, see [this thread (in German)](http://discourse.voss.earth/t/android-app-um-tonuino-karten-zu-beschreiben/2151), or use github issues.
+
 The app is available [for download on github](https://github.com/marc136/tonuino-nfc-tools/releases), 
 installable using the [Google Play Store](https://play.google.com/store/apps/details?id=de.mw136.tonuino) or the [F-Droid Store](https://f-droid.org/packages/de.mw136.tonuino/).
 
