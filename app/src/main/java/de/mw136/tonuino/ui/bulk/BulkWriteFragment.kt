@@ -90,7 +90,11 @@ class BulkWriteFragment : Fragment() {
             if (tag == null) {
                 writeButton.setText(getString(R.string.edit_write_button_no_tag))
                 writeButton.isEnabled = false
-                Toast.makeText(activity, getString(R.string.edit_nfc_connection_lost), Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    activity,
+                    getString(R.string.edit_nfc_connection_lost),
+                    Toast.LENGTH_LONG
+                ).show()
             } else {
                 writeButton.setText(getString(R.string.edit_write_button, tagIdAsString(tag)))
                 writeButton.isEnabled = true
@@ -119,7 +123,7 @@ class BulkWriteFragment : Fragment() {
 
     private fun showModalDialog(result: WriteResult) {
         with(AlertDialog.Builder(activity)) {
-            var showRetryButton = false
+            var addRetryButton = false
             var addOkButton = true
 
             when (result) {
@@ -144,12 +148,12 @@ class BulkWriteFragment : Fragment() {
                 WriteResult.AUTHENTICATION_FAILURE -> {
                     setTitle(R.string.written_title_failure)
                     setMessage(R.string.written_authentication_failure)
-                    showRetryButton = true
+                    addRetryButton = true
                 }
                 WriteResult.TAG_UNAVAILABLE -> {
                     setTitle(R.string.written_title_failure)
                     setMessage(R.string.written_tag_unavailable)
-                    showRetryButton = true
+                    addRetryButton = true
                 }
                 WriteResult.UNKNOWN_ERROR -> {
                     setTitle(R.string.written_unknown_error)
@@ -159,14 +163,14 @@ class BulkWriteFragment : Fragment() {
                             techListOf(viewModel.tag.value).joinToString(", ")
                         )
                     )
-                    showRetryButton = true
+                    addRetryButton = true
                 }
             }
 
             if (addOkButton) {
                 setPositiveButton(getString(R.string.button_ok)) { _, _ -> }
             }
-            if (showRetryButton) {
+            if (addRetryButton) {
                 setNegativeButton(getString(R.string.written_button_retry)) { _, _ -> writeTag() }
             }
             create().show()
