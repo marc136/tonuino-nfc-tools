@@ -31,7 +31,9 @@ class EnterListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<Button>(R.id.button_start).setOnClickListener {
+        val buttonStart = view.findViewById<Button>(R.id.button_start)
+        buttonStart.isEnabled = viewModel.lineCount > 0
+        buttonStart.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
 
@@ -41,6 +43,7 @@ class EnterListFragment : Fragment() {
         myTextBox.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
                 viewModel.setLines(s)
+                buttonStart.isEnabled = s.isNotBlank()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
