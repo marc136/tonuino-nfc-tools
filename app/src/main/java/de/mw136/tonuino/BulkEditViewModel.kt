@@ -84,14 +84,22 @@ class TagWithComment(val bytes: UByteArray, val title: String) {
     companion object {
         fun of(str: String): TagWithComment? {
             // TODO add tests
-            val parts = str.split(";", " ")
+            val parts = str.trim().split(";", " ")
             if (parts.isNotEmpty()) {
-                val first: UByteArray = hexToBytes(parts[0])
-                val rest = parts.drop(1).joinToString(" ")
-                Log.w("Bulk", "first: $first")
-                Log.w("Bulk", "rest: $rest")
-                if (first.isNotEmpty()) {
-                    return TagWithComment(first, rest)
+                try {
+                    val first: UByteArray = hexToBytes(parts[0])
+                    val rest = parts.drop(1).joinToString(" ")
+                    Log.d(TAG, "first: $first")
+                    Log.d(TAG, "rest: $rest")
+                    if (first.isNotEmpty()) {
+                        return TagWithComment(first, rest)
+                    }
+                } catch (ex: NumberFormatException) {
+                    Log.w(TAG, ex.toString())
+                    return null
+                } catch (ex: Exception) {
+                    Log.e(TAG, ex.toString())
+                    return null
                 }
             }
             return null
