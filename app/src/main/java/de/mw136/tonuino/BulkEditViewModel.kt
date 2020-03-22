@@ -28,7 +28,8 @@ class BulkEditViewModel : ViewModel() {
 
     var currentLineIndex: Int = 0
         private set
-    private var _currentLine: MutableLiveData<String> = MutableLiveData(lines[currentLineIndex])
+    private var _currentLine: MutableLiveData<String> =
+        MutableLiveData(if (lines.isEmpty()) "" else lines[currentLineIndex])
     val currentLine: LiveData<String> = _currentLine
 
     val lineCount: Int
