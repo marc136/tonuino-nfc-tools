@@ -8,6 +8,10 @@
 
 # fastlane
 fastlane/report.xml
+Gemfile.lock
+
+# Android Keystore files
+*.jks
 
 # build folders
 /build

@@ -11,7 +11,7 @@
 #
 
 # Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
+update_fastlane
 
 default_platform(:android)
 
@@ -21,24 +21,22 @@ platform :android do
     gradle(task: "test")
   end
 
-  desc "Submit a new Beta Build to Crashlytics Beta"
-  lane :beta do
+  desc "Submit a new build to Google Play"
+  lane :publish do
+    gradle(task: "clean")
     gradle(
-      task: "clean assembleRelease",
+      task: "bundle", # use "assemble" to build an .apk instead
+      build_type: "Release",
       properties: {
-        "android.injected.signing.store.file" => ENV["HOME"] + "/android/keystore.jks",
-        "android.injected.signing.store.password" => ENV["TONUINO_KEYSTORE_PASSWORD"],
-
-        "android.injected.signing.key.password" => ENV["TONUINO_KEY_PASSWORD"],
+	"android.injected.signing.store.file" => ENV["TONUINO_KEYSTORE"],
+        "android.injected.signing.store.password" => ENV["TONUINO_KEYSTORE_PASS"],
+        "android.injected.signing.key.password" => ENV["TONUINO_KEY_PASS"],
         "android.injected.signing.key.alias" => ENV["TONUINO_KEY"],
       }
     )
     upload_to_play_store(
-      track: 'beta',
+      track: ENV["PLAY_STORE_TRACK"],
       skip_upload_screenshots: true
     )
-
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
   end
 end
