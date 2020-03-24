@@ -4,8 +4,7 @@
     <!-- Will not show up in the store for devices without NFC support -->
     <uses-feature
             android:name="android.hardware.nfc"
-            android:required="true" />
-    <!-- Request user permission -->
+            android:required="true" /> <!-- Request user permission -->
     <uses-permission android:name="android.permission.NFC" />
 
     <application
@@ -15,6 +14,10 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity
+                android:name=".ui.EnterTagActivity"
+                android:label="@string/title_activity_enter_tag"
+                android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
                 android:name=".ui.BulkWriteActivity"
                 android:label="@string/bulk_activity_title"

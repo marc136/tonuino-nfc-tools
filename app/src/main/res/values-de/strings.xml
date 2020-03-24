@@ -33,9 +33,14 @@
     <string name="edit_special_label">Extra</string>
     <string name="edit_special_label_for_album_mode">Titel</string>
     <string name="edit_special_label_for_modifier_sleep_timer">Minuten</string>
+    <string name="edit_special_label_from">Von</string>
     <string name="edit_special2_label">Extra 2</string>
+    <string name="edit_special2_label_to">Bis</string>
+    <string name="edit_version_1">Format 1: Für Tonuino 2.0.x (master)</string>
+    <string name="edit_version_2">Format 2: Für Tonuino 2.1 (dev)</string>
 
     <string name="edit_hidden_label">hidden</string>
+    <string name="edit_unknown_value">Wert \'%s\' ist unbekannt.</string>
     <string name="edit_limit_numeric_value">Bitte eine Zahl zwischen %d und %d eingeben.</string>
 
     <string-array name="edit_mode">
@@ -45,6 +50,9 @@
         <item>Einzel</item>
         <item>Hörbuch</item>
         <item>Admin</item>
+        <item>Hörspiel von-bis</item>
+        <item>Album von-bis</item>
+        <item>Party von-bis</item>
     </string-array>
     <string-array name="edit_mode_description">
         <item>Ein zufälliger Titel aus dem gewählten Ordner wird abgespielt.</item>
@@ -55,6 +63,9 @@
             nächsten Verwenden der Karte beim aktuellen Titel begonnen wird.
         </item>
         <item>Admin-Karten werden in Tonuino 2.0.1 noch nicht unterstützt.</item>
+        <item>Ein zufälliger Titel im gewählten Ordner zwischen von und bis wird abgespielt.</item>
+        <item>Spielt alle Titel des Ordners zwischen von und bis in numerischer Reihenfolge.</item>
+        <item>Spielt zufällige Titel des Ordners zwischen von und bis in Endlosschleife.</item>
     </string-array>
     <string name="edit_mode_unknown">Der Modus \'%d\' ist unbekannt.</string>
 
@@ -77,6 +88,9 @@
         <item>Gib zum Beispiel die Lautstärke aus, bevor sie geändert wird.</item>
     </string-array>
 
+    <string name="edit_special_from">Zwischen Titel %d</string>
+    <string name="edit_special2_to">Und Titel %d</string>
+
     <string name="edit_write_button">Daten auf Tag %s schreiben</string>
     <string name="edit_write_button_no_tag">Ohne Tag kann nicht geschrieben werden</string>
     <string name="edit_write_description">Damit die Daten sicher geschrieben werden, den Empfänger ruhig auf das NFC Tag
@@ -84,8 +98,7 @@
     </string>
 
     <!-- Strings on the EditSimple fragment -->
-    <string name="edit_simple_intro">Diese Ansicht erlaubt das einfache Auswählen der Einstellungen für eine NFC
-        Karte.
+    <string name="edit_simple_intro">Diese Ansicht erlaubt das einfache Auswählen der Einstellungen für ein NFC Tag.
     </string>
 
     <!-- Strings on the EditExtended fragment -->
@@ -93,7 +106,7 @@
     <string name="edit_extended_intro">Über diese erweiterte Ansicht können Werte eingegeben werden, die dieser App
         nicht bekannt sind.
     </string>
-    <string name="ext_folder_description_modifier">Dies ist ein Modifizierungs-Tag (Admin Karte).</string>
+    <string name="ext_folder_description_modifier">Dies ist ein Modifizierungs-Tag (oder Admin Tag).</string>
 
     <!-- Strings on EditHex fragment -->
     <string name="edit_tonuino_version_label">Datenformat wählen</string>
@@ -154,5 +167,7 @@
     <string name="nfc_tag_found">Tag %s gefunden</string>
     <string name="nfc_read_tag_failure">Fehler: Konnte keine Daten vom NFC Tag lesen</string>
     <string name="nfc_tag_technologies">"Gerät und Tag unterstützen diese Technologien:\n%s"</string>
+    <string name="edit_unsupported_value">%s (Nicht unterstützt)</string>
+    <string name="edit_ext_folder_not_allowed_description">DFPlayer can only access folders up to 99</string>
     <!-- New fields below -->
 </resources>

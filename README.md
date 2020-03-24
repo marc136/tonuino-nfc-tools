@@ -72,7 +72,14 @@ Wird nur in bestimmten Modi benutzt für:
 | 7 | special | uint8 | |
 | 8 | special2 | uint8 | |
 
-TODO normal tags table
+**Different Modes**  
+Neue Modi, die in Tonuino 2.1 dazugekommen sind.
+
+| # | Titel | Beschreibung | vorwärts| zurück |
+| --- | --- | --- | --- | --- |
+| 7 | Von-Bis Hörspiel | Eine zufällige Datei aus dem Ordner zwischen special und special2 | stop | Titel von vorne spielen |
+| 8 | Von-Bis Album | Alle Titel zwischen special und special2 | nächster Titel | vorherigen Titel spielen |
+| 9 | Von-Bis Party | Alle Titel zwischen special und special2 in zufälliger Reihenfolge abspielen | zufälliger Titel | Titel von vorne spielen  |
 
 #### Modifier Tags
 All have a folder value of 0

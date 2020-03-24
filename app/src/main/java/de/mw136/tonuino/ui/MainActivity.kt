@@ -58,7 +58,8 @@ class MainActivity : NfcIntentActivity() {
     }
 
     fun showWriteActivity(view: View) {
-        startActivity(Intent(view.context, EditActivity::class.java))
+//        startActivity(Intent(view.context, EditActivity::class.java))
+        startActivity(Intent(view.context, EnterTagActivity::class.java))
     }
 
     fun showBulkWriteActivity(view: View) {

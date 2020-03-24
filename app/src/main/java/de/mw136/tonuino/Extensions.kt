@@ -3,7 +3,10 @@ package de.mw136.tonuino
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
+import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import de.mw136.tonuino.nfc.EditNfcData
 import de.mw136.tonuino.nfc.WhichByte
 
@@ -73,4 +76,40 @@ fun EditText.validateInputAndSetByte(which: WhichByte, min: Int = 0, max: Int = 
             return@addValidator false
         }
     })
+}
+
+@ExperimentalUnsignedTypes
+fun EditText.setByteIfChanged(value: UByte?) {
+    if (value == null || this.text.toString() == value.toString()) return
+    Log.e(
+        "Ton.setByteIfChanged",
+        "hasFocus ${this.hasFocus()}, '${this.text.toString()}' != '$value'"
+    )
+    this.setText(value.toString())
+}
+
+fun TextView.setResArrayString(value: Int, resId1: Int, resId2: Int, fallback: String = "") {
+    val titles = resources.getStringArray(resId1)
+    val descriptions = resources.getStringArray(resId2)
+    val max = if (titles.size < descriptions.size) titles.size else descriptions.size
+
+    if (value in 1 until max) {
+        this.visibility = View.VISIBLE
+        this.text = titles[value - 1] + ": " + descriptions[value - 1]
+    } else if (fallback.isNotBlank()) {
+        this.visibility = View.VISIBLE
+        this.text = fallback
+    } else {
+        this.visibility = View.GONE
+        this.text = ""
+    }
+}
+
+fun TextView.setTextOrHideIfBlank(string: String?) {
+    if (string.isNullOrBlank()) {
+        this.visibility = View.VISIBLE
+        this.text = string
+    } else {
+        this.visibility = View.INVISIBLE
+    }
 }

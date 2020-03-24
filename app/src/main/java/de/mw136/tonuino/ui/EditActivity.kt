@@ -43,7 +43,12 @@ class EditActivity : NfcIntentActivity(), EditNfcData {
         tagType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>) {}
 
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 Log.i(TAG, "TODO tag type selection: selected $position")
                 val version: UByte = when (position) {
                     0 -> 1u
@@ -124,9 +129,18 @@ class EditActivity : NfcIntentActivity(), EditNfcData {
             if (this@EditActivity.tag == null) {
                 setText(getString(R.string.edit_write_button_no_tag))
                 isEnabled = false
-                Toast.makeText(this@EditActivity, getString(R.string.edit_nfc_connection_lost), Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this@EditActivity,
+                    getString(R.string.edit_nfc_connection_lost),
+                    Toast.LENGTH_LONG
+                ).show()
             } else {
-                setText(getString(R.string.edit_write_button, tagIdAsString(this@EditActivity.tag!!)))
+                setText(
+                    getString(
+                        R.string.edit_write_button,
+                        tagIdAsString(this@EditActivity.tag!!)
+                    )
+                )
                 isEnabled = true
                 pollTag()
             }
@@ -156,7 +170,12 @@ class EditActivity : NfcIntentActivity(), EditNfcData {
                 }
                 WriteResult.UNSUPPORTED_FORMAT -> {
                     setTitle(R.string.written_unsupported_tag_type)
-                    setMessage(getString(R.string.nfc_tag_technologies, techListOf(tag).joinToString(", ")))
+                    setMessage(
+                        getString(
+                            R.string.nfc_tag_technologies,
+                            techListOf(tag).joinToString(", ")
+                        )
+                    )
                 }
                 WriteResult.AUTHENTICATION_FAILURE -> {
                     setTitle(R.string.written_title_failure)
@@ -170,7 +189,12 @@ class EditActivity : NfcIntentActivity(), EditNfcData {
                 }
                 WriteResult.UNKNOWN_ERROR -> {
                     setTitle(R.string.written_unknown_error)
-                    setMessage(getString(R.string.nfc_tag_technologies, techListOf(tag).joinToString(", ")))
+                    setMessage(
+                        getString(
+                            R.string.nfc_tag_technologies,
+                            techListOf(tag).joinToString(", ")
+                        )
+                    )
                     showRetryButton = true
                 }
             }
