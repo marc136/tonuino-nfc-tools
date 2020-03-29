@@ -172,8 +172,6 @@
     <string name="nfc_tag_technologies">"Device and tag support these technologies:\n%s"</string>
 
     <!-- New fields below -->
-    <string name="title_activity_enter_tag">EnterTagActivity</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="edit_unsupported_value">%s (Nicht unterstützt)</string>
     <string name="edit_ext_folder_not_allowed_description">DFPlayer can only access folders up to 99</string>
 </resources>

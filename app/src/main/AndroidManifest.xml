@@ -16,7 +16,6 @@
             android:theme="@style/AppTheme">
         <activity
                 android:name=".ui.EnterTagActivity"
-                android:label="@string/title_activity_enter_tag"
                 android:parentActivityName=".ui.MainActivity"
                 android:windowSoftInputMode="adjustResize" />
         <activity
