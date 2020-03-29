@@ -104,6 +104,15 @@ class Extended : Fragment() {
     private fun showFormat1Descriptions(mode: Int) {
         Log.d(TAG, "showFormat1Descriptions")
 
+        val folder = tagData.folder.value?.toInt() ?: return
+        folderDescription.visibility = View.VISIBLE
+        folderDescription.text =
+            if (folder in 1..99) {
+                getString(R.string.edit_ext_folder_description, folder)
+            } else {
+                getString(R.string.edit_ext_folder_not_allowed_description)
+            }
+
         val arr = resources.getStringArray(R.array.edit_mode_description)
         modeDescription.text = if (mode in 1..arr.size) {
             arr[mode - 1]
