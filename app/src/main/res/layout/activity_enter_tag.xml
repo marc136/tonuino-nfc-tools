@@ -16,7 +16,7 @@
 
         <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorPrimary" />
     </com.google.android.material.appbar.AppBarLayout>
@@ -25,13 +25,18 @@
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/margin_half"
+            android:padding="@dimen/margin_default"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintBottom_toTopOf="@id/button_write"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
     <Button
             android:id="@+id/button_write"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_half"
+            android:layout_marginEnd="@dimen/margin_half"
             android:enabled="false"
             android:onClick="onClickWriteTagButton"
             android:text="@string/edit_write_button_no_tag"
@@ -41,6 +46,10 @@
             android:id="@+id/write_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_half"
+            android:layout_marginTop="@dimen/margin_half"
+            android:layout_marginEnd="@dimen/margin_half"
+            android:layout_marginBottom="@dimen/margin_half"
             android:text="@string/edit_write_description"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
