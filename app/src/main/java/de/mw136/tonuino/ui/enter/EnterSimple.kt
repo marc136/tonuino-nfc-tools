@@ -92,7 +92,7 @@ class EnterSimple : Fragment() {
     }
 
     private fun showDescriptions() {
-        Log.w(TAG, "showDescriptions for version ${tagData.version.value}")
+        Log.v(TAG, "showDescriptions for version ${tagData.version.value}")
         when (tagData.version.value) {
             Tonuino.format1 -> {
                 showFormat1Descriptions(tagData.mode.value?.toInt() ?: -1)
@@ -163,7 +163,7 @@ class EnterSimple : Fragment() {
 
         // always hide special2 for now as it is not used in Tonuino 2.0.1
         special2Row.visibility = View.INVISIBLE
-
+        special2Description.visibility = View.GONE
     }
 
     private fun showFormat2Descriptions(mode: Int) {
@@ -183,11 +183,11 @@ class EnterSimple : Fragment() {
             Format1Mode.Album.value,
             Format1Mode.Party.value
             -> {
-                specialRow.visibility = View.INVISIBLE
+                specialRow.visibility = View.GONE
                 specialLabel.text = getString(R.string.edit_hidden_label)
-                specialDescription.visibility = View.INVISIBLE
+                specialDescription.visibility = View.GONE
                 specialDescription.text = getString(R.string.edit_hidden_label)
-                special2Row.visibility = View.INVISIBLE
+                special2Row.visibility = View.GONE
             }
             Format1Mode.Single.value -> {
                 specialRow.visibility = View.VISIBLE
@@ -195,8 +195,8 @@ class EnterSimple : Fragment() {
                 specialDescription.visibility = View.VISIBLE
                 specialDescription.text =
                     getString(R.string.play_mp3_file, tagData.special.value?.toInt())
-                special2Row.visibility = View.INVISIBLE
-
+                special2Row.visibility = View.GONE
+                special2Description.visibility = View.GONE
             }
             Format2Mode.AudioBookRandom2.value,
             Format2Mode.Album2.value,
@@ -216,11 +216,11 @@ class EnterSimple : Fragment() {
                 // unknown modes
                 specialRow.visibility = View.VISIBLE
                 specialLabel.text = getString(R.string.edit_special_label)
-                specialDescription.visibility = View.INVISIBLE
+                specialDescription.visibility = View.GONE
                 specialDescription.text = getString(R.string.edit_hidden_label)
                 special2Row.visibility = View.VISIBLE
                 special2Label.text = getString(R.string.edit_special2_label)
-                special2Description.visibility = View.INVISIBLE
+                special2Description.visibility = View.GONE
                 special2Description.text = getString(R.string.edit_hidden_label)
             }
         }
@@ -267,8 +267,6 @@ class EnterSimple : Fragment() {
     private fun setModeSpinnerValues() {
         val allModes: List<String> = resources.getStringArray(R.array.edit_mode).asList()
         val modes = allModes.take(mode_max)
-        Log.w(TAG, "modes.length ${modes.size}")
-        // initialize spinner for 'mode'
         ArrayAdapter<String>(
             requireActivity().baseContext,
             android.R.layout.simple_spinner_item,
@@ -276,10 +274,12 @@ class EnterSimple : Fragment() {
         ).also { adapter ->
             // Specify the layout to use when the list of choices appears
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
             adapter.setNotifyOnChange(true)
+            // Apply the adapter to the spinner
             mode.adapter = adapter
         }
+
+        tagData.mode.value?.let { selectCurrentItemInModeSpinner(it.toInt()) }
     }
 
     private fun addUserEventListeners() {
@@ -337,7 +337,7 @@ class EnterSimple : Fragment() {
         }
 
         special.afterTextChanged { value ->
-            Log.e(TAG, "special.afterTextChanged $value")
+            Log.v(TAG, "special.afterTextChanged $value")
             val it = value.toUByteOrNull()
             if (it == null) {
                 special.error = resources.getString(R.string.edit_limit_numeric_value, 0, 255)
@@ -350,7 +350,7 @@ class EnterSimple : Fragment() {
         }
 
         special2.afterTextChanged { value ->
-            Log.e(TAG, "special2.afterTextChanged $value")
+            Log.v(TAG, "special2.afterTextChanged $value")
             val it = value.toUByteOrNull()
             if (it == null) {
                 special2.error = resources.getString(R.string.edit_limit_numeric_value, 0, 255)
@@ -366,25 +366,25 @@ class EnterSimple : Fragment() {
     private fun addLiveDataEventListeners() {
         tagData.version.observe(viewLifecycleOwner, Observer { value: UByte ->
 //            if (!version.hasFocus()) {
-                Log.v(TAG, "version.observe $value")
-                val adapter: ArrayAdapter<String> = version.adapter as ArrayAdapter<String>
-                if (adapter.count > VERSION_MAX) {
-                    adapter.getItem(adapter.count - 1)?.let { item ->
-                        Log.d(TAG, "Removing entry '$item' from version spinner")
-                        adapter.remove(item)
-                    }
+            Log.v(TAG, "version.observe $value")
+            val adapter: ArrayAdapter<String> = version.adapter as ArrayAdapter<String>
+            if (adapter.count > VERSION_MAX) {
+                adapter.getItem(adapter.count - 1)?.let { item ->
+                    Log.d(TAG, "Removing entry '$item' from version spinner")
+                    adapter.remove(item)
                 }
+            }
 
-                if (value.toInt() in 1..VERSION_MAX) {
-                    if (version.selectedItemPosition !== value.toInt() - 1) {
-                        version.setSelection(value.toInt() - 1, false)
-                    }
-                } else {
-                    val str = getString(R.string.edit_unsupported_value, value.toString())
-                    Log.d(TAG, "Will add '$str' to version spinner and select it")
-                    adapter.add(str)
-                    version.setSelection(adapter.count - 1, false)
+            if (value.toInt() in 1..VERSION_MAX) {
+                if (version.selectedItemPosition !== value.toInt() - 1) {
+                    version.setSelection(value.toInt() - 1, false)
                 }
+            } else {
+                val str = getString(R.string.edit_unsupported_value, value.toString())
+                Log.d(TAG, "Will add '$str' to version spinner and select it")
+                adapter.add(str)
+                version.setSelection(adapter.count - 1, false)
+            }
 //            }
             setModeSpinnerValues()
         })
@@ -409,7 +409,6 @@ class EnterSimple : Fragment() {
                     val str = getString(R.string.edit_unsupported_value, value.toString())
                     Log.d(TAG, "Will add '$str' to folder spinner and select it")
                     adapter.add(str)
-//                    folder.setSelection(FOLDER_MAX, false)
                     folder.setSelection(adapter.count - 1, false)
                 }
             }
@@ -425,21 +424,11 @@ class EnterSimple : Fragment() {
                 if (adapter.count > mode_max) {
                     adapter.getItem(mode_max)?.let { item ->
                         Log.d(TAG, "Removing entry '$item' from mode spinner")
-                        // TODO crashes, no idea why
-//                        adapter.remove(item)
+                        adapter.remove(item)
                     }
                 }
 
-                if (value.toInt() in 1..mode_max) {
-                    mode.setSelection(value.toInt() - 1, false)
-                } else {
-                    val str = getString(R.string.edit_unsupported_value, value.toString())
-                    Log.d(TAG, "Will add '$str' to mode spinner and select it")
-                    // TODO crashes, no idea why
-//                    adapter.add(str)
-//                    mode.setSelection(mode_max, false)
-//                    mode.setSelection(adapter.count - 1, false)
-                }
+                selectCurrentItemInModeSpinner(value.toInt())
             }
         })
 
@@ -454,6 +443,18 @@ class EnterSimple : Fragment() {
             special2Value = value
             special2.setByteIfChanged(value)
         })
+    }
+
+    private fun selectCurrentItemInModeSpinner(value: Int) {
+        if (value in 1..mode_max) {
+            mode.setSelection(value - 1, false)
+        } else {
+            val str = getString(R.string.edit_unsupported_value, value.toString())
+            Log.d(TAG, "Will add '$str' to mode spinner and select it")
+            val adapter = mode.adapter as ArrayAdapter<String>
+            adapter.add(str)
+            mode.setSelection(adapter.count - 1, false)
+        }
     }
 }
 
