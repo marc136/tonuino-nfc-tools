@@ -93,13 +93,7 @@ class EnterViewModel() : ViewModel(), Parcelable {
     }
 
     constructor(parcel: Parcel) : this() {
-        val arr = parcel.createByteArray()?.toUByteArray()
-        if (arr.isNullOrEmpty()) {
-            // TODO use default() instead as default
-            setBytes(UByteArray(SPECIAL2 + 1) { 0u })
-        } else {
-            setBytes(arr)
-        }
+        setBytes(parcel.createByteArray()?.toUByteArray() ?: default())
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
