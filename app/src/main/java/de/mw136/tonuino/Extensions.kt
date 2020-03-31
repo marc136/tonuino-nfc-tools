@@ -83,7 +83,7 @@ fun EditText.setByteIfChanged(value: UByte?) {
     if (value == null || this.text.toString() == value.toString()) return
     Log.e(
         "Ton.setByteIfChanged",
-        "hasFocus ${this.hasFocus()}, '${this.text.toString()}' != '$value'"
+        "hasFocus ${this.hasFocus()}, '${this.text}' != '$value'"
     )
     this.setText(value.toString())
 }

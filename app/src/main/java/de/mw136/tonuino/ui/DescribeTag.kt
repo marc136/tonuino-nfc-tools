@@ -15,7 +15,7 @@ class Tonuino {
 
 @ExperimentalUnsignedTypes
 enum class TonuinoFormat(val value: UByte) {
-    format1(1u), format2(2u)
+    Format1(1u), Format2(2u)
 }
 
 @ExperimentalUnsignedTypes

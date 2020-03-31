@@ -68,7 +68,7 @@ class EnterTagActivity : NfcIntentActivity() {
     private fun enableWriteButtonIfTagPresent() {
         findViewById<Button>(R.id.button_write)?.apply {
             if (this@EnterTagActivity.tag == null) {
-                setText(getString(R.string.edit_write_button_no_tag))
+                text = getString(R.string.edit_write_button_no_tag)
                 isEnabled = false
                 Toast.makeText(
                     this@EnterTagActivity,
@@ -76,11 +76,9 @@ class EnterTagActivity : NfcIntentActivity() {
                     Toast.LENGTH_LONG
                 ).show()
             } else {
-                setText(
-                    getString(
-                        R.string.edit_write_button,
-                        tagIdAsString(this@EnterTagActivity.tag!!)
-                    )
+                text = getString(
+                    R.string.edit_write_button,
+                    tagIdAsString(this@EnterTagActivity.tag!!)
                 )
                 isEnabled = true
                 pollTag()

@@ -30,7 +30,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/margin_half"
-                        android:labelFor="@+id/folder"
+                        android:labelFor="@+id/version"
                         android:text="@string/edit_version_label"
                         android:textStyle="bold" />
 

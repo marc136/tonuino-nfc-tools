@@ -14,7 +14,7 @@ private const val SPECIAL2 = 8
 
 @ExperimentalUnsignedTypes
 class EnterViewModel : ViewModel() {
-    var bytes: UByteArray = EnterViewModel.default()
+    var bytes: UByteArray = default()
         private set
 
     val cookie: UByteArray

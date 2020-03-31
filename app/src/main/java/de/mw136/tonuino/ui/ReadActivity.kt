@@ -6,7 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
-import de.mw136.tonuino.*
+import de.mw136.tonuino.R
+import de.mw136.tonuino.byteArrayToHex
 import de.mw136.tonuino.nfc.NfcIntentActivity
 import de.mw136.tonuino.nfc.TagData
 import de.mw136.tonuino.nfc.readFromTag
@@ -29,7 +30,7 @@ class ReadActivity : NfcIntentActivity() {
         displayTonuinoInfo(tag, tagData)
     }
 
-    fun displayTonuinoInfo(tag: Tag, data: TagData) {
+    private fun displayTonuinoInfo(tag: Tag, data: TagData) {
         val tagId = tagIdAsString(tag)
         Log.i("$TAG.displayTonuinoInfo", "Tag $tagId")
         supportActionBar?.title = getString(R.string.read_title, tagId)
@@ -44,13 +45,15 @@ class ReadActivity : NfcIntentActivity() {
         setText(R.id.mode, data.mode)
         findViewById<TextView>(R.id.mode_description).apply {
             val mode = data.mode.toInt()
-            if (mode in 1..6) {
-                val str = resources.getStringArray(R.array.edit_mode)[mode - 1] + ": " +
+            text = if (mode in 1..6) {
+                resources.getStringArray(R.array.edit_mode)[mode - 1] + ": " +
                         resources.getStringArray(R.array.edit_mode_description)[mode - 1]
-                text = str
             } else {
-                Log.w("$TAG:displayTonuinoInfo", "Cannot display a description for unknown mode '$mode'.")
-                text = resources.getString(R.string.edit_mode_unknown, mode)
+                Log.w(
+                    "$TAG:displayTonuinoInfo",
+                    "Cannot display a description for unknown mode '$mode'."
+                )
+                resources.getString(R.string.edit_mode_unknown, mode)
             }
         }
 

@@ -56,7 +56,7 @@ class EditSimple : EditFragment() {
         folder = view.findViewById(R.id.folder)
         // initialize spinner for 'folder'
         val folders = (1..99).map { it.toString().padStart(2, '0') }
-        ArrayAdapter<String>(requireActivity().baseContext, android.R.layout.simple_spinner_item, folders).also {
+        ArrayAdapter(requireActivity().baseContext, android.R.layout.simple_spinner_item, folders).also {
             folder.adapter = it
         }
         folder.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

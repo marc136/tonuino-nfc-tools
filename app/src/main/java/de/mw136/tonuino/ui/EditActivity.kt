@@ -127,7 +127,7 @@ class EditActivity : NfcIntentActivity(), EditNfcData {
     private fun enableWriteButtonIfTagPresent() {
         findViewById<Button>(R.id.button_write)?.apply {
             if (this@EditActivity.tag == null) {
-                setText(getString(R.string.edit_write_button_no_tag))
+                text = getString(R.string.edit_write_button_no_tag)
                 isEnabled = false
                 Toast.makeText(
                     this@EditActivity,
@@ -135,11 +135,9 @@ class EditActivity : NfcIntentActivity(), EditNfcData {
                     Toast.LENGTH_LONG
                 ).show()
             } else {
-                setText(
-                    getString(
-                        R.string.edit_write_button,
-                        tagIdAsString(this@EditActivity.tag!!)
-                    )
+                text = getString(
+                    R.string.edit_write_button,
+                    tagIdAsString(this@EditActivity.tag!!)
                 )
                 isEnabled = true
                 pollTag()

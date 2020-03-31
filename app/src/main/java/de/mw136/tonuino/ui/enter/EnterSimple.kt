@@ -117,7 +117,7 @@ class EnterSimple : Fragment() {
 
         if (folder in 1..FOLDER_MAX) {
             folderDescription.text =
-                getString(R.string.edit_ext_folder_description, folder.toInt())
+                getString(R.string.edit_ext_folder_description, folder)
             folderDescription.visibility = View.VISIBLE
         } else {
             // value not used in TonUINO
@@ -240,7 +240,7 @@ class EnterSimple : Fragment() {
 
     private fun initSpinnerValues() {
         val versions = resources.getStringArray(R.array.edit_version).asList().map { it.trim() }
-        ArrayAdapter<String>(
+        ArrayAdapter(
             requireActivity().baseContext,
             android.R.layout.simple_spinner_item,
             versions
@@ -251,7 +251,7 @@ class EnterSimple : Fragment() {
 
         // initialize spinner for 'folder'
         val folders = (1..FOLDER_MAX).map { it.toString().padStart(2, '0') }
-        ArrayAdapter<String>(
+        ArrayAdapter(
             requireActivity().baseContext,
             android.R.layout.simple_spinner_item,
             folders
@@ -267,7 +267,7 @@ class EnterSimple : Fragment() {
     private fun setModeSpinnerValues() {
         val allModes: List<String> = resources.getStringArray(R.array.edit_mode).asList()
         val modes = allModes.take(mode_max)
-        ArrayAdapter<String>(
+        ArrayAdapter(
             requireActivity().baseContext,
             android.R.layout.simple_spinner_item,
             modes

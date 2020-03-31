@@ -18,7 +18,7 @@ private const val TAG = "TagHelper"
 private const val tonuinoSector = 1
 
 @ExperimentalUnsignedTypes
-public val tonuinoCookie = hexToBytes("1337b347").toList() // TODO add to expert settings
+val tonuinoCookie = hexToBytes("1337b347").toList() // TODO add to expert settings
 
 @ExperimentalUnsignedTypes
 private val factoryKey =
@@ -200,7 +200,7 @@ fun readFromTag(mifare: MifareClassic): UByteArray {
 @ExperimentalUnsignedTypes
 fun readFromTag(mifare: MifareUltralight): UByteArray {
     if (!mifare.isConnected) mifare.connect()
-    var result: UByteArray
+    val result: UByteArray
 
     val type_ = when (mifare.type) {
         MifareUltralight.TYPE_ULTRALIGHT -> "ULTRALIGHT"

@@ -61,7 +61,7 @@ class Extended : Fragment() {
         folder.setByteIfChanged(tagData.folder.value)
         folderDescription = view.findViewById(R.id.folder_description)
 
-        mode = view.findViewById<EditText>(R.id.mode)
+        mode = view.findViewById(R.id.mode)
         mode.setByteIfChanged(tagData.mode.value)
         modeDescription = view.findViewById(R.id.mode_description)
 

@@ -59,12 +59,12 @@ class BulkWriteFragment : Fragment() {
             val tag = TagWithComment.of(current)
             if (tag != null) {
                 tagData = tag
-                tagTitle.setText(tag.title)
+                tagTitle.text = tag.title
                 val str = byteArrayToHex(tag.bytes).joinToString(" ")
-                tagBytes.setText(str)
+                tagBytes.text = str
             } else {
-                tagTitle.setText(getString(R.string.bulk_write_invalid_line_format))
-                tagBytes.setText('"' + current + '"')
+                tagTitle.text = getString(R.string.bulk_write_invalid_line_format)
+                tagBytes.text = '"' + current + '"'
                 tagData = null
             }
         })
@@ -88,7 +88,7 @@ class BulkWriteFragment : Fragment() {
 
         viewModel.tag.observe(viewLifecycleOwner, Observer { tag ->
             if (tag == null) {
-                writeButton.setText(getString(R.string.edit_write_button_no_tag))
+                writeButton.text = getString(R.string.edit_write_button_no_tag)
                 writeButton.isEnabled = false
                 Toast.makeText(
                     activity,
@@ -96,7 +96,7 @@ class BulkWriteFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             } else {
-                writeButton.setText(getString(R.string.edit_write_button, tagIdAsString(tag)))
+                writeButton.text = getString(R.string.edit_write_button, tagIdAsString(tag))
                 writeButton.isEnabled = true
 
                 // TODO add option to instantly write data when a tag is found
