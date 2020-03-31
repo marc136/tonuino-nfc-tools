@@ -81,7 +81,7 @@ fun EditText.validateInputAndSetByte(which: WhichByte, min: Int = 0, max: Int = 
 @ExperimentalUnsignedTypes
 fun EditText.setByteIfChanged(value: UByte?) {
     if (value == null || this.text.toString() == value.toString()) return
-    Log.e(
+    Log.i(
         "Ton.setByteIfChanged",
         "hasFocus ${this.hasFocus()}, '${this.text}' != '$value'"
     )
