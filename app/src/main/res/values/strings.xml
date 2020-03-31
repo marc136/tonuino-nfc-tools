@@ -109,17 +109,18 @@
     <string name="edit_write_description">To increase the chances that the data will be successfully written, place the
         device directly on top of the tag and then press the button to write.
     </string>
+    <string name="edit_unsupported_value">%s (Nicht unterstützt)</string>
 
     <!-- Strings on the EditSimple fragment -->
     <string name="edit_simple_intro">This view allows to select values for the NFC tag.</string>
 
     <!-- Strings on the EditExtended fragment -->
-    <string name="edit_ext_folder_description">Uses the folder /%02d.</string>
-    <string name="ext_folder_description_modifier">This is a modifier tag.</string>
-
     <string name="edit_extended_intro">This extended view can be used to enter values for TonUINO variants that this
         app does not know about.
     </string>
+    <string name="edit_ext_folder_description">Uses the folder /%02d.</string>
+    <string name="ext_folder_description_modifier">This is a modifier tag.</string>
+    <string name="edit_ext_folder_not_allowed_description">DFPlayer can only access folders up to 99</string>
 
     <!-- Strings on EditHex fragment -->
     <string name="edit_hex_intro">This view can be used to enter arbitrary data.</string>
@@ -172,6 +173,4 @@
     <string name="nfc_tag_technologies">"Device and tag support these technologies:\n%s"</string>
 
     <!-- New fields below -->
-    <string name="edit_unsupported_value">%s (Nicht unterstützt)</string>
-    <string name="edit_ext_folder_not_allowed_description">DFPlayer can only access folders up to 99</string>
 </resources>

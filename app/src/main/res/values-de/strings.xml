@@ -96,12 +96,14 @@
     <string name="edit_write_description">Damit die Daten sicher geschrieben werden, den Empfänger ruhig auf das NFC Tag
         halten/legen und dann den Button betätigen.
     </string>
+    <string name="edit_unsupported_value">%s (Nicht unterstützt)</string>
 
     <!-- Strings on the EditSimple fragment -->
     <string name="edit_simple_intro">Diese Ansicht erlaubt das einfache Auswählen der Einstellungen für ein NFC Tag.
     </string>
 
     <!-- Strings on the EditExtended fragment -->
+    <string name="edit_ext_folder_not_allowed_description">DFPlayer can only access folders up to 99</string>
     <string name="edit_ext_folder_description">Verwendet den Ordner /%02d.</string>
     <string name="edit_extended_intro">Über diese erweiterte Ansicht können Werte eingegeben werden, die dieser App
         nicht bekannt sind.
@@ -167,7 +169,6 @@
     <string name="nfc_tag_found">Tag %s gefunden</string>
     <string name="nfc_read_tag_failure">Fehler: Konnte keine Daten vom NFC Tag lesen</string>
     <string name="nfc_tag_technologies">"Gerät und Tag unterstützen diese Technologien:\n%s"</string>
-    <string name="edit_unsupported_value">%s (Nicht unterstützt)</string>
-    <string name="edit_ext_folder_not_allowed_description">DFPlayer can only access folders up to 99</string>
+
     <!-- New fields below -->
 </resources>
