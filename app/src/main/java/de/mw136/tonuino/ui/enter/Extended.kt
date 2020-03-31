@@ -128,7 +128,7 @@ class Extended : Fragment() {
             Format1Mode.Party.value
             -> {
                 specialLabel.text = getString(R.string.edit_special_label)
-                specialDescription.visibility = View.INVISIBLE
+                specialDescription.visibility = View.GONE
                 specialDescription.text = getString(R.string.edit_hidden_label)
             }
             Format1Mode.Single.value -> {
@@ -140,7 +140,7 @@ class Extended : Fragment() {
             else -> {
                 // unknown modes
                 specialLabel.text = getString(R.string.edit_special_label)
-                specialDescription.visibility = View.INVISIBLE
+                specialDescription.visibility = View.GONE
                 specialDescription.text = getString(R.string.edit_hidden_label)
             }
         }
@@ -171,11 +171,6 @@ class Extended : Fragment() {
                 R.array.edit_mode,
                 R.array.edit_mode_description
             )
-//            modeDescription.visibility = View.VISIBLE
-//            val index: Int = mode.toInt() - 1
-//            val text = resources.getStringArray(R.array.edit_mode)[index] + ": " +
-//                    resources.getStringArray(R.array.edit_mode_description)[index]
-//            modeDescription.text = text
         } else {
             // value not used in TonUINO
             folderDescription.visibility = View.VISIBLE
@@ -224,7 +219,7 @@ class Extended : Fragment() {
     }
 
     private fun showFormat2ModifierDescriptions(mode: Int) {
-        folderDescription.visibility = View.INVISIBLE
+        folderDescription.visibility = View.GONE
 
         val titles = resources.getStringArray(R.array.edit_modifier_tags)
         val descriptions = resources.getStringArray(R.array.edit_modifier_tags_description)
