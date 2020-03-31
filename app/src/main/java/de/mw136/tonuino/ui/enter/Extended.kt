@@ -83,7 +83,7 @@ class Extended : Fragment() {
     }
 
     private fun showDescriptions() {
-        Log.w(TAG, "showDescriptions for version ${tagData.version.value}")
+        Log.v(TAG, "showDescriptions for version ${tagData.version.value}")
         when (tagData.version.value) {
             Tonuino.format1 -> {
                 showFormat1Descriptions(tagData.mode.value?.toInt() ?: -1)
@@ -243,7 +243,7 @@ class Extended : Fragment() {
 
     private fun addUserEventListeners() {
         version.afterTextChanged { value ->
-            Log.d(TAG, "version.afterTextChanged $value")
+            Log.v(TAG, "version.afterTextChanged $value")
             val it = value.toUByteOrNull()
             if (it == null) {
                 version.error = resources.getString(R.string.edit_limit_numeric_value, 0, 255)
@@ -255,7 +255,7 @@ class Extended : Fragment() {
         }
 
         folder.afterTextChanged { value ->
-            Log.d(TAG, "folder.afterTextChanged $value")
+            Log.v(TAG, "folder.afterTextChanged $value")
             val it = value.toUByteOrNull()
             if (it == null) {
                 folder.error = resources.getString(R.string.edit_limit_numeric_value, 0, 255)
@@ -267,7 +267,7 @@ class Extended : Fragment() {
         }
 
         mode.afterTextChanged { value ->
-            Log.d(TAG, "mode.afterTextChanged $value")
+            Log.v(TAG, "mode.afterTextChanged $value")
             val it = value.toUByteOrNull()
             if (it == null) {
                 mode.error = resources.getString(R.string.edit_limit_numeric_value, 0, 255)
@@ -279,7 +279,7 @@ class Extended : Fragment() {
         }
 
         special.afterTextChanged { value ->
-            Log.e(TAG, "special.afterTextChanged $value")
+            Log.v(TAG, "special.afterTextChanged $value")
             val it = value.toUByteOrNull()
             if (it == null) {
                 special.error = resources.getString(R.string.edit_limit_numeric_value, 0, 255)
@@ -291,7 +291,7 @@ class Extended : Fragment() {
         }
 
         special2.afterTextChanged { value ->
-            Log.d(TAG, "special2.afterTextChanged $value")
+            Log.v(TAG, "special2.afterTextChanged $value")
             val it = value.toUByteOrNull()
             if (it == null) {
                 special2.error = resources.getString(R.string.edit_limit_numeric_value, 0, 255)
