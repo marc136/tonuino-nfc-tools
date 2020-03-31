@@ -11,6 +11,7 @@ import android.os.Parcelable
 import android.util.Log
 import de.mw136.tonuino.byteArrayToHex
 import de.mw136.tonuino.hexToBytes
+import de.mw136.tonuino.ui.enter.EnterViewModel
 import java.io.IOException
 import kotlin.math.ceil
 
@@ -107,6 +108,10 @@ class TagData(var bytes: UByteArray = ubyteArrayOf()) : Parcelable {
         val block = UByteArray(size) { 0u }
         bytes.forEachIndexed { index, value -> block[index] = value }
         return block.toByteArray()
+    }
+
+    fun toEnterViewModel() : EnterViewModel {
+        return EnterViewModel(bytes)
     }
 }
 

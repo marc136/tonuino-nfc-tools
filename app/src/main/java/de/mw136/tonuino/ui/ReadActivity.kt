@@ -73,9 +73,9 @@ class ReadActivity : NfcIntentActivity() {
 
     @Suppress("UNUSED_PARAMETER")
     fun gotoEditActivity(view: View) {
-        val intent = Intent(this, EditActivity::class.java).apply {
+        val intent = Intent(this, EnterTagActivity::class.java).apply {
             putExtra(PARCEL_TAG, tag)
-            putExtra(PARCEL_TAGDATA, tagData)
+            putExtra(PARCEL_TAGDATA, tagData.toEnterViewModel())
         }
         startActivity(intent)
     }

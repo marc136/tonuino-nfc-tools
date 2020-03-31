@@ -23,6 +23,10 @@ import java.io.IOException
 class EnterTagActivity : NfcIntentActivity() {
     override val TAG = "EnterTagActivity"
 
+    // Can this get initialized from the intent to retrieve the parceled tagData?
+    // see https://developer.android.com/topic/libraries/architecture/viewmodel-savedstate
+    // and https://proandroiddev.com/customizing-the-new-viewmodel-cf28b8a7c5fc
+    // my question: https://stackoverflow.com/questions/60958608/how-can-i-initialize-an-androidx-viewmodel-from-parcelable-data
     private val tagData: EnterViewModel by viewModels()
 
     var tag: TagTechnology? = null
@@ -49,6 +53,10 @@ class EnterTagActivity : NfcIntentActivity() {
         }
 
         intent.getParcelableExtra<Tag>(PARCEL_TAG)?.let { tag -> onNfcTag(tag) }
+        intent.getParcelableExtra<EnterViewModel>(PARCEL_TAGDATA)?.let {
+            Log.i(TAG, "Found parceled tagData $it and will overwrite the current values")
+            tagData.setBytes(it.bytes)
+        }
     }
 
     override fun onPause() {
