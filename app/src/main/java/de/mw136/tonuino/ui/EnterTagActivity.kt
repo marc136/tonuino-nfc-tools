@@ -10,7 +10,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import de.mw136.tonuino.R
@@ -23,7 +23,8 @@ import java.io.IOException
 class EnterTagActivity : NfcIntentActivity() {
     override val TAG = "EnterTagActivity"
 
-    private lateinit var tagData: EnterViewModel
+    private val tagData: EnterViewModel by viewModels()
+
 
     var tag: TagTechnology? = null
     private lateinit var isTagConnected: Runnable
@@ -32,10 +33,10 @@ class EnterTagActivity : NfcIntentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        tagData = intent.getParcelableExtra<EnterViewModel>(PARCEL_TAGDATA) ?:
-                // could also add a ViewModelFactory here ViewModelProvider(this, factory)
-                ViewModelProvider(this).get(EnterViewModel::class.java)
-
+        intent.getParcelableExtra<EnterViewModel>(PARCEL_TAGDATA)?.let {
+            Log.i(TAG, "Found parceled tagData $it and will overwrite the current values")
+            tagData.setBytes(it.bytes)
+        }
         Log.i(TAG, tagData.toString())
 
         setContentView(R.layout.activity_enter_tag)
