@@ -43,7 +43,9 @@ class EnterViewModel() : ViewModel(), Parcelable {
         }
 
     fun setCookie(value: UByteArray) {
-        TODO("Implement setCookie")
+        for (index in 0 until VERSION) {
+            _bytes[index] = if (value.size > index) value[index] else 0u
+        }
     }
 
     private var _version: MutableLiveData<UByte> = MutableLiveData(_bytes[VERSION])
