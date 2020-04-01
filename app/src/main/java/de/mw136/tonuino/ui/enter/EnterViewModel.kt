@@ -113,6 +113,7 @@ class EnterViewModel() : ViewModel(), Parcelable {
             // see https://developer.android.com/topic/libraries/architecture/viewmodel-savedstate
             // and https://proandroiddev.com/customizing-the-new-viewmodel-cf28b8a7c5fc
             tonuinoCookie.forEachIndexed { index, value -> buffer[COOKIE + index] = value }
+            // TODO load default version from settings
             buffer[VERSION] = 1u
             buffer[FOLDER] = 1u
             buffer[MODE] = 1u
