@@ -108,6 +108,8 @@ class EnterViewModel() : ViewModel(), Parcelable {
         private fun default(): UByteArray {
             val buffer = UByteArray(SPECIAL2 + 1) { 0u }
             // TODO load tonuinoCookie from settings
+            // see https://developer.android.com/topic/libraries/architecture/viewmodel-savedstate
+            // and https://proandroiddev.com/customizing-the-new-viewmodel-cf28b8a7c5fc
             tonuinoCookie.forEachIndexed { index, value -> buffer[COOKIE + index] = value }
             buffer[VERSION] = 1u
             buffer[FOLDER] = 1u
