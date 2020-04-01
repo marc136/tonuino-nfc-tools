@@ -10,8 +10,8 @@ import de.mw136.tonuino.BuildConfig
 import de.mw136.tonuino.R
 import de.mw136.tonuino.byteArrayToHex
 import de.mw136.tonuino.nfc.NfcIntentActivity
-import de.mw136.tonuino.nfc.TagData
 import de.mw136.tonuino.nfc.readFromTag
+import de.mw136.tonuino.ui.enter.EnterViewModel
 
 @ExperimentalUnsignedTypes
 class MainActivity : NfcIntentActivity() {
@@ -77,7 +77,7 @@ class MainActivity : NfcIntentActivity() {
         if (bytes.isNotEmpty()) {
             val intent = Intent(this, ReadActivity::class.java).apply {
                 putExtra(PARCEL_TAG, tag)
-                putExtra(PARCEL_TAGDATA, TagData(bytes))
+                putExtra(PARCEL_TAGDATA, EnterViewModel(bytes))
             }
             startActivity(intent)
         } else {

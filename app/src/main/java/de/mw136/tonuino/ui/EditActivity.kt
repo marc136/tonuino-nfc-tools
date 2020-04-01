@@ -152,7 +152,7 @@ class EditActivity : NfcIntentActivity(), EditNfcData {
         var result = WriteResult.TAG_UNAVAILABLE
         if (tag != null) {
             Log.w("$TAG.writeTag", "will write to tag ${tagIdAsString(tag!!)}")
-            result = writeTonuino(tag!!, tagData)
+            result = writeTonuino(tag!!, tagData.bytes)
             Log.w("$TAG.writeTag", "result $result")
         }
         showModalDialog(result)

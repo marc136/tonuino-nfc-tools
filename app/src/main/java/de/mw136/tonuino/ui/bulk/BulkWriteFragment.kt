@@ -18,7 +18,10 @@ import de.mw136.tonuino.BulkEditViewModel
 import de.mw136.tonuino.R
 import de.mw136.tonuino.TagWithComment
 import de.mw136.tonuino.byteArrayToHex
-import de.mw136.tonuino.nfc.*
+import de.mw136.tonuino.nfc.WriteResult
+import de.mw136.tonuino.nfc.tagIdAsString
+import de.mw136.tonuino.nfc.techListOf
+import de.mw136.tonuino.nfc.writeTonuino
 
 
 @ExperimentalUnsignedTypes
@@ -114,7 +117,7 @@ class BulkWriteFragment : Fragment() {
             Log.w("$TAG.writeTag", "will write to tag ${tagIdAsString(it)}")
 
             tagData?.bytes?.let { bytes ->
-                result = writeTonuino(it, TagData(bytes))
+                result = writeTonuino(it, bytes)
             }
             Log.w("$TAG.writeTag", "result $result")
         }
