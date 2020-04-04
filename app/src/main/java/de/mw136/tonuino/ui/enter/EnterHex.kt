@@ -48,30 +48,11 @@ class EnterHex : Fragment() {
     }
 
     private fun addLiveDataEventListeners() {
-        tagData.version.observe(viewLifecycleOwner, Observer { value: UByte ->
-            Log.v(TAG, "version.observe $value")
-            updateEditTextIfNeeded()
-        })
-
-        tagData.folder.observe(viewLifecycleOwner, Observer { value: UByte ->
-            Log.v(TAG, "folder.observe $value")
-            updateEditTextIfNeeded()
-        })
-
-        tagData.mode.observe(viewLifecycleOwner, Observer { value: UByte ->
-            Log.v(TAG, "mode.observe $value")
-            updateEditTextIfNeeded()
-        })
-
-        tagData.special.observe(viewLifecycleOwner, Observer { value: UByte ->
-            Log.v(TAG, "special.observe $value")
-            updateEditTextIfNeeded()
-        })
-
-        tagData.special2.observe(viewLifecycleOwner, Observer { value: UByte ->
-            Log.v(TAG, "special2.observe $value")
-            updateEditTextIfNeeded()
-        })
+        tagData.version.observe(viewLifecycleOwner, Observer { _ -> updateEditTextIfNeeded() })
+        tagData.folder.observe(viewLifecycleOwner, Observer { _ -> updateEditTextIfNeeded() })
+        tagData.mode.observe(viewLifecycleOwner, Observer { _ -> updateEditTextIfNeeded() })
+        tagData.special.observe(viewLifecycleOwner, Observer { _ -> updateEditTextIfNeeded() })
+        tagData.special2.observe(viewLifecycleOwner, Observer { _ -> updateEditTextIfNeeded() })
     }
 
     private fun updateEditTextIfNeeded() {
