@@ -25,7 +25,7 @@
             android:id="@+id/bytes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:digits="0123456789abcdefABCDEF"
+            android:digits="0123456789abcdefABCDEF "
             android:ems="10"
             android:gravity="start|top"
             android:inputType="text" />

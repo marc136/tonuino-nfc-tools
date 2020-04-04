@@ -13,7 +13,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import de.mw136.tonuino.R
 import de.mw136.tonuino.byteArrayToHex
-import de.mw136.tonuino.hexToBytes
 import java.util.*
 
 /**
@@ -41,31 +40,7 @@ class EnterHex : Fragment() {
         val view = inflater.inflate(R.layout.enter_fragment_hex, container, false)
 
         bytesEdit = view.findViewById(R.id.bytes)
-        bytesEdit.addTextChangedListener(object : TextWatcher {
-            private var position = 0
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                position = start + count
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                val formatted = formatBytes(s.toString())
-                if (s.toString() != formatted) {
-                    val cursorPosition = position
-                    val value = hexToBytes(formatted.replace(" ", ""))
-
-                    if (!tagData.bytes.contentEquals(value)) {
-                        Log.e(TAG, "Will change the bytes to ${tagData.bytes}")
-                        tagData.setBytes(value)
-                    }
-                    bytesEdit.setText(formatted)
-                    // TODO fix cursor position jumping (e.g. when adding a new char)
-                    bytesEdit.setSelection(cursorPosition)
-                }
-            }
-        })
+        bytesEdit.addTextChangedListener(ByteFormatter(bytesEdit, tagData))
 
         addLiveDataEventListeners()
 
@@ -113,4 +88,64 @@ fun formatBytes(bytes: String): String {
     return bytes.replace("\\s".toRegex(), "")
         .toUpperCase(Locale.ENGLISH).chunked(2)
         .joinToString(" ")
+}
+
+private class ByteFormatter(val editText: EditText, val tagData: EnterViewModel) : TextWatcher {
+    private val TAG = this.javaClass.simpleName
+
+    private var start: Int = 0
+    private var before: Int = 0
+    private var after: Int = 0
+
+    private var ignoreChangeEvents: Boolean = false
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        if (ignoreChangeEvents) return
+        Log.w(TAG, "beforeChanged: start: $start, count: $count, after: $after, '$s'")
+    }
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        if (ignoreChangeEvents) return
+        Log.w(TAG, "onChanged: start: $start, before: $before, count: $count,  '$s'")
+        this.start = start
+        this.before = before
+        this.after = count
+    }
+
+    override fun afterTextChanged(s: Editable?) {
+        if (ignoreChangeEvents) return
+        ignoreChangeEvents = true
+        Log.w(TAG, "afterChanged: '$s'")
+
+        Log.w(TAG, "afterChanged: start: $start, before: $before, after: $after,  '$s'")
+
+        val unformatted = s.toString()
+        val formatted = formatBytes(s.toString())
+        Log.w(TAG, "$unformatted ->")
+        Log.w(TAG, formatted)
+
+        // TODO add functionality to delete spaces
+
+        if (formatted != unformatted) {
+            editText.setText(formatted)
+
+            val diff = formatted.length - unformatted.length
+            val cursor = if (before > after) {
+                Log.w(TAG, "deleted $diff chars")
+                start + after
+            } else if (after > before) {
+                Log.w(TAG, "added $diff chars")
+                start + after + diff
+            } else {
+                Log.w(TAG, "no chars added")
+                start + after + diff
+            }
+
+            if (cursor < formatted.length) {
+                editText.setSelection(cursor)
+            }
+        }
+
+        ignoreChangeEvents = false
+    }
 }
