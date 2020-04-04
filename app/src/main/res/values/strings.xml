@@ -173,4 +173,5 @@
     <string name="nfc_tag_technologies">"Device and tag support these technologies:\n%s"</string>
 
     <!-- New fields below -->
+    <string name="apply_change">Apply change</string>
 </resources>

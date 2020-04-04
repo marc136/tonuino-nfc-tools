@@ -34,6 +34,12 @@
                 android:gravity="start|top"
                 android:inputType="text" />
 
+        <Button
+                android:id="@+id/apply_change"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/apply_change" />
+
         <TextView
                 android:id="@+id/whitespace"
                 android:layout_width="match_parent"

@@ -7,13 +7,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import de.mw136.tonuino.R
 import de.mw136.tonuino.byteArrayToHex
+import de.mw136.tonuino.hexToBytes
 import java.util.*
+
+const val NO_BYTE_FORMATTER = true
 
 /**
  * A simple [Fragment] subclass.
@@ -36,11 +40,19 @@ class EnterHex : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.i(TAG, "onCreateView()")
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.enter_fragment_hex, container, false)
 
         bytesEdit = view.findViewById(R.id.bytes)
         bytesEdit.addTextChangedListener(ByteFormatter(bytesEdit, tagData))
+
+        view.findViewById<Button>(R.id.apply_change).setOnClickListener {
+            val str: String = bytesEdit.text.toString().replace("\\s".toRegex(), "")
+            if (str.isNotEmpty()) {
+                tagData.setBytes(hexToBytes(str))
+            }
+        }
 
         addLiveDataEventListeners()
 
@@ -55,10 +67,12 @@ class EnterHex : Fragment() {
         tagData.special2.observe(viewLifecycleOwner, Observer { _ -> updateEditTextIfNeeded() })
     }
 
+
     private fun updateEditTextIfNeeded() {
-        val new = byteArrayToHex(tagData.bytes).joinToString(" ")
-        Log.e(TAG, "old/new: '${bytesEdit.text.toString()}' == '$new'")
+        val new = byteArrayToHex(tagData.bytes).joinToString(if (NO_BYTE_FORMATTER) "" else " ")
+        Log.v(TAG, "old/new: '${bytesEdit.text.toString()}' == '$new'")
         if (bytesEdit.text.toString() != new) {
+            Log.e(TAG, "set text to '$new'")
             bytesEdit.setText(new)
         }
     }
@@ -71,6 +85,7 @@ fun formatBytes(bytes: String): String {
         .joinToString(" ")
 }
 
+@ExperimentalUnsignedTypes
 private class ByteFormatter(val editText: EditText, val tagData: EnterViewModel) : TextWatcher {
     private val TAG = this.javaClass.simpleName
 
@@ -78,7 +93,7 @@ private class ByteFormatter(val editText: EditText, val tagData: EnterViewModel)
     private var before: Int = 0
     private var after: Int = 0
 
-    private var ignoreChangeEvents: Boolean = true // TODO test this for the next patch release
+    private var ignoreChangeEvents: Boolean = if (NO_BYTE_FORMATTER) true else false
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
         if (ignoreChangeEvents) return
@@ -96,8 +111,8 @@ private class ByteFormatter(val editText: EditText, val tagData: EnterViewModel)
     override fun afterTextChanged(s: Editable?) {
         if (ignoreChangeEvents) return
         ignoreChangeEvents = true
-        Log.w(TAG, "afterChanged: '$s'")
 
+        Log.w(TAG, "afterChanged: '$s'")
         Log.w(TAG, "afterChanged: start: $start, before: $before, after: $after,  '$s'")
 
         val unformatted = s.toString()
@@ -105,7 +120,19 @@ private class ByteFormatter(val editText: EditText, val tagData: EnterViewModel)
         Log.w(TAG, "$unformatted ->")
         Log.w(TAG, formatted)
 
-        // TODO add functionality to delete spaces
+        /* cases to cover
+            https://developer.android.com/reference/android/text/TextWatcher
+        one char added
+            00 01 -> 00a 01 -> 00 A0 1
+            00 01 -> 0a0 01 -> 0A 00 1
+        one char deleted
+            00 01 -> 0001 -> 00 01 => this should actually lead to '00 1'
+            00 01 -> 0 01 -> 00 1
+            00 01 -> 00 0 -> 00 0
+        multiple chars added
+            must then not only put the cursor, but select more chars
+        multiple chars deleted
+         */
 
         if (formatted != unformatted) {
             editText.setText(formatted)
@@ -129,4 +156,5 @@ private class ByteFormatter(val editText: EditText, val tagData: EnterViewModel)
 
         ignoreChangeEvents = false
     }
+
 }

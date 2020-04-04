@@ -21,6 +21,15 @@ class EnterViewModel() : ViewModel(), Parcelable {
     private var _bytes: UByteArray = default()
     val bytes: UByteArray get() = _bytes
     fun setBytes(arr: UByteArray) {
+        var same = false
+        if (arr.size == _bytes.size && arr.isNotEmpty()) {
+            for (index in arr.indices) {
+                same = arr[index] == _bytes[index]
+                if (!same) break
+            }
+        }
+        if (same) return
+
         if (arr.size <= SPECIAL2) {
             // ensure the UByteArray is big enough (`.plus(0u)` crashed the app)
             val buffer = UByteArray(SPECIAL2 + 1) { 0u }
