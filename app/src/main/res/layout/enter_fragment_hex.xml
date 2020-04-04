@@ -1,14 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.enter.EnterHex">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        tools:context=".ui.enter.EnterHex">
 
-</FrameLayout>
+    <TextView
+            android:id="@+id/intro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_hex_intro" />
+
+    <TextView
+            android:id="@+id/bytes_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_half"
+            android:labelFor="@+id/bytes"
+            android:text="@string/edit_hex_bytes_label"
+            android:textStyle="bold" />
+
+    <EditText
+            android:id="@+id/bytes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:digits="0123456789abcdefABCDEF"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="text" />
+
+    <TextView
+            android:id="@+id/whitespace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_hex_whitespace" />
+
+    <TextView
+            android:id="@+id/disclaimer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_hex_disclaimer" />
+
+    <TextView
+            android:id="@+id/zero_pad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_hex_zeropad" />
+</LinearLayout>

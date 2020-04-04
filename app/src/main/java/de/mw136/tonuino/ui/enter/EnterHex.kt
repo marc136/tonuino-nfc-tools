@@ -1,56 +1,116 @@
 package de.mw136.tonuino.ui.enter
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import android.widget.EditText
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import de.mw136.tonuino.R
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import de.mw136.tonuino.byteArrayToHex
+import de.mw136.tonuino.hexToBytes
+import java.util.*
+
 /**
  * A simple [Fragment] subclass.
  * Use the [EnterHex.newInstance] factory method to
  * create an instance of this fragment.
  */
+@ExperimentalUnsignedTypes
 class EnterHex : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    val TAG = "EnterHex"
+    private val tagData: EnterViewModel by activityViewModels()
+
+    private lateinit var bytesEdit: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+        Log.i(TAG, "onCreate()")
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        val view = inflater.inflate(R.layout.enter_fragment_hex, container, false)
+
+        bytesEdit = view.findViewById(R.id.bytes)
+        bytesEdit.addTextChangedListener(object : TextWatcher {
+            private var position = 0
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                position = start + count
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                val formatted = formatBytes(s.toString())
+                if (s.toString() != formatted) {
+                    val cursorPosition = position
+                    val value = hexToBytes(formatted.replace(" ", ""))
+
+                    if (!tagData.bytes.contentEquals(value)) {
+                        Log.e(TAG, "Will change the bytes to ${tagData.bytes}")
+                        tagData.setBytes(value)
+                    }
+                    bytesEdit.setText(formatted)
+                    // TODO fix cursor position jumping (e.g. when adding a new char)
+                    bytesEdit.setSelection(cursorPosition)
+                }
+            }
+        })
+
+        addLiveDataEventListeners()
+
+        return view
+    }
+
+    private fun addLiveDataEventListeners() {
+        tagData.version.observe(viewLifecycleOwner, Observer { value: UByte ->
+            Log.v(TAG, "version.observe $value")
+            updateEditTextIfNeeded()
+        })
+
+        tagData.folder.observe(viewLifecycleOwner, Observer { value: UByte ->
+            Log.v(TAG, "folder.observe $value")
+            updateEditTextIfNeeded()
+        })
+
+        tagData.mode.observe(viewLifecycleOwner, Observer { value: UByte ->
+            Log.v(TAG, "mode.observe $value")
+            updateEditTextIfNeeded()
+        })
+
+        tagData.special.observe(viewLifecycleOwner, Observer { value: UByte ->
+            Log.v(TAG, "special.observe $value")
+            updateEditTextIfNeeded()
+        })
+
+        tagData.special2.observe(viewLifecycleOwner, Observer { value: UByte ->
+            Log.v(TAG, "special2.observe $value")
+            updateEditTextIfNeeded()
+        })
+    }
+
+    private fun updateEditTextIfNeeded() {
+        val new = byteArrayToHex(tagData.bytes).joinToString(" ")
+        Log.e(TAG, "old/new: '${bytesEdit.text.toString()}' == '$new'")
+        if (bytesEdit.text.toString() != new) {
+            bytesEdit.setText(new)
         }
     }
+}
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.enter_fragment_hex, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment EnterHex.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic fun newInstance(param1: String, param2: String) =
-                EnterHex().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
-    }
+fun formatBytes(bytes: String): String {
+    // "012 3456789" -> "01 23 45 67 89"
+    return bytes.replace("\\s".toRegex(), "")
+        .toUpperCase(Locale.ENGLISH).chunked(2)
+        .joinToString(" ")
 }

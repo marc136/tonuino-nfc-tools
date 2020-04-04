@@ -19,6 +19,7 @@ const val TAG = "enter.PagerAdapter"
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
+@ExperimentalUnsignedTypes
 class EnterFragmentPagerAdapter(private val context: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
@@ -32,7 +33,7 @@ class EnterFragmentPagerAdapter(private val context: Context, fm: FragmentManage
             1 ->
                 Extended()
             2 ->
-                PlaceholderFragment.newInstance(position + 1)
+                EnterHex()
             else ->
                 PlaceholderFragment.newInstance(position + 1)
         }
