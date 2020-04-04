@@ -97,7 +97,7 @@ private class ByteFormatter(val editText: EditText, val tagData: EnterViewModel)
     private var before: Int = 0
     private var after: Int = 0
 
-    private var ignoreChangeEvents: Boolean = false
+    private var ignoreChangeEvents: Boolean = true // TODO test this for the next patch release
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
         if (ignoreChangeEvents) return
