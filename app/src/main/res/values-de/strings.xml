@@ -103,6 +103,8 @@
     <!-- Strings on the EditSimple fragment -->
     <string name="edit_simple_intro">Diese Ansicht erlaubt das einfache Auswählen der Einstellungen für ein NFC Tag.
     </string>
+    <string name="edit_folder_normal_tag">Abspiel Tag</string>
+    <string name="edit_folder_modifier_tag">Modifier Tag</string>
 
     <!-- Strings on the EditExtended fragment -->
     <string name="edit_ext_folder_not_allowed_description">DFPlayer can only access folders up to 99</string>

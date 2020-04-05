@@ -115,6 +115,8 @@
 
     <!-- Strings on the EditSimple fragment -->
     <string name="edit_simple_intro">This view allows to select values for the NFC tag.</string>
+    <string name="edit_folder_normal_tag">Regular tag</string>
+    <string name="edit_folder_modifier_tag">Modifier tag</string>
 
     <!-- Strings on the EditExtended fragment -->
     <string name="edit_extended_intro">This extended view can be used to enter values for TonUINO variants that this

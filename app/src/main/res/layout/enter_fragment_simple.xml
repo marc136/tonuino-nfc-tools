@@ -54,6 +54,25 @@
             </TableRow>
 
             <TableRow
+                    android:id="@+id/v2_modifier_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="0dp">
+
+                <Switch
+                        android:id="@+id/v2_modifier_switch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit_folder_normal_tag" />
+
+                <TextView
+                        android:id="@+id/v2_modifier_switch_label"
+                        android:labelFor="@id/v2_modifier_switch"
+                        android:text="@string/edit_folder_modifier_tag" />
+            </TableRow>
+
+            <TableRow
+                    android:id="@+id/folder_row"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:minHeight="0dp">

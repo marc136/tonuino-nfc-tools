@@ -43,6 +43,7 @@ class EnterSimple : Fragment() {
 
     private lateinit var version: Spinner
     private lateinit var versionDescription: TextView
+    private lateinit var folderRow: TableRow
     private lateinit var folder: Spinner
     private lateinit var folderDescription: TextView
     private var folderValue: UByte = 0u // TODO remove
@@ -60,6 +61,8 @@ class EnterSimple : Fragment() {
     private lateinit var special2Description: TextView
     private lateinit var special2Row: View
 
+    private lateinit var v2ModifierSwitch: Switch
+    private lateinit var v2ModifierRow: TableRow
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +80,7 @@ class EnterSimple : Fragment() {
         version = view.findViewById(R.id.version)
         versionDescription = view.findViewById(R.id.version_description)
 
+        folderRow = view.findViewById(R.id.folder_row)
         folder = view.findViewById(R.id.folder)
         folderDescription = view.findViewById(R.id.folder_description)
 
@@ -92,6 +96,21 @@ class EnterSimple : Fragment() {
         special2Label = view.findViewById(R.id.special2_label)
         special2Description = view.findViewById(R.id.special2_description)
         special2Row = view.findViewById(R.id.special2_row)
+
+        v2ModifierRow = view.findViewById(R.id.v2_modifier_row)
+        v2ModifierSwitch = view.findViewById(R.id.v2_modifier_switch)
+        v2ModifierSwitch.setOnCheckedChangeListener { _, isChecked ->
+            tagData.folder.value?.toUInt()?.let { value ->
+                if (isChecked && value != 0u) {
+                    tagData.setFolder(0u)
+                } else if (!isChecked && value == 0u) {
+                    tagData.setFolder(1u)
+                }
+            }
+        }
+        view.findViewById<TextView>(R.id.v2_modifier_switch_label).setOnClickListener {
+            v2ModifierSwitch.toggle()
+        }
 
         initSpinnerValues()
         showDescriptions()
@@ -123,15 +142,20 @@ class EnterSimple : Fragment() {
             Tonuino.format1 -> {
                 showFormat1Descriptions(tagData.mode.value?.toInt() ?: -1)
                 versionDescription.text = getString(R.string.edit_version_1)
+                folderRow.visibility = View.VISIBLE
+                v2ModifierRow.visibility = View.GONE
             }
             Tonuino.format2 -> {
                 showFormat2Descriptions(tagData.mode.value?.toInt() ?: -1)
                 versionDescription.text = getString(R.string.edit_version_2)
+                v2ModifierRow.visibility = View.VISIBLE
             }
             else -> {
                 versionDescription.text =
                     getString(R.string.edit_unknown_value, tagData.version.value)
                 hideAllDescriptions()
+                folderRow.visibility = View.VISIBLE
+                v2ModifierRow.visibility = View.GONE
             }
         }
     }
@@ -194,6 +218,9 @@ class EnterSimple : Fragment() {
 
     private fun showFormat2Descriptions(mode: Int) {
         Log.d(TAG, "showFormat2Descriptions")
+
+        folderRow.visibility =
+            if (savedModeView == ModeView.V2_MODIFIER) View.GONE else View.VISIBLE
 
         val arr = when (savedModeView) {
             ModeView.V2 ->
@@ -487,6 +514,15 @@ class EnterSimple : Fragment() {
                 }
 
                 setModeSpinnerValues()
+
+                if (savedModeView == ModeView.V2 && v2ModifierSwitch.isChecked) {
+                    v2ModifierSwitch.isChecked = false
+                }
+                if (savedModeView == ModeView.V2_MODIFIER && !v2ModifierSwitch.isChecked) {
+                    v2ModifierSwitch.isChecked = true
+                }
+
+
             }
         })
 

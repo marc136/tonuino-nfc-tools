@@ -67,6 +67,7 @@ class EnterViewModel() : ViewModel(), Parcelable {
     private var _folder: MutableLiveData<UByte> = MutableLiveData(_bytes[FOLDER])
     val folder: LiveData<UByte> get() = _folder
     fun setFolder(value: UByte) {
+        if (_bytes[FOLDER] == value) return
         _bytes[FOLDER] = value
         _folder.value = value
     }
