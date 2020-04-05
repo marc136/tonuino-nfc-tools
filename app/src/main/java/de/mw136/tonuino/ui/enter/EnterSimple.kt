@@ -18,8 +18,6 @@ import de.mw136.tonuino.ui.Tonuino
 
 private const val VERSION_MAX = 2
 private const val FOLDER_MAX = 99
-private const val MODE_MAX_FORMAT1 = 6
-private const val MODE_MAX_FORMAT2 = 9
 
 @ExperimentalUnsignedTypes
 class EnterSimple : Fragment() {
@@ -28,7 +26,19 @@ class EnterSimple : Fragment() {
     private val tagData: EnterViewModel by activityViewModels()
     private val mode_max: Int
         get() {
-            return if (tagData.version.value?.toUInt() == 1u) MODE_MAX_FORMAT1 else MODE_MAX_FORMAT2
+            return when (savedModeView) {
+                ModeView.V1 -> 6
+                ModeView.V2 -> 9
+                ModeView.V2_MODIFIER -> 6
+                ModeView.INITIAL -> 0
+            }
+        }
+    private var savedModeView: ModeView = ModeView.INITIAL // TODO read on init
+    private val modeViewHasChanged: Boolean
+        get() {
+            val old = savedModeView
+            updateModeView()
+            return old != savedModeView
         }
 
     private lateinit var version: Spinner
@@ -83,12 +93,28 @@ class EnterSimple : Fragment() {
         special2Description = view.findViewById(R.id.special2_description)
         special2Row = view.findViewById(R.id.special2_row)
 
-        showDescriptions()
         initSpinnerValues()
+        showDescriptions()
         addUserEventListeners()
         addLiveDataEventListeners()
 
         return view
+    }
+
+    private fun updateModeView() {
+        tagData.version.value?.toUInt()?.let { version ->
+            when (version) {
+                1u ->
+                    savedModeView = ModeView.V1
+                2u -> {
+                    if (tagData.folder.value?.toUInt()?.equals(0u) ?: false) {
+                        savedModeView = ModeView.V2_MODIFIER
+                    } else {
+                        savedModeView = ModeView.V2
+                    }
+                }
+            }
+        }
     }
 
     private fun showDescriptions() {
@@ -169,9 +195,17 @@ class EnterSimple : Fragment() {
     private fun showFormat2Descriptions(mode: Int) {
         Log.d(TAG, "showFormat2Descriptions")
 
-        val arr = resources.getStringArray(R.array.edit_mode_description)
-        modeDescription.text = if (mode in 1..arr.size) {
-            arr[mode - 1]
+        val arr = when (savedModeView) {
+            ModeView.V2 ->
+                resources.getStringArray(R.array.edit_mode_description)
+            ModeView.V2_MODIFIER ->
+                resources.getStringArray(R.array.edit_modifier_tags_description)
+            else ->
+                arrayOf()
+        }
+
+        modeDescription.text = if (mode in 0 until arr.size) {
+            arr[mode]
         } else {
             getString(R.string.edit_mode_unknown, mode)
         }
@@ -267,20 +301,40 @@ class EnterSimple : Fragment() {
 
     /** Must be called multiple times because changing the version also changes the options here */
     private fun setModeSpinnerValues() {
-        val allModes: List<String> = resources.getStringArray(R.array.edit_mode).asList()
-        val modes = allModes.take(mode_max)
-        ArrayAdapter(
-            requireActivity().baseContext,
-            android.R.layout.simple_spinner_item,
-            modes
-        ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            adapter.setNotifyOnChange(true)
-            // Apply the adapter to the spinner
-            mode.adapter = adapter
-        }
+        Log.w(TAG, "setModeSpinner old $savedModeView")
+        if (modeViewHasChanged) {
+            Log.w(TAG, "setModeSpinner new $savedModeView")
+            val adapter: ArrayAdapter<CharSequence>? =
+                when (savedModeView) {
+                    ModeView.V1, ModeView.V2 -> {
+                        val allModes: List<String> =
+                            resources.getStringArray(R.array.edit_mode).asList()
+                        val modes = allModes.take(mode_max)
+                        ArrayAdapter(
+                            requireActivity().baseContext, android.R.layout.simple_spinner_item,
+                            modes
+                        )
+                    }
+                    ModeView.V2_MODIFIER -> {
+                        val modes: List<String> =
+                            resources.getStringArray(R.array.edit_modifier_tags).asList()
+                        ArrayAdapter(
+                            requireActivity().baseContext, android.R.layout.simple_spinner_item,
+                            modes
+                        )
+                    }
+                    ModeView.INITIAL ->
+                        null
+                }
 
+            if (adapter !== null) {
+                // Specify the layout to use when the list of choices appears
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                adapter.setNotifyOnChange(true)
+                // Apply the adapter to the spinner
+                mode.adapter = adapter
+            }
+        }
         tagData.mode.value?.let { selectCurrentItemInModeSpinner(it.toInt()) }
     }
 
@@ -330,9 +384,10 @@ class EnterSimple : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                if (position in 0 until mode_max) {
-                    modeValue = (position + 1).toUByte()
-                    tagData.setMode(modeValue)
+                if (savedModeView == ModeView.V2_MODIFIER && position in 0..mode_max) {
+                    tagData.setMode(position.toUByte())
+                } else if (position in 0 until mode_max) {
+                    tagData.setMode((position + 1).toUByte())
                 }
                 showDescriptions()
             }
@@ -387,8 +442,9 @@ class EnterSimple : Fragment() {
                 adapter.add(str)
                 version.setSelection(adapter.count - 1, false)
             }
-//            }
+
             setModeSpinnerValues()
+//            }
         })
 
         tagData.folder.observe(viewLifecycleOwner, Observer { value: UByte ->
@@ -413,6 +469,8 @@ class EnterSimple : Fragment() {
                     adapter.add(str)
                     folder.setSelection(adapter.count - 1, false)
                 }
+
+                setModeSpinnerValues()
             }
         })
 
@@ -423,8 +481,9 @@ class EnterSimple : Fragment() {
                 modeValue = value
 
                 val adapter = mode.adapter as ArrayAdapter<String>
-                if (adapter.count > mode_max) {
-                    adapter.getItem(mode_max)?.let { item ->
+                val max = if (savedModeView == ModeView.V2_MODIFIER) mode_max + 1 else mode_max
+                if (adapter.count > max) {
+                    adapter.getItem(max)?.let { item ->
                         Log.d(TAG, "Removing entry '$item' from mode spinner")
                         adapter.remove(item)
                     }
@@ -448,17 +507,30 @@ class EnterSimple : Fragment() {
     }
 
     private fun selectCurrentItemInModeSpinner(value: Int) {
-        if (value in 1..mode_max) {
-            mode.setSelection(value - 1, false)
+        var range = 1..mode_max
+        var position = value - 1
+        if (savedModeView == ModeView.V2_MODIFIER) {
+            range = 0 until mode_max
+            position = value
+        }
+
+        if (value in range) {
+            mode.setSelection(position, false)
         } else {
             val str = getString(R.string.edit_unsupported_value, value.toString())
             Log.d(TAG, "Will add '$str' to mode spinner and select it")
             val adapter = mode.adapter as ArrayAdapter<String>
-            adapter.add(str)
+            try {
+                adapter.add(str)
+            } catch (t: Throwable) {
+                Log.e(TAG, "Adding an item to mode spinner threw this error: ${t.message}")
+            }
             mode.setSelection(adapter.count - 1, false)
         }
     }
 }
+
+enum class ModeView { INITIAL, V1, V2, V2_MODIFIER }
 
 //TODO generalization to observe changes on spinner widgets
 //@ExperimentalUnsignedTypes

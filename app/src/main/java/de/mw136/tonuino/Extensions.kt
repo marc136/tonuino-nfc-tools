@@ -93,9 +93,9 @@ fun TextView.setResArrayString(value: Int, resId1: Int, resId2: Int, fallback: S
     val descriptions = resources.getStringArray(resId2)
     val max = if (titles.size < descriptions.size) titles.size else descriptions.size
 
-    if (value in 1 until max) {
+    if (value in 0 until max) {
         this.visibility = View.VISIBLE
-        this.text = titles[value - 1] + ": " + descriptions[value - 1]
+        this.text = titles[value] + ": " + descriptions[value]
     } else if (fallback.isNotBlank()) {
         this.visibility = View.VISIBLE
         this.text = fallback
