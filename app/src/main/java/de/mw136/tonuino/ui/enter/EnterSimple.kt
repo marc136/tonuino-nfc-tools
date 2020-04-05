@@ -428,7 +428,11 @@ class EnterSimple : Fragment() {
             if (adapter.count > VERSION_MAX) {
                 adapter.getItem(adapter.count - 1)?.let { item ->
                     Log.d(TAG, "Removing entry '$item' from version spinner")
-                    adapter.remove(item)
+                    try {
+                        adapter.remove(item)
+                    } catch (t: Throwable) {
+                        Log.e(TAG, "Could not remove version spinner item '$item'")
+                    }
                 }
             }
 
@@ -439,7 +443,11 @@ class EnterSimple : Fragment() {
             } else {
                 val str = getString(R.string.edit_unsupported_value, value.toString())
                 Log.d(TAG, "Will add '$str' to version spinner and select it")
-                adapter.add(str)
+                try {
+                    adapter.add(str)
+                } catch (t: Throwable) {
+                    Log.e(TAG, "Could not add item '$str' to version spinner")
+                }
                 version.setSelection(adapter.count - 1, false)
             }
 
@@ -456,7 +464,11 @@ class EnterSimple : Fragment() {
                 if (adapter.count > FOLDER_MAX) {
                     adapter.getItem(FOLDER_MAX)?.let { item ->
                         Log.d(TAG, "Removing entry '$item' from folder spinner")
-                        adapter.remove(item)
+                        try {
+                            adapter.remove(item)
+                        } catch (t: Throwable) {
+                            Log.e(TAG, "Could not remove mode spinner item '$item'")
+                        }
                     }
                 }
 
@@ -466,7 +478,11 @@ class EnterSimple : Fragment() {
                 } else {
                     val str = getString(R.string.edit_unsupported_value, value.toString())
                     Log.d(TAG, "Will add '$str' to folder spinner and select it")
-                    adapter.add(str)
+                    try {
+                        adapter.add(str)
+                    } catch (t: Throwable) {
+                        Log.e(TAG, "Could not add item '$str' to folder spinner")
+                    }
                     folder.setSelection(adapter.count - 1, false)
                 }
 
@@ -485,7 +501,11 @@ class EnterSimple : Fragment() {
                 if (adapter.count > max) {
                     adapter.getItem(max)?.let { item ->
                         Log.d(TAG, "Removing entry '$item' from mode spinner")
-                        adapter.remove(item)
+                        try {
+                            adapter.remove(item)
+                        } catch (t: Throwable) {
+                            Log.e(TAG, "Could not remove mode spinner item '$item'")
+                        }
                     }
                 }
 
