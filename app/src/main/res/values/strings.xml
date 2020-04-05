@@ -104,6 +104,7 @@
     </string-array>
 
     <string name="edit_special_from">Between track %d</string>
+    <string name="edit_special_label_for_sleep_timer">Minutes</string>
     <string name="edit_special2_to">And track %d</string>
 
     <string name="edit_write_button">Write data on tag %s</string>

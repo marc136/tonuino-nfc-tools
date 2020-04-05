@@ -14,6 +14,7 @@ import de.mw136.tonuino.afterTextChanged
 import de.mw136.tonuino.setByteIfChanged
 import de.mw136.tonuino.ui.Format1Mode
 import de.mw136.tonuino.ui.Format2Mode
+import de.mw136.tonuino.ui.Format2ModifierMode
 import de.mw136.tonuino.ui.Tonuino
 
 private const val VERSION_MAX = 2
@@ -29,7 +30,7 @@ class EnterSimple : Fragment() {
             return when (savedModeView) {
                 ModeView.V1 -> 6
                 ModeView.V2 -> 9
-                ModeView.V2_MODIFIER -> 6
+                ModeView.V2_MODIFIER -> 7
                 ModeView.INITIAL -> 0
             }
         }
@@ -216,21 +217,18 @@ class EnterSimple : Fragment() {
         special2Description.visibility = View.GONE
     }
 
-    private fun showFormat2Descriptions(mode: Int) {
-        Log.d(TAG, "showFormat2Descriptions")
 
-        folderRow.visibility =
-            if (savedModeView == ModeView.V2_MODIFIER) View.GONE else View.VISIBLE
+    private fun showFormat2Descriptions(mode: Int) = if (savedModeView == ModeView.V2_MODIFIER) {
+        showFormat2ModifierDescriptions(mode)
+    } else {
+        showFormat2NormalDescriptions(mode)
+    }
 
-        val arr = when (savedModeView) {
-            ModeView.V2 ->
-                resources.getStringArray(R.array.edit_mode_description)
-            ModeView.V2_MODIFIER ->
-                resources.getStringArray(R.array.edit_modifier_tags_description)
-            else ->
-                arrayOf()
-        }
+    private fun showFormat2NormalDescriptions(mode: Int) {
+        Log.d(TAG, "showFormat2NormalDescriptions")
+        folderRow.visibility = View.VISIBLE
 
+        val arr = resources.getStringArray(R.array.edit_mode_description)
         modeDescription.text = if (mode in arr.indices) {
             arr[mode]
         } else {
@@ -285,6 +283,43 @@ class EnterSimple : Fragment() {
                 special2Description.text = getString(R.string.edit_hidden_label)
             }
         }
+    }
+
+    private fun showFormat2ModifierDescriptions(mode: Int) {
+        Log.d(TAG, "showFormat2ModifierDescriptions")
+        folderRow.visibility = View.GONE
+
+        val arr = resources.getStringArray(R.array.edit_modifier_tags_description)
+        modeDescription.text = if (mode in arr.indices) {
+            arr[mode]
+        } else {
+            getString(R.string.edit_mode_unknown, mode)
+        }
+        modeDescription.visibility = View.VISIBLE
+
+        when (mode) {
+            Format2ModifierMode.SleepTimer.value -> {
+                specialRow.visibility = View.VISIBLE
+                specialLabel.text = getString(R.string.edit_special_label_for_sleep_timer)
+            }
+            Format2ModifierMode.Admin.value,
+            Format2ModifierMode.FreezeDance.value,
+            Format2ModifierMode.Locked.value,
+            Format2ModifierMode.Toddler.value,
+            Format2ModifierMode.Kindergarten.value,
+            Format2ModifierMode.RepeatSingle.value,
+            Format2ModifierMode.Feedback.value -> {
+                specialRow.visibility = View.GONE
+                specialLabel.text = getString(R.string.edit_hidden_label)
+            }
+            else -> {
+                specialRow.visibility = View.GONE
+                specialLabel.text = getString(R.string.edit_hidden_label)
+            }
+        }
+        specialDescription.visibility = View.GONE
+        specialDescription.text = getString(R.string.edit_hidden_label)
+        special2Row.visibility = View.GONE
     }
 
     private fun hideAllDescriptions() {

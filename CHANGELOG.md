@@ -7,6 +7,7 @@ TODO list before next version
 - Remove EditActivity and its related files
 - Rename EnterActivity and related files
 DONE
+- Add correct extra inputs for modifier tags
 - Add simpler selection of Tonuino 2.1 modifier tags (from edit/simple/ModifierTag)
   - with a switch button on EnterSimple instead of allowing users to select folder "0"
 - Add functionality to `bytes` tab

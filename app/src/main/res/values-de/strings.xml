@@ -91,6 +91,7 @@
     </string-array>
 
     <string name="edit_special_from">Zwischen Titel %d</string>
+    <string name="edit_special_label_for_sleep_timer">Minuten</string>
     <string name="edit_special2_to">Und Titel %d</string>
 
     <string name="edit_write_button">Daten auf Tag %s schreiben</string>

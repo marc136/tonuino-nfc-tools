@@ -18,7 +18,6 @@ enum class TonuinoFormat(val value: UByte) {
     Format1(1u), Format2(2u)
 }
 
-@ExperimentalUnsignedTypes
 enum class Format1Mode(val value: Int) {
     AudioBookRandom(1),
     Album(2),
@@ -28,11 +27,15 @@ enum class Format1Mode(val value: Int) {
     Admin(6),
 }
 
-@ExperimentalUnsignedTypes
 enum class Format2Mode(val value: Int) {
     AudioBookRandom2(7),
     Album2(8),
     Party2(9)
+}
+
+enum class Format2ModifierMode(val value: Int) {
+    Admin(0), SleepTimer(1), FreezeDance(2), Locked(3),
+    Toddler(4), Kindergarten(5), RepeatSingle(6), Feedback(7)
 }
 
 @ExperimentalUnsignedTypes
