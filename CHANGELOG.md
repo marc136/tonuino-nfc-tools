@@ -3,12 +3,12 @@ This file gives a general overview, look into the git log for more information.
 
 ## WIP: Rewrite EditActivity to use androidx.ViewModel
 TODO list before next version
-- Add simpler selection of Tonuino 2.1 modifier tags (from edit/simple/ModifierTag)
-  - with a switch button on EnterSimple instead of allowing users to select folder "0"
 - Get BytesFormatter to work without issues
 - Remove EditActivity and its related files
 - Rename EnterActivity and related files
 DONE
+- Add simpler selection of Tonuino 2.1 modifier tags (from edit/simple/ModifierTag)
+  - with a switch button on EnterSimple instead of allowing users to select folder "0"
 - Add functionality to `bytes` tab
 - Replace TagHelper.TagData with EnterViewModel
 - Find a better way to initialize the ViewModel from Parcelable in EnterTagActivity
