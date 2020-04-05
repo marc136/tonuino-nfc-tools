@@ -83,6 +83,7 @@
     <string name="edit_mode_unknown">Mode \'%d\' is unknown.</string>
 
     <string-array name="edit_modifier_tags">
+        <item>Admin menu</item>
         <item>Sleep timer</item>
         <item>Freeze dance</item>
         <item>Locked</item>
@@ -92,6 +93,7 @@
         <item>Feedback modifier</item>
     </string-array>
     <string-array name="edit_modifier_tags_description">
+        <item>Opens the TonUINO admin menu</item>
         <item>Pauses playback after timer</item>
         <item>Randomly pauses the track after 5 to 30 seconds</item>
         <item>All buttons are locked and no new card will be read</item>

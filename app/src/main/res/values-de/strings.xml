@@ -70,6 +70,7 @@
     <string name="edit_mode_unknown">Der Modus \'%d\' ist unbekannt.</string>
 
     <string-array name="edit_modifier_tags">
+        <item>Admin Menü</item>
         <item>Einschlaf Modus</item>
         <item>Pausetanz Modus</item>
         <item>Sperre</item>
@@ -79,13 +80,14 @@
         <item>Audio-Feedback</item>
     </string-array>
     <string-array name="edit_modifier_tags_description">
+        <item>Öffnet das TonUINO admin Menü</item>
         <item>Pausiert die Wiedergabe nach Ablauf der gewählten Zeit.</item>
         <item>Pausiert die Wiedergabe zufällig alle 5 bis 30 Sekunden.</item>
         <item>Alle Tasten werden gesperrt und keine neuen Tags werden gelesen.</item>
         <item>Alle Tasten werden gesperrt.</item>
         <item>Die vor- und zurück Tasten werden gesperrt. Ein neuer Tag wird nicht sofort abgespielt, sondern erst nachdem der aktuelle beendet wurde.</item>
         <item>Wiederholt den aktuellen Titel.</item>
-        <item>Gib zum Beispiel die Lautstärke aus, bevor sie geändert wird.</item>
+        <item>Gibt zum Beispiel die Lautstärke aus, bevor sie geändert wird.</item>
     </string-array>
 
     <string name="edit_special_from">Zwischen Titel %d</string>
