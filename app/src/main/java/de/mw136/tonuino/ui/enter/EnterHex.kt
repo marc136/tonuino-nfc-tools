@@ -70,7 +70,7 @@ class EnterHex : Fragment() {
 
     private fun updateEditTextIfNeeded() {
         val new = byteArrayToHex(tagData.bytes).joinToString(if (NO_BYTE_FORMATTER) "" else " ")
-        Log.v(TAG, "old/new: '${bytesEdit.text.toString()}' == '$new'")
+        Log.v(TAG, "old/new: '${bytesEdit.text}' == '$new'")
         if (bytesEdit.text.toString() != new) {
             Log.e(TAG, "set text to '$new'")
             bytesEdit.setText(new)

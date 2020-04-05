@@ -107,10 +107,10 @@ class EnterSimple : Fragment() {
                 1u ->
                     savedModeView = ModeView.V1
                 2u -> {
-                    if (tagData.folder.value?.toUInt()?.equals(0u) ?: false) {
-                        savedModeView = ModeView.V2_MODIFIER
+                    savedModeView = if (tagData.folder.value?.toUInt()?.equals(0u) == true) {
+                        ModeView.V2_MODIFIER
                     } else {
-                        savedModeView = ModeView.V2
+                        ModeView.V2
                     }
                 }
             }
@@ -204,7 +204,7 @@ class EnterSimple : Fragment() {
                 arrayOf()
         }
 
-        modeDescription.text = if (mode in 0 until arr.size) {
+        modeDescription.text = if (mode in arr.indices) {
             arr[mode]
         } else {
             getString(R.string.edit_mode_unknown, mode)
@@ -496,6 +496,7 @@ class EnterSimple : Fragment() {
                 Log.v(TAG, "mode.observe $value")
                 modeValue = value
 
+                @Suppress("UNCHECKED_CAST")
                 val adapter = mode.adapter as ArrayAdapter<String>
                 val max = if (savedModeView == ModeView.V2_MODIFIER) mode_max + 1 else mode_max
                 if (adapter.count > max) {
