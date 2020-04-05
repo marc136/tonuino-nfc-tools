@@ -527,7 +527,6 @@ class EnterSimple : Fragment() {
         })
 
         tagData.mode.observe(viewLifecycleOwner, Observer { value: UByte ->
-            val int = value.toInt()
             if (!mode.hasFocus() && modeValue != value) {
                 Log.v(TAG, "mode.observe $value")
                 modeValue = value
