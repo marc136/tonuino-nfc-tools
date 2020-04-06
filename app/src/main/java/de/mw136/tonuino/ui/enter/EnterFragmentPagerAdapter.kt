@@ -31,7 +31,7 @@ class EnterFragmentPagerAdapter(private val context: Context, fm: FragmentManage
             0 ->
                 EnterSimple()
             1 ->
-                Extended()
+                EnterExtended()
             2 ->
                 EnterHex()
             else ->

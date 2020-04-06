@@ -19,7 +19,7 @@ import de.mw136.tonuino.ui.Tonuino
 
 
 @ExperimentalUnsignedTypes
-class Extended : Fragment() {
+class EnterExtended : Fragment() {
     private val TAG: String = "enter.Extended"
 
     private val tagData: TagData by activityViewModels()
