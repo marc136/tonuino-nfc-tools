@@ -437,8 +437,7 @@ class EnterSimple : Fragment() {
                 id: Long
             ) {
                 if (position in 0 until FOLDER_MAX) {
-                    folderValue = (position + 1).toUByte()
-                    tagData.setFolder(folderValue)
+                    tagData.setFolder((position + 1).toUByte())
                 }
                 showDescriptions()
             }
@@ -470,7 +469,6 @@ class EnterSimple : Fragment() {
                 special.error = resources.getString(R.string.edit_limit_numeric_value, 0, 255)
             } else {
                 special.error = null
-                specialValue = it
                 tagData.setSpecial(it)
                 showDescriptions()
             }
@@ -483,7 +481,6 @@ class EnterSimple : Fragment() {
                 special2.error = resources.getString(R.string.edit_limit_numeric_value, 0, 255)
             } else {
                 special2.error = null
-                special2Value = it
                 tagData.setSpecial2(it)
                 showDescriptions()
             }
@@ -526,9 +523,8 @@ class EnterSimple : Fragment() {
         })
 
         tagData.folder.observe(viewLifecycleOwner, Observer { value: UByte ->
-            if (!folder.hasFocus() && folderValue != value) {
+            if (!folder.hasFocus()) {
                 Log.v(TAG, "folder.observe $value")
-                folderValue = value
 
                 val adapter: ArrayAdapter<String> = folder.adapter as ArrayAdapter<String>
                 if (adapter.count > FOLDER_MAX) {
@@ -564,43 +560,39 @@ class EnterSimple : Fragment() {
                 if (savedModeView == ModeView.V2_MODIFIER && !v2ModifierSwitch.isChecked) {
                     v2ModifierSwitch.isChecked = true
                 }
-
-
             }
         })
 
         tagData.mode.observe(viewLifecycleOwner, Observer { value: UByte ->
-            if (!mode.hasFocus() && modeValue != value) {
-                Log.v(TAG, "mode.observe $value")
-                modeValue = value
+//            val oldValue = mode.selectedItemPosition == value.toInt()
+//            if (!mode.hasFocus() && (tagData.mode.value?.equals(value) ?: false)) {
+            Log.v(TAG, "mode.observe $value")
 
-                @Suppress("UNCHECKED_CAST")
-                val adapter = mode.adapter as ArrayAdapter<String>
-                val max = if (savedModeView == ModeView.V2_MODIFIER) mode_max + 1 else mode_max
-                if (adapter.count > max) {
-                    adapter.getItem(max)?.let { item ->
-                        Log.d(TAG, "Removing entry '$item' from mode spinner")
-                        try {
-                            adapter.remove(item)
-                        } catch (t: Throwable) {
-                            Log.e(TAG, "Could not remove mode spinner item '$item'")
-                        }
+            @Suppress("UNCHECKED_CAST")
+            val adapter = mode.adapter as ArrayAdapter<String>
+            val max = if (savedModeView == ModeView.V2_MODIFIER) mode_max + 1 else mode_max
+            if (adapter.count > max) {
+                adapter.getItem(max)?.let { item ->
+                    Log.d(TAG, "Removing entry '$item' from mode spinner")
+                    try {
+                        adapter.remove(item)
+                    } catch (t: Throwable) {
+                        Log.e(TAG, "Could not remove mode spinner item '$item'")
                     }
                 }
-
-                selectCurrentItemInModeSpinner(value.toInt())
             }
+
+            selectCurrentItemInModeSpinner(value.toInt())
+//            }
         })
 
         tagData.special.observe(viewLifecycleOwner, Observer { value: UByte ->
             Log.v(TAG, "special.observe $value")
-            specialValue = value
             special.setByteIfChanged(value)
         })
 
         tagData.special2.observe(viewLifecycleOwner, Observer { value: UByte ->
             Log.v(TAG, "special2.observe $value")
-            special2Value = value
             special2.setByteIfChanged(value)
         })
     }
@@ -630,37 +622,3 @@ class EnterSimple : Fragment() {
 }
 
 enum class ModeView { INITIAL, V1, V2, V2_MODIFIER }
-
-//TODO generalization to observe changes on spinner widgets
-//@ExperimentalUnsignedTypes
-//class MyObserver(
-//    private val min: Int,
-//    private val max: Int,
-//    private val folder: Spinner,
-//    private val caption: String
-//) : Observer<UByte> {
-//    override fun onChanged(value: UByte) {
-//
-//        if (!folder.hasFocus() && value.toString() != folder.selectedItem) {
-//            Log.v(TAG, "folder.observe $value")
-//
-//            val adapter = folder.adapter as ArrayAdapter<String>
-//            if (adapter.count >= FOLDER_MAX) {
-//                adapter.getItem(FOLDER_MAX - 1)?.let { item ->
-//                    Log.d(TAG, "Removing entry '$item' from folder spinner")
-//                    adapter.remove(item)
-//                }
-//            }
-//
-//            val folderIndex = value.toInt()
-//            if (folderIndex in 1..FOLDER_MAX) {
-//                folder.setSelection(folderIndex - 1, false)
-//            } else {
-//                val str = getString(R.string.edit_unsupported_value, value.toString())
-//                Log.d(TAG, "Will add '$str' to folder spinner and select it")
-//                adapter.add(str)
-//                folder.setSelection(FOLDER_MAX, false)
-//            }
-//        }
-//    }
-//}

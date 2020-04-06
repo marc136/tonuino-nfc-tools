@@ -25,7 +25,7 @@ class PlaceholderFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_enter_tag, container, false)
+        val root = inflater.inflate(R.layout.enter_activity_fragment, container, false)
         val textView: TextView = root.findViewById(R.id.section_label)
         textView.text = index.toString()
         return root

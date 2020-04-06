@@ -39,7 +39,7 @@ class EnterTagActivity : NfcIntentActivity() {
         }
         Log.i(TAG, tagData.toString())
 
-        setContentView(R.layout.activity_enter_tag)
+        setContentView(R.layout.enter_activity)
         val sectionsPagerAdapter = EnterFragmentPagerAdapter(this, supportFragmentManager)
         val viewPager: ViewPager = findViewById(R.id.view_pager)
         viewPager.adapter = sectionsPagerAdapter
