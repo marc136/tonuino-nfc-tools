@@ -491,6 +491,7 @@ class EnterSimple : Fragment() {
         tagData.version.observe(viewLifecycleOwner, Observer { value: UByte ->
 //            if (!version.hasFocus()) {
             Log.v(TAG, "version.observe $value")
+            @Suppress("UNCHECKED_CAST")
             val adapter: ArrayAdapter<String> = version.adapter as ArrayAdapter<String>
             if (adapter.count > VERSION_MAX) {
                 adapter.getItem(adapter.count - 1)?.let { item ->
@@ -504,8 +505,9 @@ class EnterSimple : Fragment() {
             }
 
             if (value.toInt() in 1..VERSION_MAX) {
-                if (version.selectedItemPosition !== value.toInt() - 1) {
-                    version.setSelection(value.toInt() - 1, false)
+                val position = value.toInt() - 1
+                if (version.selectedItemPosition != position) {
+                    version.setSelection(position, false)
                 }
             } else {
                 val str = getString(R.string.edit_unsupported_value, value.toString())
@@ -526,6 +528,7 @@ class EnterSimple : Fragment() {
             if (!folder.hasFocus()) {
                 Log.v(TAG, "folder.observe $value")
 
+                @Suppress("UNCHECKED_CAST")
                 val adapter: ArrayAdapter<String> = folder.adapter as ArrayAdapter<String>
                 if (adapter.count > FOLDER_MAX) {
                     adapter.getItem(FOLDER_MAX)?.let { item ->
@@ -610,6 +613,7 @@ class EnterSimple : Fragment() {
         } else {
             val str = getString(R.string.edit_unsupported_value, value.toString())
             Log.d(TAG, "Will add '$str' to mode spinner and select it")
+            @Suppress("UNCHECKED_CAST")
             val adapter = mode.adapter as ArrayAdapter<String>
             try {
                 adapter.add(str)
