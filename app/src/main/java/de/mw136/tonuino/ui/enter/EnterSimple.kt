@@ -222,7 +222,19 @@ class EnterSimple : Fragment() {
 
     private fun showFormat2NormalDescriptions(mode: Int) {
         Log.d(TAG, "showFormat2NormalDescriptions")
+
+        val folder = tagData.folder.value?.toInt() ?: return
+        if (folder in 1..FOLDER_MAX) {
+            folderDescription.text =
+                getString(R.string.edit_ext_folder_description, folder)
+            folderDescription.visibility = View.VISIBLE
+        } else {
+            // value not used in TonUINO
+            folderDescription.visibility = View.VISIBLE
+            folderDescription.text = getString(R.string.edit_ext_folder_not_allowed_description)
+        }
         folderRow.visibility = View.VISIBLE
+
 
         val arr = resources.getStringArray(R.array.edit_mode_description)
         modeDescription.text = if (mode in arr.indices) {
