@@ -13,19 +13,19 @@ Google Play releases are built using [fastlane](https://docs.fastlane.tools/gett
 ## TODO
 
 - [ ] Hide on-screen-keyboard when switching between edit fragments
-- [ ] Add entry "unknown <#>" to mode spinner on EditSimple fragment
+- [x] Add entry "unknown <#>" to mode spinner on EditSimple fragment
 - [ ] Allow users to write a note or title to the NFC tag
 - [ ] Allow users to keep a list of tags
 - [x] Allow users to write a bulk list of tags
 - [x] Add support for further NFC tag technologies
   - [x] Mifare Ultralight
   - ~[ ] Generic NfcA~
-- ~[ ] Simulate NFC tag~ (unfortunately not possible with current Android APIs
+- [ ] Simulate NFC tag
 - [ ] Use proper Material design theming instead of faking it
     - MainActivity if NFC is not available
-- [ ] Use data binding
+- [x] Use data binding
   - [x] on BulkWriteActivity
-  - [ ] on EditActivity
+  - [x] on EditActivity
 
 ## Tonuino 2.0.x
 [Repository](https://github.com/xfjx/TonUINO/blob/d15df6c7bb53bc970e4def43fd3e93fd82c13086/Tonuino.ino)
@@ -90,7 +90,7 @@ All have a folder value of 0
 | FreezeDance | 2 | - | Randomly pauses the track after 5 to 30 seconds |
 | Locked | 3 | - | All buttons are locked and no new card will be read |
 | ToddlerMode | 4 | - | All buttons are locked |
-| KindergardenMode | 5 | - | Previous and back buttons are locked. Adding a new card will not stop the current track but will schedule it as next track |
+| KindergartenMode | 5 | - | Previous and back buttons are locked. Adding a new card will not stop the current track but will schedule it as next track |
 | RepeatSingleModifier | 6 | - | Repeat current track |
 | FeedbackModifier | 7 | - | Will e.g. tell volume before changing it |
 
