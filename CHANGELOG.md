@@ -4,8 +4,8 @@ This file gives a general overview, look into the git log for more information.
 ## WIP: Rewrite EditActivity to use androidx.ViewModel
 TODO list before next version
 - Get BytesFormatter to work without issues
-- Rename EnterActivity and related files
 DONE
+- Rename EnterActivity and related files
 - Remove EditActivity and its related files
 - Add correct extra inputs for modifier tags
 - Add simpler selection of Tonuino 2.1 modifier tags (from edit/simple/ModifierTag)
@@ -19,7 +19,7 @@ DONE
 
 
 ## unreleased
-<Nothing>
+- Rewrite edit activity to use androidx.ViewModel
 
 ## 0.7.0
 - Migrate to AndroidX
