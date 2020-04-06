@@ -24,7 +24,7 @@ private const val FOLDER_MAX = 99
 class EnterSimple : Fragment() {
     private val TAG: String = "enter.Simple"
 
-    private val tagData: EnterViewModel by activityViewModels()
+    private val tagData: TagData by activityViewModels()
     private val mode_max: Int
         get() {
             return when (savedModeView) {
@@ -47,17 +47,13 @@ class EnterSimple : Fragment() {
     private lateinit var folderRow: TableRow
     private lateinit var folder: Spinner
     private lateinit var folderDescription: TextView
-    private var folderValue: UByte = 0u // TODO remove
     private lateinit var mode: Spinner
     private lateinit var modeDescription: TextView
-    private var modeValue: UByte = 0u // TODO remove
     private lateinit var special: EditText
-    private var specialValue: UByte = 0u // TODO remove
     private lateinit var specialLabel: TextView
     private lateinit var specialDescription: TextView
     private lateinit var specialRow: View
     private lateinit var special2: EditText
-    private var special2Value: UByte = 0u // TODO remove
     private lateinit var special2Label: TextView
     private lateinit var special2Description: TextView
     private lateinit var special2Row: View

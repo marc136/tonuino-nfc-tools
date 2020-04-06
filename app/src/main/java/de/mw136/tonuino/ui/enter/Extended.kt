@@ -22,7 +22,7 @@ import de.mw136.tonuino.ui.Tonuino
 class Extended : Fragment() {
     private val TAG: String = "enter.Extended"
 
-    private val tagData: EnterViewModel by activityViewModels()
+    private val tagData: TagData by activityViewModels()
 
     private lateinit var version: EditText
     private lateinit var versionDescription: TextView
@@ -90,7 +90,7 @@ class Extended : Fragment() {
                 versionDescription.text = getString(R.string.edit_version_1)
             }
             Tonuino.format2 -> {
-                showFormat2Descriptions(tagData.mode.value?.toInt() ?: -1)
+                showFormat2Descriptions()
                 versionDescription.text = getString(R.string.edit_version_2)
             }
             else -> {
@@ -148,7 +148,7 @@ class Extended : Fragment() {
         special2Row.visibility = View.VISIBLE
     }
 
-    private fun showFormat2Descriptions(mode: Int) {
+    private fun showFormat2Descriptions() {
         Log.d(TAG, "showFormat2Descriptions")
 
         // TODO might need to change because of other changes

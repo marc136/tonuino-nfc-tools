@@ -1,6 +1,5 @@
 package de.mw136.tonuino
 
-import de.mw136.tonuino.nfc.TagData
 import de.mw136.tonuino.nfc.dropTrailingZeros
 import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
@@ -22,17 +21,5 @@ class TagHelperTest {
             0.toUByte(),
             input[expected.size]
         )
-    }
-
-    @Test
-    fun checkAccessors() {
-        val data = TagData(byteArrayOf(0, 1, 2, 3, 4, 5, 6, 7, 8).toUByteArray())
-
-        assertArrayEquals(byteArrayOf(0, 1, 2, 3), data.cookie.toByteArray())
-        assertEquals(4.toUByte(), data.version)
-        assertEquals(5.toUByte(), data.folder)
-        assertEquals(6.toUByte(), data.mode)
-        assertEquals(7.toUByte(), data.special)
-        assertEquals(8.toUByte(), data.special2)
     }
 }

@@ -31,7 +31,8 @@
                 android:background="#B00020"
                 android:orientation="vertical"
                 android:padding="@dimen/margin_half">
-            <!-- TODO add proper theming
+            <!--
+            TODO add proper theming
                 https://github.com/material-components/material-components-android/blob/master/docs/getting-started.md
                 values from here: https://material.io/design/color/the-color-system.html#color-theme-creation
             -->

@@ -11,14 +11,14 @@ import de.mw136.tonuino.byteArrayToHex
 import de.mw136.tonuino.nfc.NfcIntentActivity
 import de.mw136.tonuino.nfc.readFromTag
 import de.mw136.tonuino.nfc.tagIdAsString
-import de.mw136.tonuino.ui.enter.EnterViewModel
+import de.mw136.tonuino.ui.enter.TagData
 
 @ExperimentalUnsignedTypes
 class ReadActivity : NfcIntentActivity() {
     override val TAG = "ReadActivity"
 
     lateinit var tag: Tag
-    lateinit var tagData: EnterViewModel
+    lateinit var tagData: TagData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +30,7 @@ class ReadActivity : NfcIntentActivity() {
         displayTonuinoInfo(tag, tagData)
     }
 
-    private fun displayTonuinoInfo(tag: Tag, data: EnterViewModel) {
+    private fun displayTonuinoInfo(tag: Tag, data: TagData) {
         val tagId = tagIdAsString(tag)
         Log.i("$TAG.displayTonuinoInfo", "Tag $tagId")
         supportActionBar?.title = getString(R.string.read_title, tagId)
@@ -85,7 +85,7 @@ class ReadActivity : NfcIntentActivity() {
         Log.d(TAG, "bytes: ${byteArrayToHex(bytes).joinToString(" ")}")
 
         if (bytes.isNotEmpty()) {
-            displayTonuinoInfo(tag, EnterViewModel(bytes))
+            displayTonuinoInfo(tag, TagData(bytes))
         } else {
             showReadErrorModalDialog(tag)
         }

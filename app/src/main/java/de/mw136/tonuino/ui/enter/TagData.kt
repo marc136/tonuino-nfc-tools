@@ -2,7 +2,6 @@ package de.mw136.tonuino.ui.enter
 
 import android.os.Parcel
 import android.os.Parcelable
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,7 +16,7 @@ private const val SPECIAL = 7
 private const val SPECIAL2 = 8
 
 @ExperimentalUnsignedTypes
-class EnterViewModel() : ViewModel(), Parcelable {
+class TagData() : ViewModel(), Parcelable {
     private var _bytes: UByteArray = default()
     val bytes: UByteArray get() = _bytes
     fun setBytes(arr: UByteArray) {
@@ -99,8 +98,6 @@ class EnterViewModel() : ViewModel(), Parcelable {
     }
 
     constructor(arr: UByteArray) : this() {
-        // TODO check if these values are propagated to the other properties
-        Log.w("EnterViewModel", "Used the bytearray constructor with data ${arr}")
         setBytes(arr)
     }
 
@@ -116,7 +113,7 @@ class EnterViewModel() : ViewModel(), Parcelable {
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<EnterViewModel> {
+    companion object CREATOR : Parcelable.Creator<TagData> {
         private fun default(): UByteArray {
             val buffer = UByteArray(SPECIAL2 + 1) { 0u }
             // TODO load tonuinoCookie from settings
@@ -131,11 +128,11 @@ class EnterViewModel() : ViewModel(), Parcelable {
             return buffer
         }
 
-        override fun createFromParcel(parcel: Parcel): EnterViewModel {
-            return EnterViewModel(parcel)
+        override fun createFromParcel(parcel: Parcel): TagData {
+            return TagData(parcel)
         }
 
-        override fun newArray(size: Int): Array<EnterViewModel?> {
+        override fun newArray(size: Int): Array<TagData?> {
             return arrayOfNulls(size)
         }
     }

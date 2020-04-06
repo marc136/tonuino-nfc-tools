@@ -27,7 +27,7 @@ const val NO_BYTE_FORMATTER = true
 @ExperimentalUnsignedTypes
 class EnterHex : Fragment() {
     val TAG = "EnterHex"
-    private val tagData: EnterViewModel by activityViewModels()
+    private val tagData: TagData by activityViewModels()
 
     private lateinit var bytesEdit: EditText
 
@@ -86,7 +86,7 @@ fun formatBytes(bytes: String): String {
 }
 
 @ExperimentalUnsignedTypes
-private class ByteFormatter(val editText: EditText, val tagData: EnterViewModel) : TextWatcher {
+private class ByteFormatter(val editText: EditText, val tagData: TagData) : TextWatcher {
     private val TAG = this.javaClass.simpleName
 
     private var start: Int = 0

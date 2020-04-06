@@ -13,7 +13,7 @@ import de.mw136.tonuino.R
 @ExperimentalUnsignedTypes
 class PlaceholderFragment : Fragment() {
     private var index: Int = -1
-    private val enterViewModel: EnterViewModel by activityViewModels()
+    private val tagData: TagData by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

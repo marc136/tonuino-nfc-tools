@@ -26,14 +26,9 @@
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-                android:name=".ui.EditActivity"
-                android:configChanges="keyboardHidden|orientation|screenSize"
-                android:parentActivityName=".ui.MainActivity" />
         <activity
                 android:name=".ui.ReadActivity"
                 android:parentActivityName=".ui.MainActivity" />

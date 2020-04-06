@@ -16,14 +16,14 @@ import com.google.android.material.tabs.TabLayout
 import de.mw136.tonuino.R
 import de.mw136.tonuino.nfc.*
 import de.mw136.tonuino.ui.enter.EnterFragmentPagerAdapter
-import de.mw136.tonuino.ui.enter.EnterViewModel
+import de.mw136.tonuino.ui.enter.TagData
 import java.io.IOException
 
 @ExperimentalUnsignedTypes
 class EnterTagActivity : NfcIntentActivity() {
     override val TAG = "EnterTagActivity"
 
-    private val tagData: EnterViewModel by viewModels()
+    private val tagData: TagData by viewModels()
 
 
     var tag: TagTechnology? = null
@@ -33,7 +33,7 @@ class EnterTagActivity : NfcIntentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        intent.getParcelableExtra<EnterViewModel>(PARCEL_TAGDATA)?.let {
+        intent.getParcelableExtra<TagData>(PARCEL_TAGDATA)?.let {
             Log.i(TAG, "Found parceled tagData $it and will overwrite the current values")
             tagData.setBytes(it.bytes)
         }
