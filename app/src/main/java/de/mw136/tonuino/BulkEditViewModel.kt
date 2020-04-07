@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-const val TAG = "BulkEditViewModel"
+const val TAG: String = "BulkEditViewModel"
 
 // Patterns and Antipatterns about ViewModels https://medium.com/androiddevelopers/viewmodels-and-livedata-patterns-antipatterns-21efaef74a54
 

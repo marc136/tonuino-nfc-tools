@@ -4,8 +4,7 @@
     <!-- Will not show up in the store for devices without NFC support -->
     <uses-feature
             android:name="android.hardware.nfc"
-            android:required="true" />
-    <!-- Request user permission -->
+            android:required="true" /> <!-- Request user permission -->
     <uses-permission android:name="android.permission.NFC" />
 
     <application
@@ -16,6 +15,10 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
+                android:name=".ui.EnterTagActivity"
+                android:parentActivityName=".ui.MainActivity"
+                android:windowSoftInputMode="adjustResize" />
+        <activity
                 android:name=".ui.BulkWriteActivity"
                 android:label="@string/bulk_activity_title"
                 android:parentActivityName=".ui.MainActivity"
@@ -23,14 +26,9 @@
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-                android:name=".ui.EditActivity"
-                android:configChanges="keyboardHidden|orientation|screenSize"
-                android:parentActivityName=".ui.MainActivity" />
         <activity
                 android:name=".ui.ReadActivity"
                 android:parentActivityName=".ui.MainActivity" />

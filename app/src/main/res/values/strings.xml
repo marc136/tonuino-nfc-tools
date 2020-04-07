@@ -42,11 +42,20 @@
     <string name="edit_special_label">Extra</string>
     <string name="edit_special_label_for_album_mode">Title</string>
     <string name="edit_special_label_for_modifier_sleep_timer">Minutes</string>
+    <string name="edit_special_label_from">From</string>
     <string name="edit_special2_label">Extra 2</string>
+    <string name="edit_special2_label_to">To</string>
+    <string name="edit_version_1">Format 1: For Tonuino 2.0.x ("master" branch)</string>
+    <string name="edit_version_2">Format 2: For Tonuino 2.1 ("DEV" branch)</string>
 
     <string name="edit_hidden_label">hidden</string>
+    <string name="edit_unknown_value">Value \'%s\' is unknown.</string>
     <string name="edit_limit_numeric_value" tools:ignore="PluralsCandidate">Please enter a number between %d and %d.</string>
 
+    <string-array name="edit_version">
+        <item>Tonuino 2.0.x</item>
+        <item>Tonuino 2.1.x</item>
+    </string-array>
     <string-array name="edit_mode">
         <item>Audio book (single file)</item>
         <item>Album</item>
@@ -54,6 +63,9 @@
         <item>Single</item>
         <item>Audio book (multiple files)</item>
         <item>Admin</item>
+        <item>Audio book from-to (single file)</item>
+        <item>Album from-to</item>
+        <item>Party from-to</item>
     </string-array>
     <string-array name="edit_mode_description">
         <item>A random file from the chosen folder will be played.</item>
@@ -64,10 +76,14 @@
             the tag will play where it left off the last time.
         </item>
         <item>Tonuino 2.0.1 does not yet support admin tags.</item>
+        <item>A random file from the chosen folder between the selected minimum and maximum will be played.</item>
+        <item>Plays all files inside the folder between the selected minimum and maximum in numerical order.</item>
+        <item>Plays random files inside the folder between the selected minimum and maximum.</item>
     </string-array>
     <string name="edit_mode_unknown">Mode \'%d\' is unknown.</string>
 
     <string-array name="edit_modifier_tags">
+        <item>Admin menu</item>
         <item>Sleep timer</item>
         <item>Freeze dance</item>
         <item>Locked</item>
@@ -77,6 +93,7 @@
         <item>Feedback modifier</item>
     </string-array>
     <string-array name="edit_modifier_tags_description">
+        <item>Opens the TonUINO admin menu</item>
         <item>Pauses playback after timer</item>
         <item>Randomly pauses the track after 5 to 30 seconds</item>
         <item>All buttons are locked and no new card will be read</item>
@@ -86,22 +103,29 @@
         <item>Will e.g. tell volume before changing it</item>
     </string-array>
 
+    <string name="edit_special_from">Between track %d</string>
+    <string name="edit_special_label_for_sleep_timer">Minutes</string>
+    <string name="edit_special2_to">And track %d</string>
+
     <string name="edit_write_button">Write data on tag %s</string>
     <string name="edit_write_button_no_tag">Cannot write data without a tag</string>
     <string name="edit_write_description">To increase the chances that the data will be successfully written, place the
         device directly on top of the tag and then press the button to write.
     </string>
+    <string name="edit_unsupported_value">%s (Nicht unterstützt)</string>
 
     <!-- Strings on the EditSimple fragment -->
     <string name="edit_simple_intro">This view allows to select values for the NFC tag.</string>
+    <string name="edit_folder_normal_tag">Regular tag</string>
+    <string name="edit_folder_modifier_tag">Modifier tag</string>
 
     <!-- Strings on the EditExtended fragment -->
-    <string name="edit_ext_folder_description">Uses the folder /%02d.</string>
-    <string name="ext_folder_description_modifier">This is a modifier tag.</string>
-
     <string name="edit_extended_intro">This extended view can be used to enter values for TonUINO variants that this
         app does not know about.
     </string>
+    <string name="edit_ext_folder_description">Uses the folder /%02d.</string>
+    <string name="ext_folder_description_modifier">This is a modifier tag.</string>
+    <string name="edit_ext_folder_not_allowed_description">DFPlayer can only access folders up to 99</string>
 
     <!-- Strings on EditHex fragment -->
     <string name="edit_hex_intro">This view can be used to enter arbitrary data.</string>
@@ -152,5 +176,7 @@
     <string name="nfc_tag_found">Tag %s gefunden</string>
     <string name="nfc_read_tag_failure">Error: Could not read data from NFC tag</string>
     <string name="nfc_tag_technologies">"Device and tag support these technologies:\n%s"</string>
+
     <!-- New fields below -->
+    <string name="apply_change">Apply change</string>
 </resources>

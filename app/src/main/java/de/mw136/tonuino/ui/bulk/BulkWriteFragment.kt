@@ -18,7 +18,10 @@ import de.mw136.tonuino.BulkEditViewModel
 import de.mw136.tonuino.R
 import de.mw136.tonuino.TagWithComment
 import de.mw136.tonuino.byteArrayToHex
-import de.mw136.tonuino.nfc.*
+import de.mw136.tonuino.nfc.WriteResult
+import de.mw136.tonuino.nfc.tagIdAsString
+import de.mw136.tonuino.nfc.techListOf
+import de.mw136.tonuino.nfc.writeTonuino
 
 
 @ExperimentalUnsignedTypes
@@ -59,12 +62,12 @@ class BulkWriteFragment : Fragment() {
             val tag = TagWithComment.of(current)
             if (tag != null) {
                 tagData = tag
-                tagTitle.setText(tag.title)
+                tagTitle.text = tag.title
                 val str = byteArrayToHex(tag.bytes).joinToString(" ")
-                tagBytes.setText(str)
+                tagBytes.text = str
             } else {
-                tagTitle.setText(getString(R.string.bulk_write_invalid_line_format))
-                tagBytes.setText('"' + current + '"')
+                tagTitle.text = getString(R.string.bulk_write_invalid_line_format)
+                tagBytes.text = '"' + current + '"'
                 tagData = null
             }
         })
@@ -88,7 +91,7 @@ class BulkWriteFragment : Fragment() {
 
         viewModel.tag.observe(viewLifecycleOwner, Observer { tag ->
             if (tag == null) {
-                writeButton.setText(getString(R.string.edit_write_button_no_tag))
+                writeButton.text = getString(R.string.edit_write_button_no_tag)
                 writeButton.isEnabled = false
                 Toast.makeText(
                     activity,
@@ -96,7 +99,7 @@ class BulkWriteFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             } else {
-                writeButton.setText(getString(R.string.edit_write_button, tagIdAsString(tag)))
+                writeButton.text = getString(R.string.edit_write_button, tagIdAsString(tag))
                 writeButton.isEnabled = true
 
                 // TODO add option to instantly write data when a tag is found
@@ -114,7 +117,7 @@ class BulkWriteFragment : Fragment() {
             Log.w("$TAG.writeTag", "will write to tag ${tagIdAsString(it)}")
 
             tagData?.bytes?.let { bytes ->
-                result = writeTonuino(it, TagData(bytes))
+                result = writeTonuino(it, bytes)
             }
             Log.w("$TAG.writeTag", "result $result")
         }

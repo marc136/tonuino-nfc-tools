@@ -10,8 +10,8 @@ import de.mw136.tonuino.BuildConfig
 import de.mw136.tonuino.R
 import de.mw136.tonuino.byteArrayToHex
 import de.mw136.tonuino.nfc.NfcIntentActivity
-import de.mw136.tonuino.nfc.TagData
 import de.mw136.tonuino.nfc.readFromTag
+import de.mw136.tonuino.ui.enter.TagData
 
 @ExperimentalUnsignedTypes
 class MainActivity : NfcIntentActivity() {
@@ -58,7 +58,8 @@ class MainActivity : NfcIntentActivity() {
     }
 
     fun showWriteActivity(view: View) {
-        startActivity(Intent(view.context, EditActivity::class.java))
+//        startActivity(Intent(view.context, EditActivity::class.java))
+        startActivity(Intent(view.context, EnterTagActivity::class.java))
     }
 
     fun showBulkWriteActivity(view: View) {

@@ -8,94 +8,48 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
 import android.widget.Button
-import android.widget.Spinner
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import de.mw136.tonuino.R
 import de.mw136.tonuino.nfc.*
-import de.mw136.tonuino.ui.edit.*
+import de.mw136.tonuino.ui.enter.EnterFragmentPagerAdapter
+import de.mw136.tonuino.ui.enter.TagData
 import java.io.IOException
 
 @ExperimentalUnsignedTypes
-class EditActivity : NfcIntentActivity(), EditNfcData {
-    override val TAG = "EditActivity"
+class EnterTagActivity : NfcIntentActivity() {
+    override val TAG = "EnterTagActivity"
+
+    private val tagData: TagData by viewModels()
+
 
     var tag: TagTechnology? = null
-    private val handler = Handler()
     private lateinit var isTagConnected: Runnable
-
-    override lateinit var tagData: TagData
-    private val editSimpleContainer = EditSimpleContainer()
-
-    override val fragments: Array<EditFragment> = arrayOf(
-        editSimpleContainer,
-        EditExtended(),
-        EditHex()
-    )
+    private val handler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit)
 
-        val tagType = findViewById<Spinner>(R.id.tag_type_selector)
-        tagType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                Log.i(TAG, "TODO tag type selection: selected $position")
-                val version: UByte = when (position) {
-                    0 -> 1u
-                    1, 2 -> 2u
-                    else -> {
-                        Log.e(TAG, "tag type at position $position was not implemented.")
-                        return
-                    }
-                }
-
-                when (position) {
-                    2 ->
-                        editSimpleContainer.useModifierTagEditUi()
-                    else ->
-                        editSimpleContainer.useNormalTagEditUi()
-                }
-
-                if (tagData.version != version) {
-                    setByte(WhichByte.VERSION, version, fullRefresh = true)
-                }
-            }
+        intent.getParcelableExtra<TagData>(PARCEL_TAGDATA)?.let {
+            Log.i(TAG, "Found parceled tagData $it and will overwrite the current values")
+            tagData.setBytes(it.bytes)
         }
+        Log.i(TAG, tagData.toString())
 
-        // Switch between input implementations
-        val viewPager = findViewById<androidx.viewpager.widget.ViewPager>(R.id.edit_main_pager)
-        viewPager.adapter = EditPagerAdapter(supportFragmentManager, fragments)
-        val tabLayout = findViewById<TabLayout>(R.id.edit_main_tabs)
-
-        viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
-
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                // We could access the fragment that will be shown with
-                // `(viewPager.adapter as FragmentPagerAdapter)?.getItem(tab.position)`
-                // but when calling refreshUi on it, it will throw an error
-                viewPager.currentItem = tab.position
-//                this@EditActivity.currentEditFragment =
-//                    (viewPager.adapter as FragmentPagerAdapter).getItem(tab.position) as EditFragment
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {}
-
-            override fun onTabReselected(tab: TabLayout.Tab) {}
-        })
-
-        tagData = intent.getParcelableExtra(PARCEL_TAGDATA) ?: TagData.createDefault()
+        setContentView(R.layout.enter_activity)
+        val sectionsPagerAdapter = EnterFragmentPagerAdapter(this, supportFragmentManager)
+        val viewPager: ViewPager = findViewById(R.id.view_pager)
+        viewPager.adapter = sectionsPagerAdapter
+        val tabs: TabLayout = findViewById(R.id.tabs)
+        tabs.setupWithViewPager(viewPager)
 
         isTagConnected = Runnable {
             if (tag?.isConnected == true) {
                 // should be able to write to tag
                 pollTag()
-
             } else {
                 tag = null
                 enableWriteButtonIfTagPresent()
@@ -121,12 +75,19 @@ class EditActivity : NfcIntentActivity(), EditNfcData {
 
     private fun enableWriteButtonIfTagPresent() {
         findViewById<Button>(R.id.button_write)?.apply {
-            if (this@EditActivity.tag == null) {
-                setText(getString(R.string.edit_write_button_no_tag))
+            if (this@EnterTagActivity.tag == null) {
+                text = getString(R.string.edit_write_button_no_tag)
                 isEnabled = false
-                Toast.makeText(this@EditActivity, getString(R.string.edit_nfc_connection_lost), Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this@EnterTagActivity,
+                    getString(R.string.edit_nfc_connection_lost),
+                    Toast.LENGTH_LONG
+                ).show()
             } else {
-                setText(getString(R.string.edit_write_button, tagIdAsString(this@EditActivity.tag!!)))
+                text = getString(
+                    R.string.edit_write_button,
+                    tagIdAsString(this@EnterTagActivity.tag!!)
+                )
                 isEnabled = true
                 pollTag()
             }
@@ -140,7 +101,7 @@ class EditActivity : NfcIntentActivity(), EditNfcData {
         var result = WriteResult.TAG_UNAVAILABLE
         if (tag != null) {
             Log.w("$TAG.writeTag", "will write to tag ${tagIdAsString(tag!!)}")
-            result = writeTonuino(tag!!, tagData)
+            result = writeTonuino(tag!!, tagData.bytes)
             Log.w("$TAG.writeTag", "result $result")
         }
         showModalDialog(result)
@@ -156,7 +117,12 @@ class EditActivity : NfcIntentActivity(), EditNfcData {
                 }
                 WriteResult.UNSUPPORTED_FORMAT -> {
                     setTitle(R.string.written_unsupported_tag_type)
-                    setMessage(getString(R.string.nfc_tag_technologies, techListOf(tag).joinToString(", ")))
+                    setMessage(
+                        getString(
+                            R.string.nfc_tag_technologies,
+                            techListOf(tag).joinToString(", ")
+                        )
+                    )
                 }
                 WriteResult.AUTHENTICATION_FAILURE -> {
                     setTitle(R.string.written_title_failure)
@@ -170,7 +136,12 @@ class EditActivity : NfcIntentActivity(), EditNfcData {
                 }
                 WriteResult.UNKNOWN_ERROR -> {
                     setTitle(R.string.written_unknown_error)
-                    setMessage(getString(R.string.nfc_tag_technologies, techListOf(tag).joinToString(", ")))
+                    setMessage(
+                        getString(
+                            R.string.nfc_tag_technologies,
+                            techListOf(tag).joinToString(", ")
+                        )
+                    )
                     showRetryButton = true
                 }
             }
@@ -202,3 +173,4 @@ class EditActivity : NfcIntentActivity(), EditNfcData {
         }
     }
 }
+

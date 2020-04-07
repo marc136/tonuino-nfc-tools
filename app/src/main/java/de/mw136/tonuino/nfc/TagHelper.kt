@@ -6,8 +6,6 @@ import android.nfc.TagLostException
 import android.nfc.tech.MifareClassic
 import android.nfc.tech.MifareUltralight
 import android.nfc.tech.TagTechnology
-import android.os.Parcel
-import android.os.Parcelable
 import android.util.Log
 import de.mw136.tonuino.byteArrayToHex
 import de.mw136.tonuino.hexToBytes
@@ -18,7 +16,7 @@ private const val TAG = "TagHelper"
 private const val tonuinoSector = 1
 
 @ExperimentalUnsignedTypes
-private val tonuinoCookie = hexToBytes("1337b347").toList() // TODO add to expert settings
+val tonuinoCookie = hexToBytes("1337b347").toList() // TODO add to expert settings
 
 @ExperimentalUnsignedTypes
 private val factoryKey =
@@ -31,83 +29,6 @@ fun tagIdAsString(tag: TagTechnology) = tagIdAsString(tag.tag)
 @ExperimentalUnsignedTypes
 fun tagIdAsString(tag: Tag): String {
     return byteArrayToHex(tag.id.toUByteArray()).joinToString(":")
-}
-
-@ExperimentalUnsignedTypes
-class TagData(var bytes: UByteArray = ubyteArrayOf()) : Parcelable {
-    private val versionIndex = 4 // TODO remove magic byte index number
-
-    val cookie: UByteArray
-        get() {
-            if (bytes.size < versionIndex) {
-                return ubyteArrayOf(0u, 0u, 0u, 0u)
-            } else {
-                return bytes.sliceArray(0 until versionIndex)
-            }
-        }
-    val version: UByte
-        get() = getAtWithDefault(versionIndex)
-    val folder: UByte
-        get() = getAtWithDefault(versionIndex + 1)
-    val mode: UByte
-        get() = getAtWithDefault(versionIndex + 2)
-    val special: UByte
-        get() = getAtWithDefault(versionIndex + 3)
-    val special2: UByte
-        get() = getAtWithDefault(versionIndex + 4)
-
-    fun getAtWithDefault(index: Int, default: UByte = 0u): UByte {
-        return bytes.elementAtOrElse(index) { default }
-    }
-
-    fun isModifierTag(): Boolean {
-        return version == 2u.toUByte() && folder == 0u.toUByte()
-    }
-
-    constructor(parcel: Parcel) : this() {
-        bytes = parcel.createByteArray()?.toUByteArray() ?: ubyteArrayOf()
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeByteArray(bytes.toByteArray())
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<TagData> {
-        override fun createFromParcel(parcel: Parcel): TagData {
-            return TagData(parcel)
-        }
-
-        override fun newArray(size: Int): Array<TagData?> {
-            return arrayOfNulls(size)
-        }
-
-        fun createDefault(): TagData {
-            val versionIndex = tonuinoCookie.size
-            val buffer = UByteArray(versionIndex + 3) { 0u }
-            tonuinoCookie.forEachIndexed { index, value -> buffer[index] = value }
-            buffer[versionIndex] = 1u // version
-            buffer[versionIndex + 1] = 1u // folder
-            buffer[versionIndex + 2] = 1u // mode
-            return TagData(buffer)
-        }
-    }
-
-    override fun toString(): String {
-        return "TagData<${byteArrayToHex(bytes).joinToString(" ")}>"
-    }
-
-    /**
-     * Be aware that this might truncate data!
-     */
-    fun toFixedLengthBuffer(size: Int): ByteArray {
-        val block = UByteArray(size) { 0u }
-        bytes.forEachIndexed { index, value -> block[index] = value }
-        return block.toByteArray()
-    }
 }
 
 fun connectTo(tag: Tag): TagTechnology? {
@@ -200,7 +121,7 @@ fun readFromTag(mifare: MifareClassic): UByteArray {
 @ExperimentalUnsignedTypes
 fun readFromTag(mifare: MifareUltralight): UByteArray {
     if (!mifare.isConnected) mifare.connect()
-    var result: UByteArray
+    val result: UByteArray
 
     val type_ = when (mifare.type) {
         MifareUltralight.TYPE_ULTRALIGHT -> "ULTRALIGHT"
@@ -227,7 +148,7 @@ fun readFromTag(mifare: MifareUltralight): UByteArray {
 enum class WriteResult { SUCCESS, UNSUPPORTED_FORMAT, AUTHENTICATION_FAILURE, TAG_UNAVAILABLE, UNKNOWN_ERROR }
 
 @ExperimentalUnsignedTypes
-fun writeTonuino(tag: TagTechnology, data: TagData): WriteResult {
+fun writeTonuino(tag: TagTechnology, data: UByteArray): WriteResult {
     var result: WriteResult
 
     try {
@@ -248,7 +169,7 @@ fun writeTonuino(tag: TagTechnology, data: TagData): WriteResult {
 }
 
 @ExperimentalUnsignedTypes
-fun writeTag(mifare: MifareClassic, data: TagData): WriteResult {
+fun writeTag(mifare: MifareClassic, data: UByteArray): WriteResult {
     val result: WriteResult
     try {
         if (!mifare.isConnected) mifare.connect()
@@ -261,10 +182,10 @@ fun writeTag(mifare: MifareClassic, data: TagData): WriteResult {
     if (mifare.authenticateSectorWithKeyB(tonuinoSector, key)) {
         val blockIndex = mifare.sectorToBlock(tonuinoSector)
         // NOTE: This could truncates data, if we have more than 16 Byte (= MifareClassic.BLOCK_SIZE)
-        val block = data.toFixedLengthBuffer(MifareClassic.BLOCK_SIZE)
+        val block = toFixedLengthBuffer(data, MifareClassic.BLOCK_SIZE)
         mifare.writeBlock(blockIndex, block)
         Log.i(
-            TAG, "Wrote ${byteArrayToHex(data.bytes)} to tag ${tagIdAsString(
+            TAG, "Wrote ${byteArrayToHex(data)} to tag ${tagIdAsString(
                 mifare.tag
             )}"
         )
@@ -279,7 +200,7 @@ fun writeTag(mifare: MifareClassic, data: TagData): WriteResult {
 }
 
 @ExperimentalUnsignedTypes
-fun writeTag(mifare: MifareUltralight, data: TagData): WriteResult {
+fun writeTag(mifare: MifareUltralight, data: UByteArray): WriteResult {
     try {
         if (!mifare.isConnected) mifare.connect()
     } catch (ex: IOException) {
@@ -287,13 +208,13 @@ fun writeTag(mifare: MifareUltralight, data: TagData): WriteResult {
         return WriteResult.TAG_UNAVAILABLE
     }
 
-    val len = data.bytes.size
+    val len = data.size
 
     Log.i(TAG, "data byte size $len")
 
-    val pagesNeeded = ceil(data.bytes.size.toDouble() / MifareUltralight.PAGE_SIZE).toInt()
+    val pagesNeeded = ceil(data.size.toDouble() / MifareUltralight.PAGE_SIZE).toInt()
 
-    val block = data.toFixedLengthBuffer(MifareUltralight.PAGE_SIZE * pagesNeeded)
+    val block = toFixedLengthBuffer(data, MifareUltralight.PAGE_SIZE * pagesNeeded)
     var current = 0
     for (index in 0 until pagesNeeded) {
         val next = current + MifareUltralight.PAGE_SIZE
@@ -309,6 +230,12 @@ fun writeTag(mifare: MifareUltralight, data: TagData): WriteResult {
     return WriteResult.SUCCESS
 }
 
+@ExperimentalUnsignedTypes
+fun toFixedLengthBuffer(bytes: UByteArray, size: Int): ByteArray {
+    val block = UByteArray(size) { 0u }
+    bytes.forEachIndexed { index, value -> block[index] = value }
+    return block.toByteArray()
+}
 
 fun techListOf(tag: TagTechnology?) = techListOf(tag?.tag)
 

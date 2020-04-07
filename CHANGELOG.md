@@ -2,7 +2,8 @@
 This file gives a general overview, look into the git log for more information.
 
 ## unreleased
-<nothing>
+- Rewrite edit activity to use androidx.ViewModel
+- Add entry "unknown <#>" to spinners on simple edit fragment
 
 ## 0.7.0
 - Migrate to AndroidX

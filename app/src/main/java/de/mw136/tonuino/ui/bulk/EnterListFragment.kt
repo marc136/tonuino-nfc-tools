@@ -52,6 +52,6 @@ class EnterListFragment : Fragment() {
         })
 
         myTextBox.setHorizontallyScrolling(true)
-        myTextBox.setMovementMethod(ScrollingMovementMethod())
+        myTextBox.movementMethod = ScrollingMovementMethod()
     }
 }
