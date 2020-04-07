@@ -1,25 +1,9 @@
 # Changelog
 This file gives a general overview, look into the git log for more information.
 
-## WIP: Rewrite EditActivity to use androidx.ViewModel
-TODO list before next version
-- Get BytesFormatter to work without issues
-DONE
-- Rename EnterActivity and related files
-- Remove EditActivity and its related files
-- Add correct extra inputs for modifier tags
-- Add simpler selection of Tonuino 2.1 modifier tags (from edit/simple/ModifierTag)
-  - with a switch button on EnterSimple instead of allowing users to select folder "0"
-- Add functionality to `bytes` tab
-- Replace TagHelper.TagData with EnterViewModel
-- Find a better way to initialize the ViewModel from Parcelable in EnterTagActivity
-- Adapt EditExtended
-- Adapt EditSimple
-- Create EnterTagActivity
-
-
 ## unreleased
 - Rewrite edit activity to use androidx.ViewModel
+- Add entry "unknown <#>" to spinners on simple edit fragment
 
 ## 0.7.0
 - Migrate to AndroidX
