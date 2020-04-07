@@ -2,6 +2,9 @@
 This file gives a general overview, look into the git log for more information.
 
 ## unreleased
+none
+
+## v0.8.0
 - Rewrite edit activity to use androidx.ViewModel
 - Add entry "unknown <#>" to spinners on simple edit fragment
 
