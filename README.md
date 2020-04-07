@@ -38,11 +38,11 @@ Based on the value of byte *mode* and what happens, when the *next* and *previou
 
 | # | title | description | next | previous |
 | --- | --- | --- | --- | --- |
-| 1 | Hörspiel \naudio book (single file) | plays a single file in the folder | stop | Start title again from the beginning |
+| 1 | Hörspiel<br/>audio book (single file) | plays a single file in the folder | stop | Start title again from the beginning |
 | 2 | Album | play every file in the folder | next file | previous file |
 | 3 | Party | play files in the folder in random order | play random file | start title again from the beginning  |
-| 4 | Einzel \nsingle | play a single file in the folder | stop | start title again from the beginning |
-| 5 | Hörbuch \audio book (multiple files) | play all files in the folder and keep track of the progress (will start at the last file the next time | next file | previous file |
+| 4 | Einzel<br/>single | play a single file in the folder | stop | start title again from the beginning |
+| 5 | Hörbuch<br/>audio book (multiple files) | play all files in the folder and keep track of the progress (will start at the last file the next time | next file | previous file |
 | 6 | Admin | Not functionality | - | - |
 
 **Special**  
