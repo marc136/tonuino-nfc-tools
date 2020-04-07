@@ -33,7 +33,7 @@ Google Play releases are built using [fastlane](https://docs.fastlane.tools/gett
 | 7 | special | uint8 | |
 
 
-**Different modes**  
+**Different Modes**  
 Based on the value of byte *mode* and what happens, when the *next* and *previous* buttons are pressed
 
 | # | title | description | next | previous |
@@ -65,7 +65,7 @@ Is only used in specific modes to specify variables:
 | 8 | special2 | uint8 | |
 
 **Different Modes**  
-The following modes were added in Tonuino 2.1.
+It supports all modes of TonUINO 2.0 and adds these
 
 | # | title | description | next | previous |
 | --- | --- | --- | --- | --- |
@@ -73,7 +73,7 @@ The following modes were added in Tonuino 2.1.
 | 8 | Von-Bis Album | play all files between special and special2 | next file | start title again from the beginning |
 | 9 | Von-Bis Party | play all files between special and special2 in random order | random file | start title again from the beginning |
 
-#### Modifier Tags
+#### Modifier Tags (aka admin tags)
 All have a folder value of 0
 
 | Modifier | byte 6 | byte 7 | Description |
