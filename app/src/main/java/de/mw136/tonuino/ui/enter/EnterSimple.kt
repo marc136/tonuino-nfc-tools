@@ -237,8 +237,8 @@ class EnterSimple : Fragment() {
 
 
         val arr = resources.getStringArray(R.array.edit_mode_description)
-        modeDescription.text = if (mode in arr.indices) {
-            arr[mode]
+        modeDescription.text = if (mode-1 in arr.indices) {
+            arr[mode-1]
         } else {
             getString(R.string.edit_mode_unknown, mode)
         }

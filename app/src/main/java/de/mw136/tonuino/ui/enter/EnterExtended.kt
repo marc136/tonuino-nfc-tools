@@ -167,7 +167,7 @@ class EnterExtended : Fragment() {
             folderDescription.visibility = View.VISIBLE
 
             modeDescription.setResArrayString(
-                mode.toInt(),
+                mode.toInt() - 1,
                 R.array.edit_mode,
                 R.array.edit_mode_description
             )
