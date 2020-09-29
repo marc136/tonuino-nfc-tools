@@ -1,7 +1,9 @@
 package de.mw136.tonuino.ui
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.nfc.FormatException
 import android.nfc.Tag
 import android.nfc.tech.TagTechnology
@@ -16,13 +18,14 @@ import de.mw136.tonuino.R
 import de.mw136.tonuino.nfc.NfcIntentActivity
 import de.mw136.tonuino.nfc.connectTo
 import de.mw136.tonuino.nfc.tagIdAsString
+import de.mw136.tonuino.utils.RuntimePermission
 import kotlinx.android.synthetic.main.bulkwrite_fragment_enter_list.*
 import java.io.IOException
-
 
 @ExperimentalUnsignedTypes
 class BulkWriteActivity : NfcIntentActivity() {
     override val TAG = "BulkActivity"
+    private val REQUEST_CODE_CAMERA = 4710
     private val REQUEST_CODE_QR_SCAN = 4711
 
     var tag: TagTechnology? = null
@@ -54,6 +57,16 @@ class BulkWriteActivity : NfcIntentActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        // check for camera feature before requesting permission
+        if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+            // request runtime permission for camera for API23+
+            if (RuntimePermission.askFor(this, Manifest.permission.CAMERA, REQUEST_CODE_CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                button_qrcode.visibility = View.VISIBLE
+            }
+        }
+    }
 
     override fun onPause() {
         super.onPause()
@@ -91,7 +104,10 @@ class BulkWriteActivity : NfcIntentActivity() {
     }
 
     fun openQRCodeScanner(view: View) {
-        startActivityForResult(Intent(view.context, QRCodeScannerActivity::class.java), REQUEST_CODE_QR_SCAN)
+        // check for camera feature before starting qrcode scanner activity
+        if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+            startActivityForResult(Intent(view.context, QRCodeScannerActivity::class.java), REQUEST_CODE_QR_SCAN)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -99,6 +115,17 @@ class BulkWriteActivity : NfcIntentActivity() {
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_QR_SCAN && data != null) {
             val result = data.getStringExtra("de.mw136.tonuino.ui.qrcode_result")
             editText.setText(result)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when (requestCode) {
+            REQUEST_CODE_CAMERA ->
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission Granted
+                    button_qrcode.visibility = View.VISIBLE
+                }
+            else -> super.onRequestPermissionsResult(requestCode, permissions!!, grantResults)
         }
     }
 }
