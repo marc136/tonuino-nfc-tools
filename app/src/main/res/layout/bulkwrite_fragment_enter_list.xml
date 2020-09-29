@@ -22,7 +22,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/bulk_edit_button_read_qrcode"
-            android:onClick="openQRCodeReader"
+            android:onClick="openQRCodeScanner"
             app:layout_constraintBottom_toTopOf="@+id/editText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

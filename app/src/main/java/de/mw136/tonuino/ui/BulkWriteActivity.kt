@@ -90,7 +90,7 @@ class BulkWriteActivity : NfcIntentActivity() {
         }
     }
 
-    fun openQRCodeReader(view: View) {
+    fun openQRCodeScanner(view: View) {
         startActivityForResult(Intent(view.context, QRCodeScanner::class.java), REQUEST_CODE_QR_SCAN)
     }
 
