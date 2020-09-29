@@ -21,7 +21,7 @@
             android:id="@+id/button_qrcode"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/bulk_edit_button_read_qrcode"
+            android:text="@string/bulk_edit_button_scan_qrcode"
             android:onClick="openQRCodeScanner"
             app:layout_constraintBottom_toTopOf="@+id/editText"
             app:layout_constraintEnd_toEndOf="parent"

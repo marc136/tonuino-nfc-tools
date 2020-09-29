@@ -156,7 +156,7 @@
     <string name="bulk_edit_label">Edit List</string>
     <string name="bulk_edit_description">Hier kann pro Zeile ein Tag eingetragen werden. Zuerst kommt die Bytefolge, dann ein \';\', und dann kann eine beliebige Beschreibung folgen.\nBeispiel:\n1337B3470101040500;Erste Karte</string>
     <string name="bulk_edit_button_start_writing">Abarbeiten starten</string>
-    <string name="bulk_edit_button_read_qrcode">QRCode lesen</string>
+    <string name="bulk_edit_button_scan_qrcode">QRCode einlesen</string>
 
     <string name="bulk_write_label">Write Tags</string>
     <string name="bulk_write_line_number">Zeile %d von %d</string>
