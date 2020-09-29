@@ -30,7 +30,7 @@
                 android:windowSoftInputMode="adjustResize" />
         <activity
                 android:name=".ui.QRCodeScanner"
-                android:parentActivityName=".ui.MainActivity" />
+                android:parentActivityName=".ui.BulkWriteActivity" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
