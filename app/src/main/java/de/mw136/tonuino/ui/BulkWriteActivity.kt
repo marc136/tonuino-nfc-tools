@@ -1,11 +1,14 @@
 package de.mw136.tonuino.ui
 
+import android.app.Activity
+import android.content.Intent
 import android.nfc.FormatException
 import android.nfc.Tag
 import android.nfc.tech.TagTechnology
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import de.mw136.tonuino.BulkEditViewModel
@@ -13,11 +16,14 @@ import de.mw136.tonuino.R
 import de.mw136.tonuino.nfc.NfcIntentActivity
 import de.mw136.tonuino.nfc.connectTo
 import de.mw136.tonuino.nfc.tagIdAsString
+import kotlinx.android.synthetic.main.bulkwrite_fragment_enter_list.*
 import java.io.IOException
+
 
 @ExperimentalUnsignedTypes
 class BulkWriteActivity : NfcIntentActivity() {
     override val TAG = "BulkActivity"
+    private val REQUEST_CODE_QR_SCAN = 4711
 
     var tag: TagTechnology? = null
     private val handler = Handler()
@@ -81,6 +87,18 @@ class BulkWriteActivity : NfcIntentActivity() {
         } catch (ex: Exception) {
             // TODO display unexpected error
             Log.e("$TAG.onNfcTag", ex.toString())
+        }
+    }
+
+    fun openQRCodeReader(view: View) {
+        startActivityForResult(Intent(view.context, QRCodeScanner::class.java), REQUEST_CODE_QR_SCAN)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_QR_SCAN && data != null) {
+            val result = data.getStringExtra("de.mw136.tonuino.ui.qrcode_result")
+            editText.setText(result)
         }
     }
 }

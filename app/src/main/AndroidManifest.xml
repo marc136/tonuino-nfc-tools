@@ -6,6 +6,7 @@
             android:name="android.hardware.nfc"
             android:required="true" /> <!-- Request user permission -->
     <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
             android:allowBackup="true"
@@ -23,6 +24,9 @@
                 android:label="@string/bulk_activity_title"
                 android:parentActivityName=".ui.MainActivity"
                 android:windowSoftInputMode="adjustResize" />
+        <activity
+                android:name=".ui.QRCodeScanner"
+                android:parentActivityName=".ui.MainActivity" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
