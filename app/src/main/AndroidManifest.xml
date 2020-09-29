@@ -4,11 +4,13 @@
     <!-- Will not show up in the store for devices without NFC support -->
     <uses-feature
             android:name="android.hardware.nfc"
-            android:required="true" /> <!-- Request user permission -->
+            android:required="true" />
     <!-- Will show up in the store for devices without camera -->
     <uses-feature
             android:name="android.hardware.camera"
             android:required="false" />
+
+    <!-- Request user permission -->
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.CAMERA" />
 
