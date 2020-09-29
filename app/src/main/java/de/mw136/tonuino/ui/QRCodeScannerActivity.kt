@@ -12,7 +12,7 @@ import de.mw136.tonuino.R
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 import java.util.*
 
-class QRCodeScanner : AppCompatActivity(), ZXingScannerView.ResultHandler {
+class QRCodeScannerActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
     private var scannerView: ZXingScannerView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
