@@ -5,19 +5,17 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.Result
-import de.mw136.tonuino.R
 import me.dm7.barcodescanner.zxing.ZXingScannerView
-import java.util.*
 
 class QRCodeScannerActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
     private var scannerView: ZXingScannerView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         scannerView = ZXingScannerView(this)
-        scannerView!!.setFormats(Arrays.asList(BarcodeFormat.QR_CODE))
+        scannerView!!.setFormats(listOf(BarcodeFormat.QR_CODE))
         scannerView!!.setLaserEnabled(false)
         scannerView!!.setBorderColor(Color.WHITE)
         setContentView(scannerView)
