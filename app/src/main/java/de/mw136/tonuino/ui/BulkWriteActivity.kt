@@ -59,12 +59,8 @@ class BulkWriteActivity : NfcIntentActivity() {
 
     override fun onStart() {
         super.onStart()
-        // check for camera feature before requesting permission
         if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
-            // request runtime permission for camera for API23+
-            if (RuntimePermission.askFor(this, Manifest.permission.CAMERA, REQUEST_CODE_CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                button_qrcode.visibility = View.VISIBLE
-            }
+            button_qrcode.visibility = View.VISIBLE
         }
     }
 
@@ -104,8 +100,8 @@ class BulkWriteActivity : NfcIntentActivity() {
     }
 
     fun openQRCodeScanner(view: View) {
-        // check for camera feature before starting qrcode scanner activity
-        if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+        // request runtime permission for camera for API23+
+        if (RuntimePermission.askFor(this, Manifest.permission.CAMERA, REQUEST_CODE_CAMERA) == PackageManager.PERMISSION_GRANTED) {
             startActivityForResult(Intent(view.context, QRCodeScannerActivity::class.java), REQUEST_CODE_QR_SCAN)
         }
     }
@@ -121,9 +117,8 @@ class BulkWriteActivity : NfcIntentActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when (requestCode) {
             REQUEST_CODE_CAMERA ->
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Permission Granted
-                    button_qrcode.visibility = View.VISIBLE
+                if (grantResults.contains(PackageManager.PERMISSION_GRANTED)) {
+                    startActivityForResult(Intent(this, QRCodeScannerActivity::class.java), REQUEST_CODE_QR_SCAN)
                 }
             else -> super.onRequestPermissionsResult(requestCode, permissions!!, grantResults)
         }
