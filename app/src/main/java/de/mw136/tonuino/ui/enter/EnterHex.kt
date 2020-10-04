@@ -19,11 +19,6 @@ import java.util.*
 
 const val NO_BYTE_FORMATTER = true
 
-/**
- * A simple [Fragment] subclass.
- * Use the [EnterHex.newInstance] factory method to
- * create an instance of this fragment.
- */
 @ExperimentalUnsignedTypes
 class EnterHex : Fragment() {
     val TAG = "EnterHex"
@@ -60,11 +55,11 @@ class EnterHex : Fragment() {
     }
 
     private fun addLiveDataEventListeners() {
-        tagData.version.observe(viewLifecycleOwner, Observer { _ -> updateEditTextIfNeeded() })
-        tagData.folder.observe(viewLifecycleOwner, Observer { _ -> updateEditTextIfNeeded() })
-        tagData.mode.observe(viewLifecycleOwner, Observer { _ -> updateEditTextIfNeeded() })
-        tagData.special.observe(viewLifecycleOwner, Observer { _ -> updateEditTextIfNeeded() })
-        tagData.special2.observe(viewLifecycleOwner, Observer { _ -> updateEditTextIfNeeded() })
+        tagData.version.observe(viewLifecycleOwner, Observer { updateEditTextIfNeeded() })
+        tagData.folder.observe(viewLifecycleOwner, Observer { updateEditTextIfNeeded() })
+        tagData.mode.observe(viewLifecycleOwner, Observer { updateEditTextIfNeeded() })
+        tagData.special.observe(viewLifecycleOwner, Observer { updateEditTextIfNeeded() })
+        tagData.special2.observe(viewLifecycleOwner, Observer { updateEditTextIfNeeded() })
     }
 
 
@@ -138,15 +133,19 @@ private class ByteFormatter(val editText: EditText, val tagData: TagData) : Text
             editText.setText(formatted)
 
             val diff = formatted.length - unformatted.length
-            val cursor = if (before > after) {
-                Log.w(TAG, "deleted $diff chars")
-                start + after
-            } else if (after > before) {
-                Log.w(TAG, "added $diff chars")
-                start + after + diff
-            } else {
-                Log.w(TAG, "no chars added")
-                start + after + diff
+            val cursor = when {
+                before > after -> {
+                    Log.w(TAG, "deleted $diff chars")
+                    start + after
+                }
+                after > before -> {
+                    Log.w(TAG, "added $diff chars")
+                    start + after + diff
+                }
+                else -> {
+                    Log.w(TAG, "no chars added")
+                    start + after + diff
+                }
             }
 
             if (cursor < formatted.length) {

@@ -42,7 +42,7 @@ class BulkWriteActivity : NfcIntentActivity() {
         // Re-created activities receive the same MyViewModel instance created by the first activity.
         // Use the 'by viewModels()' Kotlin property delegate
         // from the activity-ktx artifact
-        model.currentLine.observe(this, Observer<String> { _ ->
+        model.currentLine.observe(this, Observer<String> {
             // update UI
         })
 
@@ -120,7 +120,7 @@ class BulkWriteActivity : NfcIntentActivity() {
                 if (grantResults.contains(PackageManager.PERMISSION_GRANTED)) {
                     startActivityForResult(Intent(this, QRCodeScannerActivity::class.java), REQUEST_CODE_QR_SCAN)
                 }
-            else -> super.onRequestPermissionsResult(requestCode, permissions!!, grantResults)
+            else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
     }
 }

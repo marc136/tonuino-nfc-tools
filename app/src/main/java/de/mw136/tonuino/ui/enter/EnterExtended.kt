@@ -158,23 +158,27 @@ class EnterExtended : Fragment() {
         specialRow.visibility = View.VISIBLE
         special2Row.visibility = View.VISIBLE
 
-        if (folder == 0u.toUByte()) {
-            showFormat2ModifierDescriptions(mode.toInt())
+        when {
+            folder == 0u.toUByte() -> {
+                showFormat2ModifierDescriptions(mode.toInt())
 
-        } else if (folder < 100u) {
-            folderDescription.text =
-                getString(R.string.edit_ext_folder_description, folder.toInt())
-            folderDescription.visibility = View.VISIBLE
+            }
+            folder < 100u -> {
+                folderDescription.text =
+                    getString(R.string.edit_ext_folder_description, folder.toInt())
+                folderDescription.visibility = View.VISIBLE
 
-            modeDescription.setResArrayString(
-                mode.toInt() - 1,
-                R.array.edit_mode,
-                R.array.edit_mode_description
-            )
-        } else {
-            // value not used in TonUINO
-            folderDescription.visibility = View.VISIBLE
-            folderDescription.text = getString(R.string.edit_ext_folder_not_allowed_description)
+                modeDescription.setResArrayString(
+                    mode.toInt() - 1,
+                    R.array.edit_mode,
+                    R.array.edit_mode_description
+                )
+            }
+            else -> {
+                // value not used in TonUINO
+                folderDescription.visibility = View.VISIBLE
+                folderDescription.text = getString(R.string.edit_ext_folder_not_allowed_description)
+            }
         }
     }
 
@@ -208,7 +212,7 @@ class EnterExtended : Fragment() {
             textView.visibility = View.VISIBLE
             textView.text = titles[value - 1] + ": " + descriptions[value - 1]
         } else {
-            if (fallback.isNullOrBlank()) {
+            if (fallback.isBlank()) {
                 textView.visibility = View.GONE
                 textView.text = ""
             } else {

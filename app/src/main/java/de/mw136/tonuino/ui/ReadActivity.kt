@@ -18,13 +18,13 @@ class ReadActivity : NfcIntentActivity() {
     override val TAG = "ReadActivity"
 
     lateinit var tag: Tag
-    lateinit var tagData: TagData
+    private lateinit var tagData: TagData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_read)
 
-        tag = intent.getParcelableExtra<Tag>(PARCEL_TAG) ?: return
+        tag = intent.getParcelableExtra(PARCEL_TAG) ?: return
         tagData = intent.getParcelableExtra(PARCEL_TAGDATA) ?: return
 
         displayTonuinoInfo(tag, tagData)

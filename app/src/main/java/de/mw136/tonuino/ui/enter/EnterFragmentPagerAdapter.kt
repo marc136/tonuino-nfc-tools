@@ -21,7 +21,7 @@ const val TAG = "enter.PagerAdapter"
  */
 @ExperimentalUnsignedTypes
 class EnterFragmentPagerAdapter(private val context: Context, fm: FragmentManager) :
-    FragmentPagerAdapter(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+    FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment {
         Log.d(TAG, "getItem(position = $position)")
