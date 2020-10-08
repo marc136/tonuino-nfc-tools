@@ -32,12 +32,16 @@ fun tagIdAsString(tag: Tag): String {
 }
 
 fun connectTo(tag: Tag): TagTechnology? {
-    if (tag.techList.contains(MifareClassic::class.java.name)) {
-        return MifareClassic.get(tag)?.apply { connect() }
-    } else if (tag.techList.contains(MifareUltralight::class.java.name)) {
-        return MifareUltralight.get(tag)?.apply { connect() }
-    } else {
-        throw FormatException("Can only handle MifareClassic and MifareUltralight")
+    when {
+        tag.techList.contains(MifareClassic::class.java.name) -> {
+            return MifareClassic.get(tag)?.apply { connect() }
+        }
+        tag.techList.contains(MifareUltralight::class.java.name) -> {
+            return MifareUltralight.get(tag)?.apply { connect() }
+        }
+        else -> {
+            throw FormatException("Can only handle MifareClassic and MifareUltralight")
+        }
     }
 }
 
@@ -48,15 +52,19 @@ fun readFromTag(tag: Tag): UByteArray {
 
     try {
         Log.i(TAG, "Tag $id techList: ${techListOf(tag).joinToString(", ")}")
-        if (tag.techList.contains(MifareClassic::class.java.name)) {
-            MifareClassic.get(tag)?.use { mifare -> result = readFromTag(mifare) }
-        } else if (tag.techList.contains(MifareUltralight::class.java.name)) {
-            MifareUltralight.get(tag)?.use { mifare -> result = readFromTag(mifare) }
-        } else {
-            Log.e(
-                "$TAG.readFromTag",
-                "Tag $id did not enumerate MifareClassic or MifareUltralight and is thus not supported"
-            )
+        when {
+            tag.techList.contains(MifareClassic::class.java.name) -> {
+                MifareClassic.get(tag)?.use { mifare -> result = readFromTag(mifare) }
+            }
+            tag.techList.contains(MifareUltralight::class.java.name) -> {
+                MifareUltralight.get(tag)?.use { mifare -> result = readFromTag(mifare) }
+            }
+            else -> {
+                Log.e(
+                    "$TAG.readFromTag",
+                    "Tag $id did not enumerate MifareClassic or MifareUltralight and is thus not supported"
+                )
+            }
         }
     } catch (ex: Exception) {
         // e.g. android.nfc.TagLostException, IOException
@@ -151,18 +159,18 @@ enum class WriteResult { SUCCESS, UNSUPPORTED_FORMAT, AUTHENTICATION_FAILURE, TA
 fun writeTonuino(tag: TagTechnology, data: UByteArray): WriteResult {
     var result: WriteResult
 
-    try {
-        result = when (tag) {
+    result = try {
+        when (tag) {
             is MifareClassic -> writeTag(tag, data)
             is MifareUltralight -> writeTag(tag, data)
             else -> WriteResult.UNSUPPORTED_FORMAT
         }
     } catch (ex: TagLostException) {
-        result = WriteResult.TAG_UNAVAILABLE
+        WriteResult.TAG_UNAVAILABLE
     } catch (ex: FormatException) {
-        result = WriteResult.UNSUPPORTED_FORMAT
+        WriteResult.UNSUPPORTED_FORMAT
     } catch (ex: Exception) {
-        result = WriteResult.UNKNOWN_ERROR
+        WriteResult.UNKNOWN_ERROR
     }
 
     return result
@@ -179,7 +187,7 @@ fun writeTag(mifare: MifareClassic, data: UByteArray): WriteResult {
     }
 
     val key = factoryKey.asByteArray() // TODO allow configuration
-    if (mifare.authenticateSectorWithKeyB(tonuinoSector, key)) {
+    result = if (mifare.authenticateSectorWithKeyB(tonuinoSector, key)) {
         val blockIndex = mifare.sectorToBlock(tonuinoSector)
         // NOTE: This could truncates data, if we have more than 16 Byte (= MifareClassic.BLOCK_SIZE)
         val block = toFixedLengthBuffer(data, MifareClassic.BLOCK_SIZE)
@@ -189,9 +197,9 @@ fun writeTag(mifare: MifareClassic, data: UByteArray): WriteResult {
                 mifare.tag
             )}"
         )
-        result = WriteResult.SUCCESS
+        WriteResult.SUCCESS
     } else {
-        result = WriteResult.AUTHENTICATION_FAILURE
+        WriteResult.AUTHENTICATION_FAILURE
     }
 
     mifare.close()

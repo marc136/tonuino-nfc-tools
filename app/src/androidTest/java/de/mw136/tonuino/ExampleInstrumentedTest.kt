@@ -1,9 +1,9 @@
 package de.mw136.tonuino
 
 import android.os.Parcel
+import androidx.test.InstrumentationRegistry.getTargetContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
-import de.mw136.tonuino.nfc.TagData
+import de.mw136.tonuino.ui.enter.TagData
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,14 +18,16 @@ class ExampleInstrumentedTest {
     @Test
     fun useAppContext() {
         // Context of the app under test.
-        val appContext = InstrumentationRegistry.getTargetContext()
+        val appContext = getTargetContext()
         assertEquals("de.mw136.tonuino", appContext.packageName)
     }
 
 
     @Test
     fun parceling() {
-        val input = TagData.createDefault()
+        val input = TagData()
+        input.setVersion(3u)
+        input.setSpecial2(244u)
         val parcel = Parcel.obtain()
         input.writeToParcel(parcel, input.describeContents())
         parcel.setDataPosition(0)

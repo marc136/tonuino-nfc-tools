@@ -11,11 +11,24 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/bulk_edit_description"
-            app:layout_constraintBottom_toTopOf="@+id/editText"
+            app:layout_constraintBottom_toTopOf="@+id/button_qrcode"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+            android:id="@+id/button_qrcode"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/bulk_edit_button_scan_qrcode"
+            android:onClick="openQRCodeScanner"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/editText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description" />
 
     <EditText
             android:id="@+id/editText"
@@ -31,7 +44,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/description"
+            app:layout_constraintTop_toBottomOf="@+id/button_qrcode"
             tools:ignore="LabelFor" />
 
     <Button
