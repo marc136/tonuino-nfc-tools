@@ -3,17 +3,18 @@ package de.mw136.tonuino.nfc
 import android.nfc.FormatException
 import android.nfc.Tag
 import android.nfc.TagLostException
-import android.nfc.tech.MifareClassic
-import android.nfc.tech.MifareUltralight
-import android.nfc.tech.TagTechnology
 import android.util.Log
 import de.mw136.tonuino.byteArrayToHex
 import de.mw136.tonuino.hexToBytes
 import java.io.IOException
 import kotlin.math.ceil
+import android.nfc.tech.*
+
 
 private const val TAG = "TagHelper"
 private const val tonuinoSector = 1
+private const val firstBlockNum = 8
+private const val lastBlockNum = 11
 
 @ExperimentalUnsignedTypes
 val tonuinoCookie = hexToBytes("1337b347").toList() // TODO add to expert settings
@@ -32,16 +33,17 @@ fun tagIdAsString(tag: Tag): String {
 }
 
 fun connectTo(tag: Tag): TagTechnology? {
-    when {
-        tag.techList.contains(MifareClassic::class.java.name) -> {
-            return MifareClassic.get(tag)?.apply { connect() }
-        }
-        tag.techList.contains(MifareUltralight::class.java.name) -> {
-            return MifareUltralight.get(tag)?.apply { connect() }
-        }
-        else -> {
-            throw FormatException("Can only handle MifareClassic and MifareUltralight")
-        }
+    if (tag.techList.contains(MifareClassic::class.java.name)) {
+        return MifareClassic.get(tag)?.apply { connect() }
+    }
+    else if (tag.techList.contains(MifareUltralight::class.java.name)) {
+        return MifareUltralight.get(tag)?.apply { connect() }
+    }
+    else if (tag.techList.contains(NfcA::class.java.name)) {
+        return NfcA.get(tag)?.apply { connect() }
+    }
+    else {
+        throw FormatException("Can only handle MifareClassic and MifareUltralight")
     }
 }
 
@@ -52,19 +54,20 @@ fun readFromTag(tag: Tag): UByteArray {
 
     try {
         Log.i(TAG, "Tag $id techList: ${techListOf(tag).joinToString(", ")}")
-        when {
-            tag.techList.contains(MifareClassic::class.java.name) -> {
-                MifareClassic.get(tag)?.use { mifare -> result = readFromTag(mifare) }
-            }
-            tag.techList.contains(MifareUltralight::class.java.name) -> {
-                MifareUltralight.get(tag)?.use { mifare -> result = readFromTag(mifare) }
-            }
-            else -> {
-                Log.e(
-                    "$TAG.readFromTag",
-                    "Tag $id did not enumerate MifareClassic or MifareUltralight and is thus not supported"
-                )
-            }
+        if (tag.techList.contains(MifareClassic::class.java.name)) {
+            MifareClassic.get(tag)?.use { mifare -> result = readFromTag(mifare) }
+        }
+        else if (tag.techList.contains(MifareUltralight::class.java.name)) {
+            MifareUltralight.get(tag)?.use { mifare -> result = readFromTag(mifare) }
+        }
+        else if (tag.techList.contains(NfcA::class.java.name)) {
+            NfcA.get(tag)?.use { nfca -> result = readFromTag(nfca) }
+        }
+        else {
+            Log.e(
+                "$TAG.readFromTag",
+                "Tag $id did not enumerate MifareClassic or MifareUltralight and is thus not supported"
+            )
         }
     } catch (ex: Exception) {
         // e.g. android.nfc.TagLostException, IOException
@@ -82,6 +85,28 @@ fun dropTrailingZeros(bytes: UByteArray): UByteArray {
     if (lastNonZeroIndex == 0) return ubyteArrayOf()
 
     return bytes.sliceArray(0..lastNonZeroIndex)
+}
+
+@ExperimentalUnsignedTypes
+fun readFromTag(nfcA: NfcA): UByteArray {
+    var result = ubyteArrayOf()
+
+    if (!nfcA.isConnected)
+        nfcA.connect()
+    val results = nfcA.transceive(
+        byteArrayOf(
+            0x3A.toByte(),  // FAST_READ
+            (firstBlockNum and 0x0ff).toByte(),
+            (lastBlockNum and 0x0ff).toByte()
+        )
+    )
+    val block = results.toUByteArray()
+    if (block.take(tonuinoCookie.size) == tonuinoCookie) {
+        Log.i(TAG, "This is a Tonuino NFCA tag")
+        result = block
+    }
+
+    return result
 }
 
 /**
@@ -157,12 +182,13 @@ enum class WriteResult { SUCCESS, UNSUPPORTED_FORMAT, AUTHENTICATION_FAILURE, TA
 
 @ExperimentalUnsignedTypes
 fun writeTonuino(tag: TagTechnology, data: UByteArray): WriteResult {
-    var result: WriteResult
+    val result: WriteResult
 
     result = try {
         when (tag) {
             is MifareClassic -> writeTag(tag, data)
             is MifareUltralight -> writeTag(tag, data)
+            is NfcA -> writeTag(tag, data)
             else -> WriteResult.UNSUPPORTED_FORMAT
         }
     } catch (ex: TagLostException) {
@@ -237,6 +263,41 @@ fun writeTag(mifare: MifareUltralight, data: UByteArray): WriteResult {
 
     return WriteResult.SUCCESS
 }
+
+@ExperimentalUnsignedTypes
+fun writeTag(nfcA: NfcA, data: UByteArray): WriteResult {
+    try {
+        if (!nfcA.isConnected)
+            nfcA.connect()
+    } catch (ex: IOException) {
+        // is e.g. thrown if the NFC tag was removed
+        return WriteResult.TAG_UNAVAILABLE
+    }
+
+    val len = data.size
+    var pageNum = firstBlockNum
+    val pagesize = MifareUltralight.PAGE_SIZE
+    val pagesNeeded = ceil(data.size.toDouble() / pagesize).toInt()
+
+    Log.i(TAG, "data byte size $len")
+    var current = 0
+    val block = toFixedLengthBuffer(data, pagesize * pagesNeeded)
+    for (index in 0 until pagesNeeded) {
+        val next = current + pagesize
+        val part = block.slice(current until next).toByteArray()
+        nfcA.transceive(
+            byteArrayOf(
+                0xA2.toByte(),  // WRITE
+                (pageNum and 0x0ff).toByte(),
+                part[0], part[1], part[2], part[3]
+            ))
+        current = next
+        pageNum += 1
+    }
+
+    return WriteResult.SUCCESS
+}
+
 
 @ExperimentalUnsignedTypes
 fun toFixedLengthBuffer(bytes: UByteArray, size: Int): ByteArray {
