@@ -45,9 +45,13 @@ class ReadActivity : NfcIntentActivity() {
         setText(R.id.mode, data.mode.value)
         findViewById<TextView>(R.id.mode_description).apply {
             val mode = data.mode.value?.toInt() ?: 0
-            val title = resources.getStringArray(R.array.edit_mode)[mode - 1] ?: ""
-            val description =
-                resources.getStringArray(R.array.edit_mode_description)[mode - 1] ?: ""
+            var title = ""
+            var description = ""
+            if (mode != 0) {
+                 title = resources.getStringArray(R.array.edit_mode)[mode - 1] ?: ""
+                 description =
+                    resources.getStringArray(R.array.edit_mode_description)[mode - 1] ?: ""
+            }
             text = if (title.isNotEmpty() && description.isNotEmpty()) {
                 "$title: $description"
             } else {
