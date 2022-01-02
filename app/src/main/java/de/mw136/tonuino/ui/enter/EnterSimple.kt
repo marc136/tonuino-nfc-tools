@@ -412,7 +412,6 @@ class EnterSimple : Fragment() {
         version.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>) {}
 
-            @ExperimentalUnsignedTypes
             override fun onItemSelected(
                 parent: AdapterView<*>,
                 view: View?,
@@ -429,7 +428,6 @@ class EnterSimple : Fragment() {
         folder.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>) {}
 
-            @ExperimentalUnsignedTypes
             override fun onItemSelected(
                 parent: AdapterView<*>,
                 view: View?,
@@ -446,7 +444,6 @@ class EnterSimple : Fragment() {
         mode.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>) {}
 
-            @ExperimentalUnsignedTypes
             override fun onItemSelected(
                 parent: AdapterView<*>,
                 view: View?,

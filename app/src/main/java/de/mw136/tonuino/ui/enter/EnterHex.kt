@@ -76,7 +76,7 @@ class EnterHex : Fragment() {
 fun formatBytes(bytes: String): String {
     // "012 3456789" -> "01 23 45 67 89"
     return bytes.replace("\\s".toRegex(), "")
-        .toUpperCase(Locale.ENGLISH).chunked(2)
+        .uppercase(Locale.ENGLISH).chunked(2)
         .joinToString(" ")
 }
 

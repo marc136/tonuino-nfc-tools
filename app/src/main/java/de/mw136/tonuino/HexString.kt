@@ -2,7 +2,6 @@ package de.mw136.tonuino
 
 private val characters = "0123456789ABCDEF".toCharArray()
 
-@ExperimentalUnsignedTypes
 fun byteToHex(byte: UByte): String {
     val i = byte.toInt() and 0xFF
     val i0 = i ushr 4 // i >> 4

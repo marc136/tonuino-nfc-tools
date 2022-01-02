@@ -1,6 +1,5 @@
 package de.mw136.tonuino.ui
 
-@ExperimentalUnsignedTypes
 class Tonuino {
     companion object {
         // TODO decide if I want this format or enum classes (which cannot pattern-match nicely)
@@ -13,7 +12,6 @@ class Tonuino {
     }
 }
 
-@ExperimentalUnsignedTypes
 enum class TonuinoFormat(val value: UByte) {
     Format1(1u), Format2(2u)
 }
@@ -38,7 +36,6 @@ enum class Format2ModifierMode(val value: Int) {
     Toddler(4), Kindergarten(5), RepeatSingle(6), Feedback(7)
 }
 
-@ExperimentalUnsignedTypes
 fun usageExample1() {
     val version: UByte = 1u
     var a1 = when (version) {
@@ -65,6 +62,8 @@ fun usageExample1() {
 //        else ->
 //            1
 //    }
+    println("a1: $a1")
+    println("a2: $a2")
 }
 
 

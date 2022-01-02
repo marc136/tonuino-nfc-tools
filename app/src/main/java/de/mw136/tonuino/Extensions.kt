@@ -46,7 +46,6 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
     })
 }
 
-@ExperimentalUnsignedTypes
 fun EditText.setByteIfChanged(value: UByte?) {
     if (value == null || this.text.toString() == value.toString()) return
     Log.i(
