@@ -10,8 +10,8 @@ android {
         applicationId "de.mw136.tonuino"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 20
-        versionName "0.9.0"
+        versionCode 21
+        versionName "0.9.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
