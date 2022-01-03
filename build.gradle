@@ -4,7 +4,7 @@ buildscript {
     ext.kotlin_version = '1.6.10'
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.4'
@@ -17,6 +17,10 @@ buildscript {
 allprojects {
     repositories {
         google()
+        mavenCentral()
+        // Still keeping jcenter here because 'me.dm7.barcodescanner:zxing:1.9.13' is used, which does not exist on mavenCentral
+        // See https://github.com/dm77/barcodescanner/issues/499
+        //noinspection JcenterRepositoryObsolete
         jcenter()
     }
 }
