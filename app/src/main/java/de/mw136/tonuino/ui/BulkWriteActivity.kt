@@ -19,12 +19,12 @@ import de.mw136.tonuino.nfc.NfcIntentActivity
 import de.mw136.tonuino.nfc.connectTo
 import de.mw136.tonuino.nfc.tagIdAsString
 import de.mw136.tonuino.utils.RuntimePermission
-import kotlinx.android.synthetic.main.bulkwrite_fragment_enter_list.*
 import java.io.IOException
 
 @ExperimentalUnsignedTypes
 class BulkWriteActivity : NfcIntentActivity() {
     override val TAG = "BulkActivity"
+    private lateinit var binding: ResultProfileBinding
     private val REQUEST_CODE_CAMERA = 4710
     private val REQUEST_CODE_QR_SCAN = 4711
 
@@ -36,7 +36,12 @@ class BulkWriteActivity : NfcIntentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.bulkwrite_activity)
+//        setContentView(R.layout.bulkwrite_activity)
+
+        binding = ResultProfileBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
 
         // Create a ViewModel the first time the system calls an activity's onCreate() method.
         // Re-created activities receive the same MyViewModel instance created by the first activity.
@@ -60,7 +65,7 @@ class BulkWriteActivity : NfcIntentActivity() {
     override fun onStart() {
         super.onStart()
         if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
-            button_qrcode.visibility = View.VISIBLE
+            binding.button_qrcode.visibility = View.VISIBLE
         }
     }
 

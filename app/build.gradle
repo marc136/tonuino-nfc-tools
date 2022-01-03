@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-parcelize'
 
 android {
     compileSdkVersion 31
@@ -23,6 +23,9 @@ android {
             v1SigningEnabled true
             v2SigningEnabled true
         }
+    }
+    buildFeatures {
+        viewBinding true
     }
     buildTypes {
         release {
