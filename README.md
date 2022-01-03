@@ -10,6 +10,41 @@ installable using the [Google Play Store](https://play.google.com/store/apps/det
 The github releases are built on [CircleCI ![CircleCI](https://circleci.com/gh/marc136/tonuino-nfc-tools/tree/master.svg?style=svg)](https://circleci.com/gh/marc136/tonuino-nfc-tools/tree/master).  
 Google Play releases are built using [fastlane](https://docs.fastlane.tools/getting-started/android/setup/).
 
+## Getting started
+
+Install [Android studio](https://developer.android.com/studio#downloads), and then [run this app on a real Android device](https://developer.android.com/training/basics/firstapp/running-app#RealDevice).
+
+If you want more control check the docs on [building](https://developer.android.com/studio/build/building-cmdline) and [testing](https://developer.android.com/studio/test/command-line) from cli.
+
+Follow the instructions on how to [run apps on a real hardware Android device](https://developer.android.com/studio/run/device).
+
+These are a few commands I find useful:
+
+```sh
+# Create a clean build
+./gradlew clean bundle
+
+# If something fails, check the output of
+./gradlew --version
+
+# Run the linter
+./gradlew lint
+
+# Run the test suite with
+./gradlew test
+# Or
+bundle exec fastlane test
+
+# Deploy a debug build to a connected Android device
+./gradlew installDebug
+
+# Check if the Android device was properly connected
+./gradlew connectedCheck
+
+# Get a list of available gradle tasks
+./gradlew tasks
+```
+
 ## TODO
 - [ ] Get BytesFormatter to work without issues
 - [ ] Hide on-screen-keyboard when switching between edit fragments
