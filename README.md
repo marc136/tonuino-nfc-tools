@@ -48,6 +48,8 @@ bundle exec fastlane test
 ## TODO
 - [ ] Migrate away from deprecated `kotlin-android-extensions` plugin
 > Warning: The 'kotlin-android-extensions' Gradle plugin is deprecated. Please use this migration guide (https://goo.gle/kotlin-android-extensions-deprecation) to start working with View Binding (https://developer.android.com/topic/libraries/view-binding) and the 'kotlin-parcelize' plugin.
+    - [ ] Recreate the UI with [Jetpack compose](https://developer.android.com/jetpack/compose)
+    - [ ] Use KTX extension libs https://developer.android.com/kotlin/ktx
 - [ ] Replace qr code scanner lib as it is no longer maintained
 - [ ] Get BytesFormatter to work without issues
 - [ ] Hide on-screen-keyboard when switching between edit fragments
