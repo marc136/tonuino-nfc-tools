@@ -46,13 +46,16 @@ bundle exec fastlane test
 ```
 
 ## TODO
+- [ ] Migrate away from deprecated `kotlin-android-extensions` plugin
+> Warning: The 'kotlin-android-extensions' Gradle plugin is deprecated. Please use this migration guide (https://goo.gle/kotlin-android-extensions-deprecation) to start working with View Binding (https://developer.android.com/topic/libraries/view-binding) and the 'kotlin-parcelize' plugin.
+- [ ] Replace qr code scanner lib as it is no longer maintained
 - [ ] Get BytesFormatter to work without issues
 - [ ] Hide on-screen-keyboard when switching between edit fragments
 - [ ] Allow users to write a note or title to the NFC tag
 - [ ] Allow users to keep a list of tags
 - [ ] Simulate NFC tag
 - [ ] Use proper Material design theming instead of faking it
-    - MainActivity if NFC is not available
+    - On MainActivity if NFC is not available
 
 ## Tonuino 2.0.x
 [Repository](https://github.com/xfjx/TonUINO/blob/d15df6c7bb53bc970e4def43fd3e93fd82c13086/Tonuino.ino)
