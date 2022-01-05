@@ -12,5 +12,5 @@ It does not collect any personal data, nor does it forward any personal data to 
 [Copyright and license](https://github.com/marc136/tonuino-nfc-tools/blob/master/LICENSE)
 
 
-![logo](https://github.com/marc136/tonuino-nfc-tools/blob/master/res/feature-graphic.png?raw=true)
+![logo](https://github.com/marc136/tonuino-nfc-tools/blob/main/res/feature-graphic.png?raw=true)
 
