@@ -104,14 +104,15 @@ fun dropTrailingZeros(bytes: UByteArray): UByteArray {
  * Source: https://developer.android.com/reference/android/nfc/tech/MifareClassic.html
  */
 @ExperimentalUnsignedTypes
-fun readFromTag(mifare: MifareClassic): UByteArray {
-    if (!mifare.isConnected) mifare.connect()
+fun readFromTag(tag: MifareClassic): UByteArray {
+    if (!tag.isConnected) tag.connect()
     var result = ubyteArrayOf()
 
     val key = factoryKey.asByteArray()
-    if (mifare.authenticateSectorWithKeyA(tonuinoSector, key)) {
-        val blockIndex = mifare.sectorToBlock(tonuinoSector)
-        val block = mifare.readBlock(blockIndex).toUByteArray()
+    if (tag.authenticateSectorWithKeyA(tonuinoSector, key)) {
+        val blockIndex = tag.sectorToBlock(tonuinoSector)
+        val block = tag.readBlock(blockIndex).toUByteArray()
+        tag.close()
 
         Log.w(TAG, "Bytes in sector: ${byteArrayToHex(block).joinToString(" ")}")
 
@@ -122,10 +123,10 @@ fun readFromTag(mifare: MifareClassic): UByteArray {
 
         result = block
     } else {
+        tag.close()
         Log.e(TAG, "Authentication of sector $tonuinoSector failed!")
     }
 
-    mifare.close()
     return result
 }
 
@@ -137,17 +138,19 @@ fun readFromTag(mifare: MifareClassic): UByteArray {
  * Source: https://developer.android.com/reference/android/nfc/tech/MifareUltralight
  */
 @ExperimentalUnsignedTypes
-fun readFromTag(mifare: MifareUltralight): UByteArray {
-    if (!mifare.isConnected) mifare.connect()
+fun readFromTag(tag: MifareUltralight): UByteArray {
+    if (!tag.isConnected) tag.connect()
 
-    val tagType = when (mifare.type) {
+    val tagType = when (tag.type) {
         MifareUltralight.TYPE_ULTRALIGHT -> "ULTRALIGHT"
         MifareUltralight.TYPE_ULTRALIGHT_C -> "ULTRALIGHT_C"
         else -> "ULTRALIGHT (UNKNOWN)"
     }
 
     // tonuinoCookie should be in page 8
-    val block = mifare.readPages(8).toUByteArray()
+    val block = tag.readPages(8).toUByteArray()
+    tag.close()
+
     // first 4 byte should match the tonuinoCookie
     if (block.take(tonuinoCookie.size) == tonuinoCookie) {
         Log.i(TAG, "This is a Tonuino MIFARE $tagType tag")
@@ -155,7 +158,6 @@ fun readFromTag(mifare: MifareUltralight): UByteArray {
 
     Log.i(TAG, "Bytes in sector: ${byteArrayToHex(block).joinToString(" ")}")
 
-    mifare.close()
     return block
 }
 
@@ -163,23 +165,23 @@ fun readFromTag(mifare: MifareUltralight): UByteArray {
  * This actually reads a Mifare Ultralight TAG using NfcA
  */
 @ExperimentalUnsignedTypes
-fun readFromTag(nfcA: NfcA): UByteArray {
-    if (!nfcA.isConnected) nfcA.connect()
+fun readFromTag(tag: NfcA): UByteArray {
+    if (!tag.isConnected) tag.connect()
 
-    val block = nfcA.transceive(
+    val block = tag.transceive(
         byteArrayOf(
             0x3A.toByte(),  // FAST_READ
             firstBlockNum,
             lastBlockNum,
         ),
     ).toUByteArray()
+    tag.close()
 
     // first 4 byte should match the tonuinoCookie
     if (block.take(tonuinoCookie.size) == tonuinoCookie) {
         Log.i(TAG, "This is a Tonuino NFCA tag")
     }
 
-    nfcA.close()
     return block
 }
 
@@ -206,25 +208,25 @@ fun writeTonuino(tag: TagTechnology, data: UByteArray): WriteResult {
 }
 
 @ExperimentalUnsignedTypes
-fun writeTag(mifare: MifareClassic, data: UByteArray): WriteResult {
+fun writeTag(tag: MifareClassic, data: UByteArray): WriteResult {
     val result: WriteResult
     try {
-        if (!mifare.isConnected) mifare.connect()
+        if (!tag.isConnected) tag.connect()
     } catch (ex: IOException) {
         // is e.g. thrown if the NFC tag was removed
         return WriteResult.TAG_UNAVAILABLE
     }
 
     val key = factoryKey.asByteArray() // TODO allow configuration
-    result = if (mifare.authenticateSectorWithKeyB(tonuinoSector, key)) {
-        val blockIndex = mifare.sectorToBlock(tonuinoSector)
+    result = if (tag.authenticateSectorWithKeyB(tonuinoSector, key)) {
+        val blockIndex = tag.sectorToBlock(tonuinoSector)
         // NOTE: This could truncates data, if we have more than 16 Byte (= MifareClassic.BLOCK_SIZE)
         val block = toFixedLengthBuffer(data, MifareClassic.BLOCK_SIZE)
-        mifare.writeBlock(blockIndex, block)
+        tag.writeBlock(blockIndex, block)
         Log.i(
             TAG, "Wrote ${byteArrayToHex(data)} to tag ${
                 tagIdAsString(
-                    mifare.tag
+                    tag.tag
                 )
             }"
         )
@@ -233,15 +235,15 @@ fun writeTag(mifare: MifareClassic, data: UByteArray): WriteResult {
         WriteResult.AUTHENTICATION_FAILURE
     }
 
-    mifare.close()
+    tag.close()
 
     return result
 }
 
 @ExperimentalUnsignedTypes
-fun writeTag(mifare: MifareUltralight, data: UByteArray): WriteResult {
+fun writeTag(tag: MifareUltralight, data: UByteArray): WriteResult {
     try {
-        if (!mifare.isConnected) mifare.connect()
+        if (!tag.isConnected) tag.connect()
     } catch (ex: IOException) {
         // is e.g. thrown if the NFC tag was removed
         return WriteResult.TAG_UNAVAILABLE
@@ -258,10 +260,10 @@ fun writeTag(mifare: MifareUltralight, data: UByteArray): WriteResult {
     for (index in 0 until pagesNeeded) {
         val next = current + MifareUltralight.PAGE_SIZE
         val part = block.slice(current until next).toByteArray()
-        mifare.writePage(8 + index, part)
+        tag.writePage(8 + index, part)
         Log.i(
             TAG,
-            "Wrote ${byteArrayToHex(part.toUByteArray())} to tag ${tagIdAsString(mifare.tag)}"
+            "Wrote ${byteArrayToHex(part.toUByteArray())} to tag ${tagIdAsString(tag.tag)}"
         )
         current = next
     }
@@ -273,10 +275,9 @@ fun writeTag(mifare: MifareUltralight, data: UByteArray): WriteResult {
  * This actually writes a Mifare Ultralight TAG using NfcA
  */
 @ExperimentalUnsignedTypes
-fun writeTag(nfcA: NfcA, data: UByteArray): WriteResult {
+fun writeTag(tag: NfcA, data: UByteArray): WriteResult {
     try {
-        if (!nfcA.isConnected)
-            nfcA.connect()
+        if (!tag.isConnected) tag.connect()
     } catch (ex: IOException) {
         // is e.g. thrown if the NFC tag was removed
         return WriteResult.TAG_UNAVAILABLE
@@ -293,7 +294,7 @@ fun writeTag(nfcA: NfcA, data: UByteArray): WriteResult {
     for (index in 0 until pagesNeeded) {
         val next = current + pagesize
         val part = block.slice(current until next).toByteArray()
-        nfcA.transceive(
+        tag.transceive(
             byteArrayOf(
                 0xA2.toByte(),  // WRITE
                 pageNum,
