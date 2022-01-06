@@ -16,8 +16,8 @@ import kotlin.math.ceil
 
 private const val TAG = "TagHelper"
 private const val tonuinoSector = 1
-private const val firstBlockNum = 8
-private const val lastBlockNum = 11
+private const val firstBlockNum: Byte = 8
+private const val lastBlockNum: Byte = 11
 
 @ExperimentalUnsignedTypes
 val tonuinoCookie = hexToBytes("1337b347").toList() // TODO add to expert settings
@@ -94,28 +94,6 @@ fun dropTrailingZeros(bytes: UByteArray): UByteArray {
     return bytes.sliceArray(0..lastNonZeroIndex)
 }
 
-@ExperimentalUnsignedTypes
-fun readFromTag(nfcA: NfcA): UByteArray {
-    var result = ubyteArrayOf()
-
-    if (!nfcA.isConnected)
-        nfcA.connect()
-    val results = nfcA.transceive(
-        byteArrayOf(
-            0x3A.toByte(),  // FAST_READ
-            (firstBlockNum and 0x0ff).toByte(),
-            (lastBlockNum and 0x0ff).toByte()
-        )
-    )
-    val block = results.toUByteArray()
-    if (block.take(tonuinoCookie.size) == tonuinoCookie) {
-        Log.i(TAG, "This is a Tonuino NFCA tag")
-        result = block
-    }
-
-    return result
-}
-
 /**
  * Different MIFARE Classic formats:
  * MIFARE Classic Mini are 320 bytes (SIZE_MINI), with 5 sectors each of 4 blocks.
@@ -181,14 +159,35 @@ fun readFromTag(mifare: MifareUltralight): UByteArray {
     return block
 }
 
+/**
+ * This actually reads a Mifare Ultralight TAG using NfcA
+ */
+@ExperimentalUnsignedTypes
+fun readFromTag(nfcA: NfcA): UByteArray {
+    if (!nfcA.isConnected) nfcA.connect()
+
+    val block = nfcA.transceive(
+        byteArrayOf(
+            0x3A.toByte(),  // FAST_READ
+            firstBlockNum,
+            lastBlockNum,
+        ),
+    ).toUByteArray()
+
+    // first 4 byte should match the tonuinoCookie
+    if (block.take(tonuinoCookie.size) == tonuinoCookie) {
+        Log.i(TAG, "This is a Tonuino NFCA tag")
+    }
+
+    nfcA.close()
+    return block
+}
 
 enum class WriteResult { SUCCESS, UNSUPPORTED_FORMAT, AUTHENTICATION_FAILURE, TAG_UNAVAILABLE, UNKNOWN_ERROR }
 
 @ExperimentalUnsignedTypes
 fun writeTonuino(tag: TagTechnology, data: UByteArray): WriteResult {
-    val result: WriteResult
-
-    result = try {
+    val result: WriteResult = try {
         when (tag) {
             is MifareClassic -> writeTag(tag, data)
             is MifareUltralight -> writeTag(tag, data)
@@ -270,6 +269,9 @@ fun writeTag(mifare: MifareUltralight, data: UByteArray): WriteResult {
     return WriteResult.SUCCESS
 }
 
+/**
+ * This actually writes a Mifare Ultralight TAG using NfcA
+ */
 @ExperimentalUnsignedTypes
 fun writeTag(nfcA: NfcA, data: UByteArray): WriteResult {
     try {
@@ -294,12 +296,12 @@ fun writeTag(nfcA: NfcA, data: UByteArray): WriteResult {
         nfcA.transceive(
             byteArrayOf(
                 0xA2.toByte(),  // WRITE
-                (pageNum and 0x0ff).toByte(),
+                pageNum,
                 part[0], part[1], part[2], part[3]
             )
         )
         current = next
-        pageNum += 1
+        pageNum++
     }
 
     return WriteResult.SUCCESS
