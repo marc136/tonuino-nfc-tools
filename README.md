@@ -7,7 +7,7 @@ For discussion, see [this thread (in German)](http://discourse.voss.earth/t/andr
 The app is available [for download on github](https://github.com/marc136/tonuino-nfc-tools/releases), 
 installable using the [Google Play Store](https://play.google.com/store/apps/details?id=de.mw136.tonuino) or the [F-Droid Store](https://f-droid.org/packages/de.mw136.tonuino/).
 
-The github releases are built on [CircleCI ![CircleCI](https://circleci.com/gh/marc136/tonuino-nfc-tools/tree/master.svg?style=svg)](https://circleci.com/gh/marc136/tonuino-nfc-tools/tree/master).  
+The github releases are built on [CircleCI ![CircleCI](https://circleci.com/gh/marc136/tonuino-nfc-tools/tree/main.svg?style=svg)](https://circleci.com/gh/marc136/tonuino-nfc-tools/tree/master).  
 Google Play releases are built using [fastlane](https://docs.fastlane.tools/getting-started/android/setup/).
 
 ## Getting started
