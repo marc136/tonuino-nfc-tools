@@ -47,7 +47,7 @@ fun connectTo(tag: Tag): TagTechnology? {
             NfcA.get(tag)?.apply { connect() }
         }
         else -> {
-            throw FormatException("Can only write MifareClassic, MifareUltralight and NfcA")
+            throw FormatException("Can only handle MifareClassic, MifareUltralight and NfcA")
         }
     }
 }
