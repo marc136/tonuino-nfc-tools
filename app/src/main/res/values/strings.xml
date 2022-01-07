@@ -25,7 +25,7 @@
 
 
     <!-- Strings used on EditActivity -->
-    <string name="edit_nfc_connection_lost">Verbindung verloren</string>
+    <string name="edit_nfc_connection_lost">Connection lost</string>
     <string name="edit_tonuino_version_label">Select tag type</string>
     <string-array name="edit_tonuino_tag_types">
         <item>Tonuino 2.0.x</item>
