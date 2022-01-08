@@ -365,6 +365,79 @@ fun writeMifareUltralight(tag: NfcA, data: UByteArray): WriteResult {
     return WriteResult.Success
 }
 
+/**
+ * WIP: DOES NOT WORK!
+ */
+fun writeMifareClassic(tag: NfcA, data: UByteArray): WriteResult {
+    val len = data.size
+    var pageNum = firstBlockNum
+    Log.i(TAG, "maxTransceiveLength ${tag.maxTransceiveLength}")
+    val pagesize = MifareClassic.BLOCK_SIZE
+    val pagesNeeded = ceil(data.size.toDouble() / pagesize).toInt()
+
+    // TODO detect an NTAG21xx tag?
+
+    // The MFRC522 lib that TonUINO uses detects the tag type using the SAK ID `PICC_GetType` (Proximity inductive coupling card)
+    // See https://github.com/miguelbalboa/rfid/blob/eda2e385668163062250526c0e19033247d196a8/src/MFRC522.cpp#L1321
+    // More information on the standards are on https://nfc-tools.github.io/resources/standards/iso14443A/
+
+    // Looks like we need 2 passes to write on Mifare Classic
+    // https://github.com/miguelbalboa/rfid/blob/eda2e385668163062250526c0e19033247d196a8/src/MFRC522.cpp#L987
+
+    Log.i(TAG, "data byte size $len")
+
+// Write a Mifare Classic tag
+    // From https://github.com/miguelbalboa/rfid/blob/eda2e385668163062250526c0e19033247d196a8/src/MFRC522.cpp#L987
+    // Mifare Classic protocol requires two communications to perform a write.
+    // Step 1: Tell the PICC we want to write to block blockAddr.
+    var cmd = byteArrayOf(
+//            0xA2.toByte(),  // WRITE
+        0xA0.toByte(), // PICC_CMD_MF_WRITE (Compatibility Write, see https://www.nxp.com/docs/en/data-sheet/NTAG213_215_216.pdf)
+        pageNum
+    )
+    Log.i(TAG, "will transceive(${cmd.toHex()})")
+
+    var result: ByteArray
+
+    try {
+        result = tag.transceive(cmd)
+        Log.i(TAG, "transceive(${cmd.toHex()}) returned ${result.toHex()}")
+        if (result.size != 1 || result[0] != 0x0A.toByte()) {
+            Log.e(TAG, "transceive did not return `ACK (0A)`. Got `${result.toHex()}` instead.")
+            tag.close()
+            return WriteResult.NfcATransceiveNotOk(result)
+        }
+    } catch (ex: Exception) {
+        // e.g. android.nfc.TagLostException, IOException
+        Log.e("$TAG.readFromTag", ex.toString())
+        return WriteResult.UnknownError
+    }
+
+    val block = toFixedLengthBuffer(data, MifareClassic.BLOCK_SIZE)
+    if (len > block.size) {
+        throw FormatException("TODO add paging")
+    }
+
+    cmd = byteArrayOf(0xA2.toByte() /* WRITE */, pageNum) + block
+    Log.i(TAG, "will transceive(${cmd.toHex()})")
+    try {
+        result = tag.transceive(cmd)
+        Log.i(TAG, "transceive(${cmd.toHex()}) returned ${result.toHex()}")
+        if (result.size != 1 || result[0] != 0x0A.toByte()) {
+            Log.e(TAG, "transceive did not return `ACK (0A)`. Got `${result.toHex()}` instead.")
+            tag.close()
+            return WriteResult.UnknownError
+        }
+    } catch (ex: Exception) {
+        // e.g. android.nfc.TagLostException, IOException
+        Log.e("$TAG.readFromTag", ex.toString())
+        return WriteResult.UnknownError
+    }
+
+    tag.close()
+    return WriteResult.Success
+}
+
 @ExperimentalUnsignedTypes
 fun toFixedLengthBuffer(bytes: UByteArray, size: Int): ByteArray {
     val block = UByteArray(size) { 0u }
