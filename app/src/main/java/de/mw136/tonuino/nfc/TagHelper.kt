@@ -35,6 +35,22 @@ fun tagIdAsString(tag: Tag): String = tag.id.toHex(":")
 fun ByteArray.toHex(separator: String = " "): String =
     joinToString(separator) { eachByte -> "%02x".format(eachByte).uppercase() }
 
+fun describeTagType(tag: Tag): String =
+    getTagTechnology(tag)?.use { describeTagType(it) } ?: Resources.getSystem().getString(R.string.identify_unknown_type)
+
+fun getTagTechnology(tag: Tag): TagTechnology? {
+    return when {
+        tag.techList.contains(MifareClassic::class.java.name) ->
+            MifareClassic.get(tag)
+        tag.techList.contains(MifareUltralight::class.java.name) ->
+            MifareUltralight.get(tag)
+        tag.techList.contains(NfcA::class.java.name) ->
+            NfcA.get(tag)
+        else ->
+            throw FormatException("Can only handle MifareClassic, MifareUltralight and NfcA")
+    }
+}
+
 fun describeTagType(tag: TagTechnology): String {
     return when (tag) {
         is MifareClassic ->
@@ -58,19 +74,6 @@ fun describeTagType(tag: TagTechnology): String {
             "NfcA (SAK: ${tag.sak.toString().padStart(2, '0')}, ATQA: ${tag.atqa.toHex()})"
         else ->
             Resources.getSystem().getString(R.string.identify_unsupported_type)
-    }
-}
-
-fun getTagTechnology(tag: Tag): TagTechnology? {
-    return when {
-        tag.techList.contains(MifareClassic::class.java.name) ->
-            MifareClassic.get(tag)
-        tag.techList.contains(MifareUltralight::class.java.name) ->
-            MifareUltralight.get(tag)
-        tag.techList.contains(NfcA::class.java.name) ->
-            NfcA.get(tag)
-        else ->
-            throw FormatException("Can only handle MifareClassic, MifareUltralight and NfcA")
     }
 }
 

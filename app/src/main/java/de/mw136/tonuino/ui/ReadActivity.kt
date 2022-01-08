@@ -9,6 +9,7 @@ import android.widget.TextView
 import de.mw136.tonuino.R
 import de.mw136.tonuino.byteArrayToHex
 import de.mw136.tonuino.nfc.NfcIntentActivity
+import de.mw136.tonuino.nfc.describeTagType
 import de.mw136.tonuino.nfc.readFromTag
 import de.mw136.tonuino.nfc.tagIdAsString
 import de.mw136.tonuino.ui.enter.TagData
@@ -34,6 +35,8 @@ class ReadActivity : NfcIntentActivity() {
         val tagId = tagIdAsString(tag)
         Log.i("$TAG.displayTonuinoInfo", "Tag $tagId")
         supportActionBar?.title = getString(R.string.read_title, tagId)
+
+        findViewById<TextView>(R.id.tagDescription).text = describeTagType(tag)
 
         setText(R.id.cookie, data.cookie)
         setText(R.id.version, (data.version.value))
