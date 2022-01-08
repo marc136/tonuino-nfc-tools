@@ -139,11 +139,12 @@ class BulkWriteFragment : Fragment() {
                 }
                 WriteResult.UnsupportedFormat -> {
                     setTitle(R.string.written_unsupported_tag_type)
+                    val techList = techListOf(viewModel.tag.value).joinToString(", ")
                     setMessage(
-                        getString(
-                            R.string.nfc_tag_technologies,
-                            techListOf(viewModel.tag.value).joinToString(", ")
-                        )
+                        StringBuilder()
+                            .append(getString(R.string.nfc_tag_type, result.description))
+                            .append("\n\n")
+                            .append(getString(R.string.nfc_tag_technologies, techList))
                     )
                 }
                 WriteResult.AuthenticationFailure -> {
@@ -171,11 +172,12 @@ class BulkWriteFragment : Fragment() {
                 }
                 is WriteResult.UnknownError -> {
                     setTitle(R.string.written_unknown_error)
+                    val techList = techListOf(viewModel.tag.value).joinToString(", ")
                     setMessage(
-                        getString(
-                            R.string.nfc_tag_technologies,
-                            techListOf(viewModel.tag.value).joinToString(", ")
-                        )
+                        StringBuilder()
+                            .append(getString(R.string.nfc_tag_type, result.description))
+                            .append("\n\n")
+                            .append(getString(R.string.nfc_tag_technologies, techList))
                     )
                     addRetryButton = true
                 }

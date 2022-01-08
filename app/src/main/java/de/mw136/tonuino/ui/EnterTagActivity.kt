@@ -118,12 +118,9 @@ class EnterTagActivity : NfcIntentActivity() {
                 }
                 is WriteResult.UnsupportedFormat -> {
                     setTitle(R.string.written_unsupported_tag_type)
-                    setMessage(
-                        getString(
-                            R.string.nfc_tag_technologies,
-                            techListOf(tag).joinToString(", ")
-                        )
-                    )
+                    setMessage(StringBuilder()
+                        .append(getString(R.string.nfc_tag_type, description)).append("\n\n")
+                        .append(getString(R.string.nfc_tag_technologies, techListOf(tag).joinToString(", "))))
                 }
                 is WriteResult.AuthenticationFailure -> {
                     setTitle(R.string.written_title_failure)
@@ -138,21 +135,17 @@ class EnterTagActivity : NfcIntentActivity() {
                 is WriteResult.NfcATransceiveNotOk -> {
                     setTitle(R.string.written_title_failure)
                     val notOk = result.response.toHex().trimEnd('0', ' ')
-                    val techList = techListOf(tag).joinToString(", ")
                     setMessage(StringBuilder()
                         .append(getString(R.string.nfc_tag_type, description)).append("\n\n")
                         .append(getString(R.string.nfca_not_ok, notOk)).append("\n\n")
-                        .append(getString(R.string.nfc_tag_technologies, techList)))
+                        .append(getString(R.string.nfc_tag_technologies, techListOf(tag).joinToString(", "))))
                     showRetryButton = true
                 }
                 is WriteResult.UnknownError -> {
                     setTitle(R.string.written_unknown_error)
-                    setMessage(
-                        getString(
-                            R.string.nfc_tag_technologies,
-                            techListOf(tag).joinToString(", ")
-                        )
-                    )
+                    setMessage(StringBuilder()
+                        .append(getString(R.string.nfc_tag_type, description)).append("\n\n")
+                        .append(getString(R.string.nfc_tag_technologies, techListOf(tag).joinToString(", "))))
                     showRetryButton = true
                 }
             }
