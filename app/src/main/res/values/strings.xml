@@ -150,7 +150,6 @@
     <!-- Strings about tag identification -->
     <string name="identify_unknown_type">unknown</string>
     <string name="identify_unsupported_type">unsupported</string>
-    <string name="identify_exception">Error</string>
 
     <!-- Strings on ReadActivity -->
     <string name="read_title">Tag %s</string>
