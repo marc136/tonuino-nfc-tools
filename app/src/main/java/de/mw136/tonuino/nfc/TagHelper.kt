@@ -61,21 +61,21 @@ fun describeTagType(tag: TagTechnology): String {
     }
 }
 
-fun connectTo(tag: Tag): TagTechnology? {
+fun getTagTechnology(tag: Tag): TagTechnology? {
     return when {
-        tag.techList.contains(MifareClassic::class.java.name) -> {
-            MifareClassic.get(tag)?.apply { connect() }
-        }
-        tag.techList.contains(MifareUltralight::class.java.name) -> {
-            MifareUltralight.get(tag)?.apply { connect() }
-        }
-        tag.techList.contains(NfcA::class.java.name) -> {
-            NfcA.get(tag)?.apply { connect() }
-        }
-        else -> {
+        tag.techList.contains(MifareClassic::class.java.name) ->
+            MifareClassic.get(tag)
+        tag.techList.contains(MifareUltralight::class.java.name) ->
+            MifareUltralight.get(tag)
+        tag.techList.contains(NfcA::class.java.name) ->
+            NfcA.get(tag)
+        else ->
             throw FormatException("Can only handle MifareClassic, MifareUltralight and NfcA")
-        }
     }
+}
+
+fun connectTo(tag: Tag): TagTechnology? {
+    return getTagTechnology(tag)?.apply { connect() }
 }
 
 @ExperimentalUnsignedTypes
