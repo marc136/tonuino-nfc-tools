@@ -216,28 +216,38 @@ fun readFromTag(tag: NfcA): UByteArray {
     return block
 }
 
-enum class WriteResult { SUCCESS, UNSUPPORTED_FORMAT, AUTHENTICATION_FAILURE, TAG_UNAVAILABLE, UNKNOWN_ERROR }
+data class WriteResultData(val description: String, val result: WriteResult)
+
+// ADT as shown on https://medium.com/sharenowtech/kotlin-adt-74472319962a
+sealed class WriteResult {
+    object Success : WriteResult()
+    object UnsupportedFormat : WriteResult()
+    object AuthenticationFailure : WriteResult()
+    object TagUnavailable : WriteResult()
+    data class NfcATransceiveNotOk(val response: ByteArray) : WriteResult()
+    object UnknownError : WriteResult()
+}
 
 @ExperimentalUnsignedTypes
-fun writeTonuino(tag: TagTechnology, data: UByteArray): WriteResult {
-    val description = describeTagType(tag)
-
+fun writeTonuino(tag: TagTechnology, data: UByteArray): WriteResultData {
+    var description: String = ""
     val result: WriteResult = try {
+        description = describeTagType(tag)
         when (tag) {
             is MifareClassic -> writeTag(tag, data)
             is MifareUltralight -> writeTag(tag, data)
             is NfcA -> writeTag(tag, data)
-            else -> WriteResult.UNSUPPORTED_FORMAT
+            else -> WriteResult.UnsupportedFormat
         }
     } catch (ex: TagLostException) {
-        WriteResult.TAG_UNAVAILABLE
+        WriteResult.TagUnavailable
     } catch (ex: FormatException) {
-        WriteResult.UNSUPPORTED_FORMAT
+        WriteResult.UnsupportedFormat
     } catch (ex: Exception) {
-        WriteResult.UNKNOWN_ERROR
+        WriteResult.UnknownError
     }
 
-    return result
+    return WriteResultData(description, result)
 }
 
 @ExperimentalUnsignedTypes
@@ -247,7 +257,7 @@ fun writeTag(tag: MifareClassic, data: UByteArray): WriteResult {
         if (!tag.isConnected) tag.connect()
     } catch (ex: IOException) {
         // is e.g. thrown if the NFC tag was removed
-        return WriteResult.TAG_UNAVAILABLE
+        return WriteResult.TagUnavailable
     }
 
     val key = factoryKey.asByteArray() // TODO allow configuration
@@ -263,9 +273,9 @@ fun writeTag(tag: MifareClassic, data: UByteArray): WriteResult {
                 )
             }"
         )
-        WriteResult.SUCCESS
+        WriteResult.Success
     } else {
-        WriteResult.AUTHENTICATION_FAILURE
+        WriteResult.AuthenticationFailure
     }
 
     tag.close()
@@ -279,11 +289,10 @@ fun writeTag(tag: MifareUltralight, data: UByteArray): WriteResult {
         if (!tag.isConnected) tag.connect()
     } catch (ex: IOException) {
         // is e.g. thrown if the NFC tag was removed
-        return WriteResult.TAG_UNAVAILABLE
+        return WriteResult.TagUnavailable
     }
 
     val len = data.size
-
     Log.i(TAG, "data byte size $len")
 
     val pagesNeeded = ceil(data.size.toDouble() / MifareUltralight.PAGE_SIZE).toInt()
@@ -301,7 +310,7 @@ fun writeTag(tag: MifareUltralight, data: UByteArray): WriteResult {
         current = next
     }
 
-    return WriteResult.SUCCESS
+    return WriteResult.Success
 }
 
 /**
@@ -313,7 +322,7 @@ fun writeTag(tag: NfcA, data: UByteArray): WriteResult {
         if (!tag.isConnected) tag.connect()
     } catch (ex: IOException) {
         // is e.g. thrown if the NFC tag was removed
-        return WriteResult.TAG_UNAVAILABLE
+        return WriteResult.TagUnavailable
     }
 
     val len = data.size
@@ -327,18 +336,24 @@ fun writeTag(tag: NfcA, data: UByteArray): WriteResult {
     for (index in 0 until pagesNeeded) {
         val next = current + pagesize
         val part = block.slice(current until next).toByteArray()
-        tag.transceive(
-            byteArrayOf(
-                0xA2.toByte(),  // WRITE
-                pageNum,
-                part[0], part[1], part[2], part[3]
-            )
+        val data = byteArrayOf(
+            0xA2.toByte(),  // WRITE
+            pageNum,
+            part[0], part[1], part[2], part[3] // TODO change this
         )
+        val result = tag.transceive(data)
         current = next
+        Log.i(TAG, "transceive(${data.toHex()}) returned ${result.toHex()}")
+        if (result.size != 1 || result[0] != 0x0A.toByte()) {
+            Log.e(TAG, "transceive did not return `ACK (0A)`. Got `${result.toHex()}` instead.")
+            tag.close()
+            return WriteResult.NfcATransceiveNotOk(result)
+        }
         pageNum++
     }
 
-    return WriteResult.SUCCESS
+    tag.close()
+    return WriteResult.Success
 }
 
 @ExperimentalUnsignedTypes

@@ -144,6 +144,11 @@
     <string name="written_unknown_error">Ein unbekannter Fehler ist aufgetreten</string>
     <string name="written_button_retry">Nochmal versuchen</string>
 
+    <!-- Strings about tag identification -->
+    <string name="identify_unknown_type">unbekannt</string>
+    <string name="identify_unsupported_type">nicht unterstützt</string>
+    <string name="identify_exception">Fehler</string>
+
     <!-- Strings on ReadActivity -->
     <string name="read_title">Tag %s</string>
     <string name="read_intro">Gelesene Daten</string>
@@ -175,6 +180,8 @@
     <string name="nfc_tag_found">Tag %s gefunden</string>
     <string name="nfc_read_tag_failure">Fehler: Konnte keine Daten vom NFC Tag lesen</string>
     <string name="nfc_tag_technologies">"Gerät und Tag unterstützen diese Technologien:\n%s"</string>
+    <string name="nfc_tag_type">Tag Technologie:\n%s</string>
+    <string name="nfca_not_ok">NfcA transceive gab \'%s\' zurück statt OK (\'A\')</string>
 
     <!-- New fields below -->
     <string name="apply_change">Änderung übernehmen</string>

@@ -18,10 +18,7 @@ import de.mw136.tonuino.BulkEditViewModel
 import de.mw136.tonuino.R
 import de.mw136.tonuino.TagWithComment
 import de.mw136.tonuino.byteArrayToHex
-import de.mw136.tonuino.nfc.WriteResult
-import de.mw136.tonuino.nfc.tagIdAsString
-import de.mw136.tonuino.nfc.techListOf
-import de.mw136.tonuino.nfc.writeTonuino
+import de.mw136.tonuino.nfc.*
 
 
 @ExperimentalUnsignedTypes
@@ -110,7 +107,8 @@ class BulkWriteFragment : Fragment() {
     }
 
     private fun writeTag() {
-        var result = WriteResult.TAG_UNAVAILABLE
+        var result = WriteResultData("", WriteResult.TagUnavailable)
+
         Log.w(TAG, "called writeTag")
         viewModel.tag.value?.let {
             Log.w(TAG, "has tag.value $it")
@@ -124,13 +122,13 @@ class BulkWriteFragment : Fragment() {
         showModalDialog(result)
     }
 
-    private fun showModalDialog(result: WriteResult) {
+    private fun showModalDialog(result: WriteResultData) {
         with(AlertDialog.Builder(activity)) {
             var addRetryButton = false
             var addOkButton = true
 
-            when (result) {
-                WriteResult.SUCCESS -> {
+            when (result.result) {
+                WriteResult.Success -> {
                     setMessage(R.string.written_success)
                     if (viewModel.hasNext) {
                         setPositiveButton(R.string.bulk_write_button_next) { _, _ ->
@@ -139,7 +137,7 @@ class BulkWriteFragment : Fragment() {
                         addOkButton = false
                     }
                 }
-                WriteResult.UNSUPPORTED_FORMAT -> {
+                WriteResult.UnsupportedFormat -> {
                     setTitle(R.string.written_unsupported_tag_type)
                     setMessage(
                         getString(
@@ -148,17 +146,30 @@ class BulkWriteFragment : Fragment() {
                         )
                     )
                 }
-                WriteResult.AUTHENTICATION_FAILURE -> {
+                WriteResult.AuthenticationFailure -> {
                     setTitle(R.string.written_title_failure)
                     setMessage(R.string.written_authentication_failure)
                     addRetryButton = true
                 }
-                WriteResult.TAG_UNAVAILABLE -> {
+                WriteResult.TagUnavailable -> {
                     setTitle(R.string.written_title_failure)
                     setMessage(R.string.written_tag_unavailable)
                     addRetryButton = true
                 }
-                WriteResult.UNKNOWN_ERROR -> {
+                is WriteResult.NfcATransceiveNotOk -> {
+                    setTitle(R.string.written_title_failure)
+                    val notOk = result.result.response.toHex().trimEnd('0', ' ')
+                    val techList = techListOf(viewModel.tag.value).joinToString(", ")
+                    setMessage(
+                        StringBuilder()
+                            .append(getString(R.string.nfc_tag_type, result.description))
+                            .append("\n\n")
+                            .append(getString(R.string.nfca_not_ok, notOk)).append("\n\n")
+                            .append(getString(R.string.nfc_tag_technologies, techList))
+                    )
+                    addRetryButton = true
+                }
+                is WriteResult.UnknownError -> {
                     setTitle(R.string.written_unknown_error)
                     setMessage(
                         getString(
