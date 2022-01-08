@@ -26,14 +26,12 @@ val tonuinoCookie = hexToBytes("1337b347").toList() // TODO add to expert settin
 private val factoryKey =
     hexToBytes("FFFFFFFFFFFF") // factory preset, same as MifareClassic.KEY_DEFAULT
 
-
-@ExperimentalUnsignedTypes
 fun tagIdAsString(tag: TagTechnology) = tagIdAsString(tag.tag)
 
-@ExperimentalUnsignedTypes
-fun tagIdAsString(tag: Tag): String {
-    return byteArrayToHex(tag.id.toUByteArray()).joinToString(":")
-}
+fun tagIdAsString(tag: Tag): String = tag.id.toHex(":")
+
+fun ByteArray.toHex(separator: String = " "): String =
+    joinToString(separator) { eachByte -> "%02x".format(eachByte).uppercase() }
 
 fun connectTo(tag: Tag): TagTechnology? {
     return when {
@@ -307,7 +305,6 @@ fun writeTag(tag: NfcA, data: UByteArray): WriteResult {
 
     return WriteResult.SUCCESS
 }
-
 
 @ExperimentalUnsignedTypes
 fun toFixedLengthBuffer(bytes: UByteArray, size: Int): ByteArray {
