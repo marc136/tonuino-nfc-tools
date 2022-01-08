@@ -313,9 +313,7 @@ fun writeTag(tag: MifareUltralight, data: UByteArray): WriteResult {
     return WriteResult.Success
 }
 
-/**
- * This actually writes a Mifare Ultralight TAG using NfcA
- */
+
 @ExperimentalUnsignedTypes
 fun writeTag(tag: NfcA, data: UByteArray): WriteResult {
     try {
@@ -325,6 +323,26 @@ fun writeTag(tag: NfcA, data: UByteArray): WriteResult {
         return WriteResult.TagUnavailable
     }
 
+    // The MFRC522 lib that TonUINO uses detects the tag type using the SAK ID with `PICC_GetType` (Proximity inductive coupling card)
+    // See https://github.com/miguelbalboa/rfid/blob/eda2e385668163062250526c0e19033247d196a8/src/MFRC522.cpp#L1321
+    // More information on the standards, different vendors and how to guess the tag type using SAK and ATQA values is on
+    // https://nfc-tools.github.io/resources/standards/iso14443A/
+    return when (tag.sak.toInt()) {
+        0 ->
+            writeMifareUltralight(tag, data)
+
+        8, 9, 10, 11, 18 ->
+            // should be writable as Mifare Classic according to
+            // https://nfc-tools.github.io/resources/standards/iso14443A/ and https://github.com/miguelbalboa/rfid/blob/eda2e385668163062250526c0e19033247d196a8/src/MFRC522.cpp#L1321
+            // writeMifareClassic(tag, data) // WIP: DOES NOT WORK YET!
+            WriteResult.UnsupportedFormat
+
+        else ->
+            WriteResult.UnsupportedFormat
+    }
+}
+
+fun writeMifareUltralight(tag: NfcA, data: UByteArray): WriteResult {
     val len = data.size
     var pageNum = firstBlockNum
     val pagesize = MifareUltralight.PAGE_SIZE
