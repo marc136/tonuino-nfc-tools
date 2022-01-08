@@ -331,16 +331,14 @@ fun writeTag(tag: NfcA, data: UByteArray): WriteResult {
     val pagesNeeded = ceil(data.size.toDouble() / pagesize).toInt()
 
     Log.i(TAG, "data byte size $len")
+
     var current = 0
     val block = toFixedLengthBuffer(data, pagesize * pagesNeeded)
     for (index in 0 until pagesNeeded) {
         val next = current + pagesize
-        val part = block.slice(current until next).toByteArray()
-        val data = byteArrayOf(
-            0xA2.toByte(),  // WRITE
-            pageNum,
-            part[0], part[1], part[2], part[3] // TODO change this
-        )
+        val data = byteArrayOf(0xA2.toByte() /* WRITE */, pageNum) + block.slice(current until next)
+            .toByteArray()
+        Log.i(TAG, "Will transceive(${data.toHex()})")
         val result = tag.transceive(data)
         current = next
         Log.i(TAG, "transceive(${data.toHex()}) returned ${result.toHex()}")
