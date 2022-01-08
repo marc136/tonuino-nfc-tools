@@ -1,5 +1,6 @@
 package de.mw136.tonuino.nfc
 
+import android.content.res.Resources
 import android.nfc.FormatException
 import android.nfc.Tag
 import android.nfc.TagLostException
@@ -8,6 +9,7 @@ import android.nfc.tech.MifareUltralight
 import android.nfc.tech.NfcA
 import android.nfc.tech.TagTechnology
 import android.util.Log
+import de.mw136.tonuino.R
 import de.mw136.tonuino.byteArrayToHex
 import de.mw136.tonuino.hexToBytes
 import java.io.IOException
@@ -32,6 +34,37 @@ fun tagIdAsString(tag: Tag): String = tag.id.toHex(":")
 
 fun ByteArray.toHex(separator: String = " "): String =
     joinToString(separator) { eachByte -> "%02x".format(eachByte).uppercase() }
+
+fun describeTagType(tag: TagTechnology): String {
+    return try {
+        if (!tag.isConnected) tag.connect()
+        when (tag) {
+            is MifareClassic ->
+                when (tag.type) {
+                    MifareClassic.TYPE_CLASSIC -> "Mifare Classic"
+                    MifareClassic.TYPE_PLUS -> "Mifare Plus"
+                    MifareClassic.TYPE_PRO -> "Mifare Pro"
+                    else -> "Mifare Classic (${
+                        Resources.getSystem().getString(R.string.identify_unknown_type)
+                    })"
+                }
+            is MifareUltralight ->
+                when (tag.type) {
+                    MifareUltralight.TYPE_ULTRALIGHT -> "Mifare Ultralight"
+                    MifareUltralight.TYPE_ULTRALIGHT_C -> "Mifare Ultralight C"
+                    else -> "Mifare Ultralight (${
+                        Resources.getSystem().getString(R.string.identify_unknown_type)
+                    })"
+                }
+            is NfcA ->
+                "NfcA (SAK: ${tag.sak.toString().padStart(2, '0')}, ATQA: ${tag.atqa.toHex()})"
+            else ->
+                Resources.getSystem().getString(R.string.identify_unsupported_type)
+        }
+    } catch (ex: Exception) {
+        Resources.getSystem().getString(R.string.identify_exception)
+    }
+}
 
 fun connectTo(tag: Tag): TagTechnology? {
     return when {
@@ -187,6 +220,8 @@ enum class WriteResult { SUCCESS, UNSUPPORTED_FORMAT, AUTHENTICATION_FAILURE, TA
 
 @ExperimentalUnsignedTypes
 fun writeTonuino(tag: TagTechnology, data: UByteArray): WriteResult {
+    val description = describeTagType(tag)
+
     val result: WriteResult = try {
         when (tag) {
             is MifareClassic -> writeTag(tag, data)
