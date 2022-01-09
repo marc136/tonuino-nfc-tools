@@ -25,7 +25,7 @@
 
 
     <!-- Strings used on EditActivity -->
-    <string name="edit_nfc_connection_lost">Verbindung verloren</string>
+    <string name="edit_nfc_connection_lost">Connection lost</string>
     <string name="edit_tonuino_version_label">Select tag type</string>
     <string-array name="edit_tonuino_tag_types">
         <item>Tonuino 2.0.x</item>
@@ -147,6 +147,10 @@
     <string name="written_unknown_error">An unknown error has occurred</string>
     <string name="written_button_retry">Try again</string>
 
+    <!-- Strings about tag identification -->
+    <string name="identify_unknown_type">unknown</string>
+    <string name="identify_unsupported_type">unsupported</string>
+
     <!-- Strings on ReadActivity -->
     <string name="read_title">Tag %s</string>
     <string name="read_intro">Read data</string>
@@ -177,6 +181,8 @@
     <string name="nfc_tag_found">Tag %s gefunden</string>
     <string name="nfc_read_tag_failure">Error: Could not read data from NFC tag</string>
     <string name="nfc_tag_technologies">"Device and tag support these technologies:\n%s"</string>
+    <string name="nfc_tag_type">Tag technology: \n%s</string>
+    <string name="nfca_not_ok">NfcA transceive returned \'%s\' instead of OK (\'A\')</string>
 
     <!-- New fields below -->
     <string name="apply_change">Apply change</string>

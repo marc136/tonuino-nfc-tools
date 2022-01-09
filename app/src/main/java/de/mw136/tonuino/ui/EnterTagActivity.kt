@@ -98,50 +98,54 @@ class EnterTagActivity : NfcIntentActivity() {
     fun onClickWriteTagButton(view: View) = writeTag()
 
     private fun writeTag() {
-        var result = WriteResult.TAG_UNAVAILABLE
         if (tag != null) {
             Log.w("$TAG.writeTag", "will write to tag ${tagIdAsString(tag!!)}")
-            result = writeTonuino(tag!!, tagData.bytes)
+            val (description, result) = writeTonuino(tag!!, tagData.bytes)
             Log.w("$TAG.writeTag", "result $result")
+            showModalDialog(result, description)
+        } else {
+            showModalDialog(WriteResult.TagUnavailable, "")
         }
-        showModalDialog(result)
     }
 
-    private fun showModalDialog(result: WriteResult) {
+    private fun showModalDialog(result: WriteResult, description: String) {
         with(AlertDialog.Builder(this)) {
             var showRetryButton = false
 
             when (result) {
-                WriteResult.SUCCESS -> {
+                is WriteResult.Success -> {
                     setMessage(R.string.written_success)
                 }
-                WriteResult.UNSUPPORTED_FORMAT -> {
+                is WriteResult.UnsupportedFormat -> {
                     setTitle(R.string.written_unsupported_tag_type)
-                    setMessage(
-                        getString(
-                            R.string.nfc_tag_technologies,
-                            techListOf(tag).joinToString(", ")
-                        )
-                    )
+                    setMessage(StringBuilder()
+                        .append(getString(R.string.nfc_tag_type, description)).append("\n\n")
+                        .append(getString(R.string.nfc_tag_technologies, techListOf(tag).joinToString(", "))))
                 }
-                WriteResult.AUTHENTICATION_FAILURE -> {
+                is WriteResult.AuthenticationFailure -> {
                     setTitle(R.string.written_title_failure)
                     setMessage(R.string.written_authentication_failure)
                     showRetryButton = true
                 }
-                WriteResult.TAG_UNAVAILABLE -> {
+                is WriteResult.TagUnavailable -> {
                     setTitle(R.string.written_title_failure)
                     setMessage(R.string.written_tag_unavailable)
                     showRetryButton = true
                 }
-                WriteResult.UNKNOWN_ERROR -> {
+                is WriteResult.NfcATransceiveNotOk -> {
+                    setTitle(R.string.written_title_failure)
+                    val notOk = result.response.toHex().trimEnd('0', ' ')
+                    setMessage(StringBuilder()
+                        .append(getString(R.string.nfc_tag_type, description)).append("\n\n")
+                        .append(getString(R.string.nfca_not_ok, notOk)).append("\n\n")
+                        .append(getString(R.string.nfc_tag_technologies, techListOf(tag).joinToString(", "))))
+                    showRetryButton = true
+                }
+                is WriteResult.UnknownError -> {
                     setTitle(R.string.written_unknown_error)
-                    setMessage(
-                        getString(
-                            R.string.nfc_tag_technologies,
-                            techListOf(tag).joinToString(", ")
-                        )
-                    )
+                    setMessage(StringBuilder()
+                        .append(getString(R.string.nfc_tag_type, description)).append("\n\n")
+                        .append(getString(R.string.nfc_tag_technologies, techListOf(tag).joinToString(", "))))
                     showRetryButton = true
                 }
             }
