@@ -4,7 +4,18 @@ This file gives a general overview, look into the git log for more information.
 ## unreleased
 none
 
-## v0.8.0
+## 0.9.1
+- Prevent appcrash when reading modifier cards
+- Update to support Android 12 (SDK 31)
+
+## 0.9.0
+- Add a QR code scanner to the bulk edit view
+- Fix another bug displaying TonUINO 2.1 mode description texts
+
+## 0.8.1
+- Fix the display of TonUINO 2.1 mode description texts
+
+## 0.8.0
 - Rewrite edit activity to use androidx.ViewModel
 - Add entry "unknown <#>" to spinners on simple edit fragment
 
