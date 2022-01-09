@@ -2,7 +2,7 @@
 This file gives a general overview, look into the git log for more information.
 
 ## unreleased
-none
+- Add support to write Mifare Ultralight tags with NfcA
 
 ## 0.9.1
 - Prevent appcrash when reading modifier cards
