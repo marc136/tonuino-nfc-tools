@@ -35,10 +35,16 @@ fun tagIdAsString(tag: Tag): String = tag.id.toHex(":")
 fun ByteArray.toHex(separator: String = " "): String =
     joinToString(separator) { eachByte -> "%02x".format(eachByte).uppercase() }
 
-fun describeTagType(tag: Tag): String =
-    getTagTechnology(tag)?.use { describeTagType(it) } ?: Resources.getSystem().getString(R.string.identify_unknown_type)
+fun describeTagType(tag: Tag): String {
+    return try {
+        describeTagType(getTagTechnology(tag))
+    } catch (ex: Exception) {
+        Log.w(TAG, "describeTagType failed with $ex")
+        Resources.getSystem().getString(R.string.identify_unsupported_type)
+    }
+}
 
-fun getTagTechnology(tag: Tag): TagTechnology? {
+fun getTagTechnology(tag: Tag): TagTechnology {
     return when {
         tag.techList.contains(MifareClassic::class.java.name) ->
             MifareClassic.get(tag)
@@ -78,39 +84,28 @@ fun describeTagType(tag: TagTechnology): String {
 }
 
 fun connectTo(tag: Tag): TagTechnology? {
-    return getTagTechnology(tag)?.apply { connect() }
+    return getTagTechnology(tag).apply { connect() }
 }
 
 @ExperimentalUnsignedTypes
 fun readFromTag(tag: Tag): UByteArray {
     val id = tagIdAsString(tag)
-    var result = ubyteArrayOf()
-
     try {
         Log.i(TAG, "Tag $id techList: ${techListOf(tag).joinToString(", ")}")
-        when {
-            tag.techList.contains(MifareClassic::class.java.name) -> {
-                MifareClassic.get(tag)?.use { mifare -> result = readFromTag(mifare) }
-            }
-            tag.techList.contains(MifareUltralight::class.java.name) -> {
-                MifareUltralight.get(tag)?.use { mifare -> result = readFromTag(mifare) }
-            }
-            tag.techList.contains(NfcA::class.java.name) -> {
-                NfcA.get(tag)?.use { nfca -> result = readFromTag(nfca) }
-            }
-            else -> {
-                Log.e(
-                    "$TAG.readFromTag",
-                    "Tag $id did not enumerate MifareClassic, MifareUltralight or NfcA and is not supported"
-                )
+        val result = getTagTechnology(tag).use { tech ->
+            when (tech) {
+                is MifareClassic -> readFromTag(tech)
+                is MifareUltralight -> readFromTag(tech)
+                is NfcA -> readFromTag(tech)
+                else -> ubyteArrayOf()
             }
         }
+        return dropTrailingZeros(result)
     } catch (ex: Exception) {
         // e.g. android.nfc.TagLostException, IOException
         Log.e("$TAG.readFromTag", ex.toString())
+        return ubyteArrayOf()
     }
-
-    return dropTrailingZeros(result)
 }
 
 @ExperimentalUnsignedTypes
