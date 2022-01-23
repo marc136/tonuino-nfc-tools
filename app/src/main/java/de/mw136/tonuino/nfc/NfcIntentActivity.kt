@@ -31,7 +31,7 @@ abstract class NfcIntentActivity : AppCompatActivity() {
         val intent = Intent(this, javaClass).apply {
             addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         }
-        pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+        pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE)
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
     }
 
