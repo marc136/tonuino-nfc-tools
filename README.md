@@ -93,7 +93,6 @@ Is only used in specific modes to specify variables:
 ## Tonuino 2.1.0
 [Repository](https://github.com/xfjx/TonUINO/blob/DEV/Tonuino.ino)
 
-
 #### Normal Tags
 | # | name     | range  | description                                                                                           |
 |---|----------|--------|-------------------------------------------------------------------------------------------------------|
@@ -126,6 +125,23 @@ All have a folder value of 0
 | RepeatSingleModifier | 6      | -                                  | Repeat current track                                                                                                       |
 | FeedbackModifier     | 7      | -                                  | Will e.g. tell volume before changing it                                                                                   |
 
+## Tonuino TNG 3.1.x
+[Repository](https://github.com/tonuino/TonUINO-TNG#version-31-13102022)
+
+Is a full rewrite of the original TonUINO software in C++ 
+
+**Different Modes**  
+It supports all modes of TonUINO 2.1 and adds these
+
+| #  | title           | description                                               | next | previous                              |
+|----|-----------------|-----------------------------------------------------------|------|---------------------------------------|
+| 10 | Hörbuch Einzeln | Play the next file from the folder and store the progress | stop | start title again from the beginning  |
+| 11 | Repeat last     | Repeat the last card or shortcut                          | ??   | ??                                    |
+
+Wiederhole Karte Modus: die letzte Karte oder der letzte Shortcut wird wiederholt.
+
+#### Modifier Tags (aka admin tags)
+Same as TonUINO 2.1 but removed the `FeedbackModifier` card with value `7`.
 
 ## NFC Host Card Emulation
 It would be great if the app also can act as an NFC tag to simulate TonUINO tags, some links to this:

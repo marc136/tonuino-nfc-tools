@@ -45,8 +45,8 @@
     <string name="edit_special_label_from">From</string>
     <string name="edit_special2_label">Extra 2</string>
     <string name="edit_special2_label_to">To</string>
-    <string name="edit_version_1">Format 1: For Tonuino 2.0.x ("master" branch)</string>
-    <string name="edit_version_2">Format 2: For Tonuino 2.1 ("DEV" branch)</string>
+    <string name="edit_version_1">Format 1: For Tonuino 2.0.x</string>
+    <string name="edit_version_2">Format 2: For Tonuino 2.1 and Tonuino TNG 3.1</string>
 
     <string name="edit_hidden_label">hidden</string>
     <string name="edit_unknown_value">Value \'%s\' is unknown.</string>
@@ -54,7 +54,7 @@
 
     <string-array name="edit_version">
         <item>Tonuino 2.0.x</item>
-        <item>Tonuino 2.1.x</item>
+        <item>Tonuino 2.1.x and Tonuino TNG</item>
     </string-array>
     <string-array name="edit_mode">
         <item>Audio book (single file)</item>
@@ -66,6 +66,8 @@
         <item>Audio book from-to (single file)</item>
         <item>Album from-to</item>
         <item>Party from-to</item>
+        <item>Audio book series (single files)</item>
+        <item>Repeat last</item>
     </string-array>
     <string-array name="edit_mode_description">
         <item>A random file from the chosen folder will be played.</item>
@@ -79,6 +81,8 @@
         <item>A random file from the chosen folder between the selected minimum and maximum will be played.</item>
         <item>Plays all files inside the folder between the selected minimum and maximum in numerical order.</item>
         <item>Plays random files inside the folder between the selected minimum and maximum.</item>
+        <item>Plays the next file from the folder and store the progress.</item>
+        <item>Repeat the last card or shortcut.</item>
     </string-array>
     <string name="edit_mode_unknown">Mode \'%d\' is unknown.</string>
 

@@ -15,6 +15,7 @@ import de.mw136.tonuino.setByteIfChanged
 import de.mw136.tonuino.ui.Format1Mode
 import de.mw136.tonuino.ui.Format2Mode
 import de.mw136.tonuino.ui.Format2ModifierMode
+import de.mw136.tonuino.ui.Format3Mode
 import de.mw136.tonuino.ui.Tonuino
 
 private const val VERSION_MAX = 2
@@ -29,7 +30,7 @@ class EnterSimple : Fragment() {
         get() {
             return when (savedModeView) {
                 ModeView.V1 -> 6
-                ModeView.V2 -> 9
+                ModeView.V2 -> 11
                 ModeView.V2_MODIFIER -> 7
                 ModeView.INITIAL -> 0
             }
@@ -248,7 +249,9 @@ class EnterSimple : Fragment() {
             Format1Mode.AudioBookRandom.value,
             Format1Mode.AudioBookMultiple.value,
             Format1Mode.Album.value,
-            Format1Mode.Party.value
+            Format1Mode.Party.value,
+            Format3Mode.AudioBookSingle.value,
+            Format3Mode.RepeatLast.value
             -> {
                 specialRow.visibility = View.GONE
                 specialLabel.text = getString(R.string.edit_hidden_label)

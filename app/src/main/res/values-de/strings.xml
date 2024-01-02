@@ -53,6 +53,8 @@
         <item>Hörspiel von-bis</item>
         <item>Album von-bis</item>
         <item>Party von-bis</item>
+        <item>Hörbuch einzeln</item>
+        <item>Wiederhole Karte</item>
     </string-array>
     <string-array name="edit_mode_description">
         <item>Ein zufälliger Titel aus dem gewählten Ordner wird abgespielt.</item>
@@ -66,6 +68,8 @@
         <item>Ein zufälliger Titel im gewählten Ordner zwischen von und bis wird abgespielt.</item>
         <item>Spielt alle Titel des Ordners zwischen von und bis in numerischer Reihenfolge.</item>
         <item>Spielt zufällige Titel des Ordners zwischen von und bis in Endlosschleife.</item>
+        <item>Den nächsten Titel im Ordner wiedergeben und den Fortschritt speichern.</item>
+        <item>Die letzte Karte oder der letzte Shortcut wird wiederholt.</item>
     </string-array>
     <string name="edit_mode_unknown">Der Modus \'%d\' ist unbekannt.</string>
 

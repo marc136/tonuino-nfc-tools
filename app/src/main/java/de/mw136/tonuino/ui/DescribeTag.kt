@@ -31,6 +31,11 @@ enum class Format2Mode(val value: Int) {
     Party2(9)
 }
 
+enum class Format3Mode(val value: Int) {
+    AudioBookSingle(10),
+    RepeatLast(11),
+}
+
 enum class Format2ModifierMode(val value: Int) {
     Admin(0), SleepTimer(1), FreezeDance(2), Locked(3),
     Toddler(4), Kindergarten(5), RepeatSingle(6), Feedback(7)
