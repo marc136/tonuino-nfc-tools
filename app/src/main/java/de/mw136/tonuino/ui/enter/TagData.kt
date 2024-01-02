@@ -121,7 +121,7 @@ class TagData() : ViewModel(), Parcelable {
             // and https://proandroiddev.com/customizing-the-new-viewmodel-cf28b8a7c5fc
             tonuinoCookie.forEachIndexed { index, value -> buffer[COOKIE + index] = value }
             // TODO load default version from settings
-            buffer[VERSION] = 1u
+            buffer[VERSION] = 2u
             buffer[FOLDER] = 1u
             buffer[MODE] = 1u
 
