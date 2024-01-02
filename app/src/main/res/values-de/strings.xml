@@ -43,6 +43,11 @@
     <string name="edit_unknown_value">Wert \'%s\' ist unbekannt.</string>
     <string name="edit_limit_numeric_value">Bitte eine Zahl zwischen %d und %d eingeben.</string>
 
+    <string-array name="edit_version">
+        <item>Tonuino 2.0.x</item>
+        <item>Tonuino 2.1.x und Tonuino TNG</item>
+    </string-array>
+
     <string-array name="edit_mode">
         <item>Hörspiel</item>
         <item>Album</item>

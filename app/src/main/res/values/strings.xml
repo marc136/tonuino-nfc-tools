@@ -56,6 +56,7 @@
         <item>Tonuino 2.0.x</item>
         <item>Tonuino 2.1.x and Tonuino TNG</item>
     </string-array>
+
     <string-array name="edit_mode">
         <item>Audio book (single file)</item>
         <item>Album</item>
