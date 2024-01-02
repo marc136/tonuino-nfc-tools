@@ -95,36 +95,36 @@ Is only used in specific modes to specify variables:
 
 
 #### Normal Tags
-| # | name | range | description |
-| --- | --- | --- | --- |
-| 0 | cookie | uint32 | Identifies a Tonuino tag, usually `0x1337b347` |
-| 4 | version | uint8 | always 2 |
-| 5 | folder | uint8 | Values from 1 to 99, see [dfplayer docs](https://wiki.dfrobot.com/DFPlayer_Mini_SKU_DFR0299#target_1)  |
-| 6 | mode | uint8 | Values from 1 to 5, see next table |
-| 7 | special | uint8 | |
-| 8 | special2 | uint8 | |
+| # | name     | range  | description                                                                                           |
+|---|----------|--------|-------------------------------------------------------------------------------------------------------|
+| 0 | cookie   | uint32 | Identifies a Tonuino tag, usually `0x1337b347`                                                        |
+| 4 | version  | uint8  | always 2                                                                                              |
+| 5 | folder   | uint8  | Values from 1 to 99, see [dfplayer docs](https://wiki.dfrobot.com/DFPlayer_Mini_SKU_DFR0299#target_1) |
+| 6 | mode     | uint8  | Values from 1 to 5, see next table                                                                    |
+| 7 | special  | uint8  |                                                                                                       |
+| 8 | special2 | uint8  |                                                                                                       |
 
 **Different Modes**  
 It supports all modes of TonUINO 2.0 and adds these
 
-| # | title | description | next | previous |
-| --- | --- | --- | --- | --- |
-| 7 | Von-Bis Hörspiel | play a random file from the folder between special and special2 | stop | start title again from the beginning |
-| 8 | Von-Bis Album | play all files between special and special2 | next file | start title again from the beginning |
-| 9 | Von-Bis Party | play all files between special and special2 in random order | random file | start title again from the beginning |
+| # | title            | description                                                     | next        | previous                             |
+|---|------------------|-----------------------------------------------------------------|-------------|--------------------------------------|
+| 7 | Von-Bis Hörspiel | play a random file from the folder between special and special2 | stop        | start title again from the beginning |
+| 8 | Von-Bis Album    | play all files between special and special2                     | next file   | start title again from the beginning |
+| 9 | Von-Bis Party    | play all files between special and special2 in random order     | random file | start title again from the beginning |
 
 #### Modifier Tags (aka admin tags)
 All have a folder value of 0
 
-| Modifier | byte 6 | byte 7 | Description |
-| --- | --- | --- | --- |
-| SleepTimer | 1 | Play duration in minutes (255 max) | Pauses playback after timer |
-| FreezeDance | 2 | - | Randomly pauses the track after 5 to 30 seconds |
-| Locked | 3 | - | All buttons are locked and no new card will be read |
-| ToddlerMode | 4 | - | All buttons are locked |
-| KindergartenMode | 5 | - | Previous and back buttons are locked. Adding a new card will not stop the current track but will schedule it as next track |
-| RepeatSingleModifier | 6 | - | Repeat current track |
-| FeedbackModifier | 7 | - | Will e.g. tell volume before changing it |
+| Modifier             | byte 6 | byte 7                             | Description                                                                                                                |
+|----------------------|--------|------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| SleepTimer           | 1      | Play duration in minutes (255 max) | Pauses playback after timer                                                                                                |
+| FreezeDance          | 2      | -                                  | Randomly pauses the track after 5 to 30 seconds                                                                            |
+| Locked               | 3      | -                                  | All buttons are locked and no new card will be read                                                                        |
+| ToddlerMode          | 4      | -                                  | All buttons are locked                                                                                                     |
+| KindergartenMode     | 5      | -                                  | Previous and back buttons are locked. Adding a new card will not stop the current track but will schedule it as next track |
+| RepeatSingleModifier | 6      | -                                  | Repeat current track                                                                                                       |
+| FeedbackModifier     | 7      | -                                  | Will e.g. tell volume before changing it                                                                                   |
 
 
 ## NFC Host Card Emulation
