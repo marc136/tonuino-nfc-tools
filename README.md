@@ -21,6 +21,9 @@ Follow the instructions on how to [run apps on a real hardware Android device](h
 These are a few commands I find useful:
 
 ```sh
+# show attached devices
+adb devices
+
 # Create a clean build
 ./gradlew clean bundle
 
