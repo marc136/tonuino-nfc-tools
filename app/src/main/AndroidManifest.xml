@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <!-- Will not show up in the store for devices without NFC support -->
     <uses-feature
             android:name="android.hardware.nfc"
@@ -12,6 +13,9 @@
     <!-- Request user permission -->
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- I don't know which dependency wants to access the advertising ID, this seems to be a way to block it, though -->
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
 
     <application
             android:allowBackup="true"
