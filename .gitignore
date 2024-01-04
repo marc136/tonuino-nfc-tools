@@ -20,3 +20,8 @@ app/debug/
 
 # others
 res/_*
+
+# environment variables
+.envrc
+.direnv/
+

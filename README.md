@@ -11,12 +11,30 @@ The github releases are built on [CircleCI ![CircleCI](https://circleci.com/gh/m
 Google Play releases are built using [fastlane](https://docs.fastlane.tools/getting-started/android/setup/).
 
 ## Getting started
+If you don't plan to program for Android often, and have [nix](https://nixos.org) available, I would recommend using that.
 
-Install [Android studio](https://developer.android.com/studio#downloads), and then [run this app on a real Android device](https://developer.android.com/training/basics/firstapp/running-app#RealDevice).
+### With [nix](https://nixos.org)
+it is very easy to install and setup the needed tools in a clean environment. No need for nixOS, just [the package manager](https://nixos.org/download) is enough.  
+I used https://github.com/tadfisher/android-nixpkgs to configure both `nix develop` and `nix-shell`.
 
-If you want more control check the docs on [building](https://developer.android.com/studio/build/building-cmdline) and [testing](https://developer.android.com/studio/test/command-line) from cli.
+```sh
+# Uses the configuration of `./flake.shell.nix`
+nix develop
+# or as an alternative (without nix flakes) use `./shell.nix` 
+nix-shell
+```
 
-Follow the instructions on how to [run apps on a real hardware Android device](https://developer.android.com/studio/run/device).
+### Install Android Studio, SDKs and other tools 
+This is my only Android app, so every time I want to create another update, I would spend a lot of time upgrading the SDKs, Android Studio, Gradle and kotlin and have now switched to the nix approach.  
+But the links below should still work. If not, please create a pull request so I can update them.
+
+Install [Android studio](https://developer.android.com/studio#downloads), and then follow the tutorial "[run this app on a real Android device](https://developer.android.com/training/basics/firstapp/running-app#RealDevice)".
+
+### Useful commands
+
+If you want more control instead of using Android Studio, check the docs on [building](https://developer.android.com/studio/build/building-cmdline) and [testing](https://developer.android.com/studio/test/command-line) from cli.
+
+If you have problems connecting to your Android device, have a look at this help page on on how to [run apps on a real hardware Android device](https://developer.android.com/studio/run/device).
 
 These are a few commands I find useful:
 
