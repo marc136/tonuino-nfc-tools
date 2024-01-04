@@ -2,6 +2,11 @@
 This file gives a general overview, look into the git log for more information.  
 The list contains the version number and then in brackets the app version code (which is important for Google Play).
 
+## 1.0.2 (#27)
+- Add new tags for Tonuino TNG 3.1, see https://github.com/marc136/tonuino-nfc-tools/blob/05c0f6577ecbde7859022346c89ee3fe366b14cf/README.md#tonuino-tng-31x
+- Make Tonuino 2.1 and TNG 3.1 tag format the default
+- Add support for Android 14
+  
 ## 1.0.1 (#26)
 - Fix support for Android 12
 
