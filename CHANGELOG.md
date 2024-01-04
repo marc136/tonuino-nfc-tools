@@ -1,38 +1,42 @@
 # Changelog
-This file gives a general overview, look into the git log for more information.
+This file gives a general overview, look into the git log for more information.  
+The list contains the version number and then in brackets the app version code (which is important for Google Play).
 
-## unreleased
-- Add support to write Mifare Ultralight tags with NfcA
+## 1.0.1 (#26)
+- Fix support for Android 12
 
-## 0.9.1
+## 1.0.0 (#24, #25)
+- Add support for writing tags that do not fully comply with Mifare Ultralight (often NFC sticker tags) using the NfcA standard.
+
+## 0.9.1 (#21, #22, #23)
 - Prevent appcrash when reading modifier cards
 - Update to support Android 12 (SDK 31)
 
-## 0.9.0
+## 0.9.0 (#20)
 - Add a QR code scanner to the bulk edit view
 - Fix another bug displaying TonUINO 2.1 mode description texts
 
-## 0.8.1
+## 0.8.1 (#19)
 - Fix the display of TonUINO 2.1 mode description texts
 
-## 0.8.0
+## 0.8.0 (#18)
 - Rewrite edit activity to use androidx.ViewModel
 - Add entry "unknown <#>" to spinners on simple edit fragment
 
-## 0.7.0
+## 0.7.0 (#16)
 - Migrate to AndroidX
 - Add bulk write activity
 
-## 0.6.1
+## 0.6.1 (#14)
 - Allow users to write Special2 field on EditExtended form
 
-## 0.6.0
+## 0.6.0 (#13)
 - Add support for reading and writing MifareUltralight NFC tags
 
-## 0.5.2
+## 0.5.3 (#12)
 - Allow Android 4.0.0 users to install the app
 
-## 0.5.0
+## 0.5.0 (#9)
 - Add support for Tonuino 2.1 (dev) tags
   - DONE: Modifier (Admin) tags
   - TODO: Play card
