@@ -36,7 +36,7 @@ platform :android do
     )
     upload_to_play_store(
       track: ENV["PLAY_STORE_TRACK"],
-      skip_upload_screenshots: true
+      skip_upload_screenshots: true,
     )
   end
 end
