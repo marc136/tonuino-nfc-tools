@@ -10,6 +10,8 @@ installable using the [Google Play Store](https://play.google.com/store/apps/det
 The github releases are built on [CircleCI ![CircleCI](https://circleci.com/gh/marc136/tonuino-nfc-tools/tree/main.svg?style=svg)](https://circleci.com/gh/marc136/tonuino-nfc-tools/tree/main).  
 Google Play releases are built using [fastlane](https://docs.fastlane.tools/getting-started/android/setup/).
 
+For differences between versions, see [the CHANGELOG](./CHANGELOG.md).
+
 ## Getting started
 If you don't plan to program for Android often, and have [nix](https://nixos.org) available, I would recommend using that.
 
