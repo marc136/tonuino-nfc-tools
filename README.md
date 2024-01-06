@@ -2,15 +2,14 @@
 
 Android app to write and read NFC tags that can be used on the [TonUINO DIY music box](https://tonuino.de/).
 
-For discussion, see [this thread (in German)](http://discourse.voss.earth/t/android-app-um-tonuino-karten-zu-beschreiben/2151), or use github issues.
+For discussion, see [this thread (in German)](http://discourse.voss.earth/t/android-app-um-tonuino-karten-zu-beschreiben/2151), or use [github issues](https://github.com/marc136/tonuino-nfc-tools/issues).
 
-The app is available [for download on github](https://github.com/marc136/tonuino-nfc-tools/releases), 
-installable using the [Google Play Store](https://play.google.com/store/apps/details?id=de.mw136.tonuino) or the [F-Droid Store](https://f-droid.org/packages/de.mw136.tonuino/).
+You can [download releases on github](https://github.com/marc136/tonuino-nfc-tools/releases),
+or install the app from the [Google Play Store](https://play.google.com/store/apps/details?id=de.mw136.tonuino) or the [F-Droid Store](https://f-droid.org/packages/de.mw136.tonuino/).
 
-The github releases are built on [CircleCI ![CircleCI](https://circleci.com/gh/marc136/tonuino-nfc-tools/tree/main.svg?style=svg)](https://circleci.com/gh/marc136/tonuino-nfc-tools/tree/main).  
-Google Play releases are built using [fastlane](https://docs.fastlane.tools/getting-started/android/setup/).
+Every commit is also built and bundled as an .apk on [CircleCI](https://app.circleci.com/pipelines/github/marc136/tonuino-nfc-tools), the latest state is [![CircleCI](https://dl.circleci.com/status-badge/img/gh/marc136/tonuino-nfc-tools/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/marc136/tonuino-nfc-tools/tree/main)
 
-For differences between versions, see [the CHANGELOG](./CHANGELOG.md).
+For differences between release versions, consult [the change log](./CHANGELOG.md).
 
 ## Getting started
 If you don't plan to program for Android often, and have [nix](https://nixos.org) available, I would recommend using that.
