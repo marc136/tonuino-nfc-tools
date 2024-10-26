@@ -155,15 +155,23 @@ Is a full rewrite of the original TonUINO software in C++
 **Different Modes**  
 It supports all modes of TonUINO 2.1 and adds these
 
-| #  | title           | description                                               | next | previous                              |
-|----|-----------------|-----------------------------------------------------------|------|---------------------------------------|
-| 10 | Hörbuch Einzeln | Play the next file from the folder and store the progress | stop | start title again from the beginning  |
-| 11 | Repeat last     | Repeat the last card or shortcut                          | ??   | ??                                    |
+| #  | title           | description                                               | next | previous                             |
+|----|-----------------|-----------------------------------------------------------|------|--------------------------------------|
+| 10 | Hörbuch Einzeln | Play the next file from the folder and store the progress | stop | start title again from the beginning |
+| 11 | Repeat last     | Repeat the last card or shortcut                          | ??   | ??                                   |
+| 12 | Quiz game       | See https://github.com/tonuino/TonUINO-TNG/issues/155     | ??   | ??                                   |
+| 13 | Memory game     | See https://github.com/tonuino/TonUINO-TNG/issues/176     | ??   | ??                                   |
+| 14 | Bluetooth       | See https://github.com/tonuino/TonUINO-TNG/issues/215     |      |                                      |
 
 Wiederhole Karte Modus: die letzte Karte oder der letzte Shortcut wird wiederholt.
 
 #### Modifier Tags (aka admin tags)
-Same as TonUINO 2.1 but removed the `FeedbackModifier` card with value `7`.
+
+Same as TonUINO 2.1 but replaced the `FeedbackModifier` card with value `7` with `Bluetooth pairing`
+
+| Modifier  | byte 6 | byte 7 | Description                                           |
+|-----------|--------|--------|:------------------------------------------------------|
+| Bluetooth | 7      | -      | See https://github.com/tonuino/TonUINO-TNG/issues/215 |
 
 ## NFC Host Card Emulation
 It would be great if the app also can act as an NFC tag to simulate TonUINO tags, some links to this:
@@ -188,5 +196,3 @@ Currently only Mifare Classic and Ultralight are supported, but in case generic 
 - [Example of writing NTAG215 tags (for cloning Amiibos)](https://github.com/HiddenRamblings/TagMo)
   - ...but they [use Mifare Ultralight](https://github.com/HiddenRamblings/TagMo/blob/master/app/src/main/java/com/hiddenramblings/tagmo/NfcActivity.java#L152)
   - [Explanation how to use it](https://www.reddit.com/r/Amiibomb/comments/5ywlol/howto_the_easy_guide_to_making_your_own_amiibo/)
-
-

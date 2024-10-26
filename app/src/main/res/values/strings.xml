@@ -69,6 +69,9 @@
         <item>Party from-to</item>
         <item>Audio book series (single files)</item>
         <item>Repeat last</item>
+        <item>Quiz Game</item>
+        <item>Memory Game</item>
+        <item>Bluetooth</item>
     </string-array>
     <string-array name="edit_mode_description">
         <item>A random file from the chosen folder will be played.</item>
@@ -84,6 +87,9 @@
         <item>Plays random files inside the folder between the selected minimum and maximum.</item>
         <item>Plays the next file from the folder and store the progress.</item>
         <item>Repeat the last card or shortcut.</item>
+        <item>Play a quiz game either with answers or with a buzzer.</item>
+        <item>Play a memory game.</item>
+        <item>Toggles bluetooth mode on or off.</item>
     </string-array>
     <string name="edit_mode_unknown">Mode \'%d\' is unknown.</string>
 
@@ -95,7 +101,7 @@
         <item>Toddler mode</item>
         <item>Kindergarten mode</item>
         <item>Repeat single tag</item>
-        <item>Feedback modifier</item>
+        <item>Bluetooth</item>
     </string-array>
     <string-array name="edit_modifier_tags_description">
         <item>Opens the TonUINO admin menu</item>
@@ -105,7 +111,7 @@
         <item>All buttons are locked</item>
         <item>Previous and back buttons are locked. Adding a new card will not stop the current track but will schedule it as next track</item>
         <item>Repeat current track</item>
-        <item>Will e.g. tell volume before changing it</item>
+        <item>Bluetooth modifier</item>
     </string-array>
 
     <string name="edit_special_from">Between track %d</string>

@@ -34,11 +34,14 @@ enum class Format2Mode(val value: Int) {
 enum class Format3Mode(val value: Int) {
     AudioBookSingle(10),
     RepeatLast(11),
+    GameQuiz(12),
+    GameMemory(13),
+    SwitchBluetooth(14)
 }
 
 enum class Format2ModifierMode(val value: Int) {
     Admin(0), SleepTimer(1), FreezeDance(2), Locked(3),
-    Toddler(4), Kindergarten(5), RepeatSingle(6), Feedback(7)
+    Toddler(4), Kindergarten(5), RepeatSingle(6), Bluetooth(7)
 }
 
 fun usageExample1() {

@@ -30,7 +30,7 @@ class EnterSimple : Fragment() {
         get() {
             return when (savedModeView) {
                 ModeView.V1 -> 6
-                ModeView.V2 -> 11
+                ModeView.V2 -> 14
                 ModeView.V2_MODIFIER -> 7
                 ModeView.INITIAL -> 0
             }
@@ -251,7 +251,9 @@ class EnterSimple : Fragment() {
             Format1Mode.Album.value,
             Format1Mode.Party.value,
             Format3Mode.AudioBookSingle.value,
-            Format3Mode.RepeatLast.value
+            Format3Mode.RepeatLast.value,
+            Format3Mode.GameMemory.value,
+            Format3Mode.SwitchBluetooth.value
             -> {
                 specialRow.visibility = View.GONE
                 specialLabel.text = getString(R.string.edit_hidden_label)
@@ -282,6 +284,7 @@ class EnterSimple : Fragment() {
                 special2Description.text =
                     getString(R.string.edit_special2_to, tagData.special2.value?.toInt())
             }
+            // Format3Mode.GameQuiz.value,
             else -> {
                 // unknown modes
                 specialRow.visibility = View.VISIBLE
@@ -319,7 +322,7 @@ class EnterSimple : Fragment() {
             Format2ModifierMode.Toddler.value,
             Format2ModifierMode.Kindergarten.value,
             Format2ModifierMode.RepeatSingle.value,
-            Format2ModifierMode.Feedback.value -> {
+            Format2ModifierMode.Bluetooth.value -> {
                 specialRow.visibility = View.GONE
                 specialLabel.text = getString(R.string.edit_hidden_label)
             }

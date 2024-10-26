@@ -60,6 +60,9 @@
         <item>Party von-bis</item>
         <item>Hörbuch einzeln</item>
         <item>Wiederhole Karte</item>
+        <item>Quiz Spiel</item>
+        <item>Memory Spiel</item>
+        <item>Bluetooth</item>
     </string-array>
     <string-array name="edit_mode_description">
         <item>Ein zufälliger Titel aus dem gewählten Ordner wird abgespielt.</item>
@@ -75,6 +78,9 @@
         <item>Spielt zufällige Titel des Ordners zwischen von und bis in Endlosschleife.</item>
         <item>Den nächsten Titel im Ordner wiedergeben und den Fortschritt speichern.</item>
         <item>Die letzte Karte oder der letzte Shortcut wird wiederholt.</item>
+        <item>Beim Quiz können entweder Antworten hinterlegt, oder ein Buzzer verwendet werden.</item>
+        <item>Ein Gedächtnis-Spiel spielen.</item>
+        <item>Schaltet den Bluetooth Modus an oder aus.</item>
     </string-array>
     <string name="edit_mode_unknown">Der Modus \'%d\' ist unbekannt.</string>
 
@@ -86,7 +92,7 @@
         <item>Kleinkind Modus</item>
         <item>Kindergarten Modus</item>
         <item>Titel wiederholen</item>
-        <item>Audio-Feedback</item>
+        <item>Bluetooth</item>
     </string-array>
     <string-array name="edit_modifier_tags_description">
         <item>Öffnet das TonUINO admin Menü</item>
@@ -96,7 +102,7 @@
         <item>Alle Tasten werden gesperrt.</item>
         <item>Die vor- und zurück Tasten werden gesperrt. Ein neuer Tag wird nicht sofort abgespielt, sondern erst nachdem der aktuelle beendet wurde.</item>
         <item>Wiederholt den aktuellen Titel.</item>
-        <item>Gibt zum Beispiel die Lautstärke aus, bevor sie geändert wird.</item>
+        <item>Bluetooth Modifier.</item>
     </string-array>
 
     <string name="edit_special_from">Zwischen Titel %d</string>
