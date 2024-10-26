@@ -82,40 +82,44 @@ bundle exec fastlane test
     - On MainActivity if NFC is not available
 
 ## Tonuino 2.0.x
+
 [Repository](https://github.com/xfjx/TonUINO/blob/d15df6c7bb53bc970e4def43fd3e93fd82c13086/Tonuino.ino)
 
 ### Data
 
-| # | name | range | description |
-| --- | --- | --- | --- |
-| 0 | cookie | uint32 | identifies TonUINO, expected `0x1337b347` |
-| 4 | version | uint8 | always 1 |
-| 5 | folder | uint8 | values between 1 and 99, see [dfplayer docs](https://wiki.dfrobot.com/DFPlayer_Mini_SKU_DFR0299#target_1)  |
-| 6 | mode | uint8 | values between 1 and 5, see next table |
-| 7 | special | uint8 | |
-
+| # | name    | range  | description                                                                                               |
+|---|---------|--------|-----------------------------------------------------------------------------------------------------------|
+| 0 | cookie  | uint32 | identifies TonUINO, expected `0x1337b347`                                                                 |
+| 4 | version | uint8  | always 1                                                                                                  |
+| 5 | folder  | uint8  | values between 1 and 99, see [dfplayer docs](https://wiki.dfrobot.com/DFPlayer_Mini_SKU_DFR0299#target_1) |
+| 6 | mode    | uint8  | values between 1 and 5, see next table                                                                    |
+| 7 | special | uint8  |                                                                                                           |
 
 **Different Modes**  
-Based on the value of byte *mode* and what happens, when the *next* and *previous* buttons are pressed
+Based on the value of byte *mode* and what happens, when the *next* and *previous* buttons are
+pressed
 
-| # | title | description | next | previous |
-| --- | --- | --- | --- | --- |
-| 1 | Hörspiel<br/>audio book (single file) | plays a single file in the folder | stop | Start title again from the beginning |
-| 2 | Album | play every file in the folder | next file | previous file |
-| 3 | Party | play files in the folder in random order | play random file | start title again from the beginning  |
-| 4 | Einzel<br/>single | play a single file in the folder | stop | start title again from the beginning |
-| 5 | Hörbuch<br/>audio book (multiple files) | play all files in the folder and keep track of the progress (will start at the last file the next time | next file | previous file |
-| 6 | Admin | Not functionality | - | - |
+| # | title                                   | description                                                                                            | next             | previous                             |
+|---|-----------------------------------------|--------------------------------------------------------------------------------------------------------|------------------|--------------------------------------|
+| 1 | Hörspiel<br/>audio book (single file)   | plays a single file in the folder                                                                      | stop             | Start title again from the beginning |
+| 2 | Album                                   | play every file in the folder                                                                          | next file        | previous file                        |
+| 3 | Party                                   | play files in the folder in random order                                                               | play random file | start title again from the beginning |
+| 4 | Einzel<br/>single                       | play a single file in the folder                                                                       | stop             | start title again from the beginning |
+| 5 | Hörbuch<br/>audio book (multiple files) | play all files in the folder and keep track of the progress (will start at the last file the next time | next file        | previous file                        |
+| 6 | Admin                                   | Not functionality                                                                                      | -                | -                                    |
 
 **Special**  
 Is only used in specific modes to specify variables:
+
 - mode 4: file number
 - mode 6: placeholder, no functionaliy yet
 
 ## Tonuino 2.1.0
+
 [Repository](https://github.com/xfjx/TonUINO/blob/DEV/Tonuino.ino)
 
 #### Normal Tags
+
 | # | name     | range  | description                                                                                           |
 |---|----------|--------|-------------------------------------------------------------------------------------------------------|
 | 0 | cookie   | uint32 | Identifies a Tonuino tag, usually `0x1337b347`                                                        |
@@ -135,6 +139,7 @@ It supports all modes of TonUINO 2.0 and adds these
 | 9 | Von-Bis Party    | play all files between special and special2 in random order     | random file | start title again from the beginning |
 
 #### Modifier Tags (aka admin tags)
+
 All have a folder value of 0
 
 | Modifier             | byte 6 | byte 7                             | Description                                                                                                                |
@@ -148,6 +153,7 @@ All have a folder value of 0
 | FeedbackModifier     | 7      | -                                  | Will e.g. tell volume before changing it                                                                                   |
 
 ## Tonuino TNG 3.1.x
+
 [Repository](https://github.com/tonuino/TonUINO-TNG#version-31-13102022)
 
 Is a full rewrite of the original TonUINO software in C++ 
